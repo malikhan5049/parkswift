@@ -25,27 +25,34 @@
 
             <form ng-show="!success" name="form" role="form" novalidate ng-submit="register()" show-validation>
 
-                <div class="form-group">
-                    <label translate="global.form.username">Login</label>
-                    <input type="text" class="form-control" name="login" placeholder="{{'global.form.username.placeholder' | translate}}"
-                           ng-model="registerAccount.login" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
-                    <div ng-show="form.login.$dirty && form.login.$invalid">
+				<div class="form-group">
+                    <label translate="global.form.firstName">First Name</label>
+                    <input type="text" class="form-control" name="firstName" placeholder="{{'global.form.firstName.placeholder' | translate}}"
+                           ng-model="registerAccount.firstName" ng-maxlength=50 required>
+                    <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
                         <p class="help-block"
-                               ng-show="form.login.$error.required" translate="register.messages.validate.login.required">
-                            Your login is required.
+                               ng-show="form.firstName.$error.required" translate="global.messages.validate.firstName.required">
+                            Your First Name is required.
                         </p>
                         <p class="help-block"
-                               ng-show="form.login.$error.minlength" translate="register.messages.validate.login.minlength">
-                            Your login is required to be at least 1 character
+                               ng-show="form.firstName.$error.maxlength" translate="global.messages.validate.firstName.maxlength">
+                            Your First Name cannot be longer than 50 characters
+                        </p>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label translate="global.form.lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" placeholder="{{'global.form.lastName.placeholder' | translate}}"
+                           ng-model="registerAccount.lastName" ng-maxlength=50 required>
+                    <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
+                        <p class="help-block"
+                               ng-show="form.lastName.$error.required" translate="global.messages.validate.lastName.required">
+                            Your Last Name is required.
                         </p>
                         <p class="help-block"
-                               ng-show="form.login.$error.maxlength" translate="register.messages.validate.login.maxlength">
-                            Your login cannot be longer than 50 characters
+                               ng-show="form.lastName.$error.maxlength" translate="global.messages.validate.lastName.maxlength">
+                            Your Last Name cannot be longer than 50 characters
                         </p>
-                        <p class="help-block"
-                               ng-show="form.login.$error.pattern" translate="register.messages.validate.login.pattern">
-                            Your login can only contain lower-case letters and digits
-                    </p>
                     </div>
                 </div>
                 <div class="form-group">

@@ -9,9 +9,7 @@ import java.util.List;
 
 public class UserDTO {
 
-    @Pattern(regexp = "^[a-z0-9]*$")
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 5, max = 100)
     private String login;
 
     @NotNull
@@ -52,7 +50,7 @@ public class UserDTO {
     }
 
     public String getLogin() {
-        return login;
+        return login == null ? email : login;
     }
 
     public String getFirstName() {

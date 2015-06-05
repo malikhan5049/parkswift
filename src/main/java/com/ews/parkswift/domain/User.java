@@ -28,10 +28,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Pattern(regexp = "^[a-z0-9]*$")
-    @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false)
+    @Size(max = 100)
+    @Column(length = 100, unique = true)
     private String login;
 
     @JsonIgnore
@@ -91,7 +89,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public String getLogin() {
-        return login;
+        return login == null?email:login;
     }
 
     public void setLogin(String login) {
