@@ -67,7 +67,8 @@ public class AccountResource {
                     ":" +                                  // ":"
                     request.getServerPort();               // "80"
 
-                    mailService.sendActivationEmail(user, baseUrl);
+                    if(!insertUserActivated)
+                    	mailService.sendActivationEmail(user, baseUrl);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
