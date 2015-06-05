@@ -80,6 +80,13 @@ public class UserService {
                return user;
            });
     }
+    
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
+            String langKey, boolean insertUserActivated){
+    	User user = createUserInformation(login, password, firstName, lastName, email, langKey);
+    	user.setActivated(insertUserActivated);
+    	return user;
+    }
 
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
                                       String langKey) {
