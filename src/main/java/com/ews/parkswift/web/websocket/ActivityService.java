@@ -21,7 +21,7 @@ import java.util.Calendar;
 
 import static com.ews.parkswift.config.WebsocketConfiguration.IP_ADDRESS;
 
-@Controller
+//@Controller
 public class ActivityService implements ApplicationListener<SessionDisconnectEvent> {
 
     private static final Logger log = LoggerFactory.getLogger(ActivityService.class);

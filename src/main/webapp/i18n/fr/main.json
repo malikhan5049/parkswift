@@ -5,14 +5,14 @@
         "logged": {
             "message": "Vous êtes connecté en tant que \"{{username}}\"."
         },
-        "question": "Si vous avez des questions à propos de JHipster:",
+        "question": "Si vous avez des questions à propos de ParkSwift:",
         "link": {
-            "homepage": "Page d'accueil de JHipster",
-            "stackoverflow": "JHipster sur Stack Overflow",
-            "bugtracker": "JHipster bug tracker",
-            "contact": "Contactez-nous sur Twitter @java_hipster"
+            "homepage": "Page d'accueil de ParkSwfit",
+            "stackoverflow": "ParkSwfit sur Stack Overflow",
+            "bugtracker": "Park Swfit bug tracker",
+            "contact": "Contactez-nous sur Twitter @parkswift"
         },
-        "like": "Si vous aimez JHipster, donnez nous une étoile sur",
+        "like": "Si vous aimez Park Swfit, donnez nous une étoile sur",
         "github": "Github"
     }
 }

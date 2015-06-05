@@ -1,18 +1,18 @@
 {
     "main": {
-        "title": "Welcome, Java Hipster!",
+        "title": "Welcome",
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
-        "question": "If you have any question on JHipster:",
+        "question": "If you have any question on Park Swift:",
         "link": {
-            "homepage": "JHipster homepage",
-            "stackoverflow": "JHipster on Stack Overflow",
-            "bugtracker": "JHipster bug tracker",
-            "contact": "contact @java_hipster on Twitter"
+            "homepage": "Park Swift homepage",
+            "stackoverflow": "Park Swfit on Stack Overflow",
+            "bugtracker": "Park Swift bug tracker",
+            "contact": "contact @parkswift on Twitter"
         },
-        "like": "If you like JHipster, don't forget to give us a star on",
+        "like": "If you like Park Swift, don't forget to give us a star on",
         "github": "Github"
     }
 }

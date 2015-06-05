@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, Tracker) {
+    .factory('Auth', function Auth($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish){//, Tracker) {
         return {
             login: function (credentials, callback) {
                 var cb = callback || angular.noop;
@@ -13,7 +13,7 @@ angular.module('parkswiftApp')
                         // After the login the language will be changed to
                         // the language selected by the user during his registration
                         $translate.use(account.langKey);
-                        Tracker.sendActivity();
+//                        Tracker.sendActivity();
                         deferred.resolve(data);
                     });
                     return cb();
