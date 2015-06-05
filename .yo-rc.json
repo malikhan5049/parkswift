@@ -1,0 +1,20 @@
+{
+  "generator-jhipster": {
+    "baseName": "ParkSwift",
+    "packageName": "com.ews.parkswift",
+    "packageFolder": "com/ews/parkswift",
+    "authenticationType": "xauth",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "no",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8",
+    "rememberMeKey": "22782eb382dfe6900430479496be5f9aae0ae140"
+  }
+}
