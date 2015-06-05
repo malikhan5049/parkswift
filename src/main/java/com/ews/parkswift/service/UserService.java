@@ -85,6 +85,7 @@ public class UserService {
             String langKey, boolean insertUserActivated){
     	User user = createUserInformation(login, password, firstName, lastName, email, langKey);
     	user.setActivated(insertUserActivated);
+    	user.setActivationKey(null);
     	return user;
     }
 
