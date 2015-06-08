@@ -73,9 +73,9 @@ public class BasicErrorController implements ErrorController {
 		HttpStatus status = getStatus(request);
 		if(request.getHeader("User-Agent")!=null && request.getHeader("User-Agent").indexOf("Mobile") != -1){
 			Map<String, Object> bodyWithMessageStatusContent = new HashMap<String,Object>();
-			bodyWithMessageStatusContent.put("status", HttpStatus.valueOf(Integer.valueOf(body.get("status").toString())).is2xxSuccessful()?"true":"false");
-			bodyWithMessageStatusContent.put("message", body.get("message").toString().split(":")[0]);
-			bodyWithMessageStatusContent.put("content",null);
+			bodyWithMessageStatusContent.put("status", HttpStatus.valueOf(Integer.valueOf(body.get("status").toString())).is2xxSuccessful()?"success":"failed");
+			bodyWithMessageStatusContent.put("failureMessage", body.get("message").toString().split(":")[0]);
+			bodyWithMessageStatusContent.put("path",body.get("path"));
 			body = bodyWithMessageStatusContent;
 		}
 		return new ResponseEntity<Map<String, Object>>(body, status);

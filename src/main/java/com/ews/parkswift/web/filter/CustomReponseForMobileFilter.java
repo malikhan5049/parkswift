@@ -33,15 +33,17 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			chain.doFilter(request, responseWrapper);
 			String responseContent = new String(responseWrapper.getDataStream());
 			HttpStatus httpStatus = HttpStatus.valueOf(responseWrapper.getStatus());
-			String status = httpStatus.is2xxSuccessful()?"true":"false";
-			String message = "";
+			String status = httpStatus.is2xxSuccessful()?"success":"failed";
+			String failureMessage = "";
 			if(httpStatus.is4xxClientError() || httpStatus.is5xxServerError()){
-				message = responseContent;
+				failureMessage = responseContent;
 				responseContent = "";
 			}
+			
+			String path = ((HttpServletRequest)request).getRequestURI();
 	
-			RestResponse fullResponse = new RestResponse(status, message,
-					responseContent);
+			RestResponse fullResponse = new RestResponse(status, failureMessage,
+					responseContent, path);
 			response.setContentLength(-1); // will limit the response to 20 characters if not set to -1
 			response.setContentType("application/json; charset=UTF-8");
 			mapper.writeValue(response.getOutputStream(), fullResponse);
