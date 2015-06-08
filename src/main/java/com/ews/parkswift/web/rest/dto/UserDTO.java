@@ -1,14 +1,14 @@
 package com.ews.parkswift.web.rest.dto;
 
-import org.hibernate.validator.constraints.Email;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.List;
 
-public class UserDTO {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+
+public class UserDTO {
+	
     @Size(min = 5, max = 100)
     private String login;
 

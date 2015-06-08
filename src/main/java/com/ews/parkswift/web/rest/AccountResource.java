@@ -47,6 +47,8 @@ public class AccountResource {
 
     @Inject
     private MailService mailService;
+    
+
 
     /**
      * POST  /register -> register the user.
@@ -55,14 +57,14 @@ public class AccountResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request, Device device) {
+    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
         return userRepository.findOneByLogin(userDTO.getLogin())
             .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
                 .map(user -> new ResponseEntity<>("e-mail address already in use", HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                 	boolean insertUserActivated = false;
-                	if(device.isMobile())
+                	if(request.getHeader("User-Agent")!=null && request.getHeader("User-Agent").indexOf("Mobile") != -1)
                 		insertUserActivated = true;
                     User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
                     userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
@@ -73,7 +75,7 @@ public class AccountResource {
                     ":" +                                  // ":"
                     request.getServerPort();               // "80"
 
-                    if(!device.isMobile())
+                    if(!insertUserActivated)
                     	mailService.sendActivationEmail(user, baseUrl);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })

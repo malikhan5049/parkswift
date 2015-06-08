@@ -9,6 +9,7 @@ import com.ews.parkswift.security.AuthoritiesConstants;
 import com.ews.parkswift.service.MailService;
 import com.ews.parkswift.service.UserService;
 import com.ews.parkswift.web.rest.dto.UserDTO;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.mobile.device.Device;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -25,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -58,6 +61,7 @@ public class AccountResourceTest {
 
     @Inject
     private UserService userService;
+    
 
     @Mock
     private UserService mockUserService;
@@ -147,7 +151,7 @@ public class AccountResourceTest {
     @Transactional
     public void testRegisterValid() throws Exception {
         UserDTO u = new UserDTO(
-            "joe",                  // login
+            null,                  // login
             "password",             // password
             "Joe",                  // firstName
             "Shmoe",                // lastName
@@ -162,7 +166,7 @@ public class AccountResourceTest {
                 .content(TestUtil.convertObjectToJsonBytes(u)))
             .andExpect(status().isCreated());
 
-        Optional<User> user = userRepository.findOneByLogin("joe");
+        Optional<User> user = userRepository.findOneByLogin("joe@example.com");
         assertThat(user.isPresent()).isTrue();
     }
 
@@ -170,11 +174,11 @@ public class AccountResourceTest {
     @Transactional
     public void testRegisterInvalidLogin() throws Exception {
         UserDTO u = new UserDTO(
-            "funky-log!n",          // login <-- invalid
+            null,          // login <-- invalid
             "password",             // password
             "Funky",                // firstName
             "One",                  // lastName
-            "funky@example.com",    // e-mail
+            "funky",    // e-mail <-- invalid
             "en",                   // langKey
             Arrays.asList(AuthoritiesConstants.USER)
         );
@@ -248,41 +252,7 @@ public class AccountResourceTest {
         assertThat(userDup.isPresent()).isFalse();
     }
 
-    @Test
-    @Transactional
-    public void testRegisterDuplicateEmail() throws Exception {
-        // Good
-        UserDTO u = new UserDTO(
-            "john",                 // login
-            "password",             // password
-            "John",                 // firstName
-            "Doe",                  // lastName
-            "john@example.com",     // e-mail
-            "en",                   // langKey
-            Arrays.asList(AuthoritiesConstants.USER)
-        );
-
-        // Duplicate e-mail, different login
-        UserDTO dup = new UserDTO("johnjr", u.getPassword(), u.getLogin(), u.getLastName(),
-            u.getEmail(), u.getLangKey(), u.getRoles());
-
-        // Good user
-        restMvc.perform(
-            post("/api/register")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(u)))
-            .andExpect(status().isCreated());
-
-        // Duplicate e-mail
-        restMvc.perform(
-            post("/api/register")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(dup)))
-            .andExpect(status().is4xxClientError());
-
-        Optional<User> userDup = userRepository.findOneByLogin("johnjr");
-        assertThat(userDup.isPresent()).isFalse();
-    }
+    
 
     @Test
     @Transactional
