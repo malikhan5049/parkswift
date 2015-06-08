@@ -39,7 +39,13 @@ public class XAuthTokenFilter extends GenericFilterBean {
             if (StringUtils.hasText(authToken)) {
                 String username = this.tokenProvider.getUserNameFromToken(authToken);
                 UserDetails details = this.detailsService.loadUserByUsername(username);
-                if (this.tokenProvider.validateToken(authToken, details)) {
+                boolean validateToken = false;
+                HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+                if(httpRequest.getHeader("User-Agent")!=null && httpRequest.getHeader("User-Agent").indexOf("Mobile") != -1)
+                	validateToken = this.tokenProvider.validateTokenMobile(authToken, details);
+                else
+                	validateToken = this.tokenProvider.validateToken(authToken, details);
+                if (validateToken) {
                     UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(details, details.getPassword(), details.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(token);
                 }

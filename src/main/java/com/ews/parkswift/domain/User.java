@@ -47,6 +47,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String lastName;
 
     @Email
+    @NotNull
     @Size(max = 100)
     @Column(length = 100, unique = true)
     private String email;
@@ -161,7 +162,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public String getLangKey() {
-        return langKey;
+        return langKey == null ? "en":langKey;
     }
 
     public void setLangKey(String langKey) {

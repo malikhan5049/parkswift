@@ -12,6 +12,10 @@ public class Token {
         this.token = token;
         this.expires = expires;
     }
+    
+    public Token(String token){
+        this.token = token;
+    }
 
     public String getToken() {
         return token;

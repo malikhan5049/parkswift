@@ -362,6 +362,10 @@
             <artifactId>metrics-spark-reporter</artifactId>
             <version>${metrics-spark-reporter.version}</version>
         </dependency>
+	    <dependency>
+	        <groupId>org.springframework.mobile</groupId>
+	        <artifactId>spring-mobile-device</artifactId>
+	    </dependency>
     </dependencies>
     <build>
         <resources>

@@ -41,7 +41,7 @@ public class UserService {
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
-        userRepository.findOneByActivationKey(key)
+        return userRepository.findOneByActivationKey(key)
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
@@ -50,7 +50,6 @@ public class UserService {
                 log.debug("Activated user: {}", user);
                 return user;
             });
-        return Optional.empty();
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
@@ -84,8 +83,10 @@ public class UserService {
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
             String langKey, boolean insertUserActivated){
     	User user = createUserInformation(login, password, firstName, lastName, email, langKey);
-    	user.setActivated(insertUserActivated);
-    	user.setActivationKey(null);
+    	if(insertUserActivated){
+    		user.setActivated(insertUserActivated);
+    		user.setActivationKey(null);
+    	}
     	return user;
     }
 
@@ -138,6 +139,12 @@ public class UserService {
         User currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).get();
         currentUser.getAuthorities().size(); // eagerly load the association
         return currentUser;
+    }
+    
+    
+    @Transactional(readOnly = true)
+    public User getUser() {
+        return userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).get();
     }
 
     /**

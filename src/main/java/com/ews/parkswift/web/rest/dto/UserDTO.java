@@ -23,6 +23,7 @@ public class UserDTO {
     private String lastName;
 
     @Email
+    @NotNull
     @Size(min = 5, max = 100)
     private String email;
 
