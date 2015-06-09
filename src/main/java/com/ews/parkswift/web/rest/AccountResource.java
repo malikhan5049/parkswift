@@ -161,6 +161,21 @@ public class AccountResource {
         userService.changePassword(password);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    
+    /**
+     * POST  /change_password -> changes the current user's password
+     */
+    @RequestMapping(value = "/account/changepassword",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> changePassword(@RequestBody UserDTO userDto) {
+        if (StringUtils.isEmpty(userDto.getPassword()) || userDto.getPassword().length() < 5 || userDto.getPassword().length() > 50) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        userService.changePassword(userDto.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/account/reset_password/init",
         method = RequestMethod.POST,
