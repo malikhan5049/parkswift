@@ -9,5 +9,10 @@
     <include file="classpath:config/liquibase/changelog/20150610073956_added_entity_LookupHeader.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610074106_added_entity_LookupEntry.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610081902_added_entity_PaypallAccount.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610083154_added_entity_ParkingLocationContactInfo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610084845_added_entity_ParkingLocation.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610085116_added_entity_ParkingLocationFacility.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610085318_added_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610090231_added_entity_Favourite.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,3 +1,5 @@
+"favourite": "Favourite",
+
 {
     "global": {
         "title": "ParkSwift",
@@ -9,6 +11,10 @@
                 "lookupEntry": "LookupEntry",
 				"lookupHeader": "LookupHeader",
 				"paypallAccount": "PaypallAccount",
+				"parkingSpace": "ParkingSpace",
+				"parkingLocationFacility": "ParkingLocationFacility",
+				"parkingLocation": "ParkingLocation",
+				"parkingLocationContactInfo": "ParkingLocationContactInfo",
                 "additionalEntity": "Will add additional entities here (do not translate!)"
             },
             "account": {

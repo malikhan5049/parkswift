@@ -1,0 +1,101 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parkingLocation",
+            "relationshipNameCapitalized": "ParkingLocation",
+            "relationshipFieldName": "parkingLocation",
+            "otherEntityName": "parkingLocation",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "ParkingLocation",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "parkingLocationContactInfo"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "firstName",
+            "fieldType": "String",
+            "fieldNameCapitalized": "FirstName",
+            "fieldNameUnderscored": "first_name",
+            "fieldInJavaBeanMethod": "FirstName",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "lastName",
+            "fieldType": "String",
+            "fieldNameCapitalized": "LastName",
+            "fieldNameUnderscored": "last_name",
+            "fieldInJavaBeanMethod": "LastName",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "phone1",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Phone1",
+            "fieldNameUnderscored": "phone1",
+            "fieldInJavaBeanMethod": "Phone1",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "phone2",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Phone2",
+            "fieldNameUnderscored": "phone2",
+            "fieldInJavaBeanMethod": "Phone2",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "email1",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Email1",
+            "fieldNameUnderscored": "email1",
+            "fieldInJavaBeanMethod": "Email1",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "email2",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Email2",
+            "fieldNameUnderscored": "email2",
+            "fieldInJavaBeanMethod": "Email2",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CreatedAt",
+            "fieldNameUnderscored": "created_at",
+            "fieldInJavaBeanMethod": "CreatedAt",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "modifiedAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "ModifiedAt",
+            "fieldNameUnderscored": "modified_at",
+            "fieldInJavaBeanMethod": "ModifiedAt",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610083154",
+    "dto": "no",
+    "pagination": "no",
+    "validation": false
+}

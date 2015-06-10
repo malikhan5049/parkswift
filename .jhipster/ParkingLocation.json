@@ -1,0 +1,200 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parkingLocationContactInfo",
+            "relationshipNameCapitalized": "ParkingLocationContactInfo",
+            "relationshipFieldName": "parkingLocationContactInfo",
+            "otherEntityName": "parkingLocationContactInfo",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "ParkingLocationContactInfo",
+            "ownerSide": true
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "paypallAccount",
+            "relationshipNameCapitalized": "PaypallAccount",
+            "relationshipFieldName": "paypallAccount",
+            "otherEntityName": "paypallAccount",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "PaypallAccount",
+            "otherEntityField": "email"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "email"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipName": "parkingLocationFacility",
+            "relationshipNameCapitalized": "ParkingLocationFacility",
+            "relationshipFieldName": "parkingLocationFacility",
+            "otherEntityName": "parkingLocationFacility",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ParkingLocationFacility",
+            "otherEntityRelationshipName": "parkingLocation"
+        },
+        {
+            "relationshipId": 5,
+            "relationshipName": "parkingSpace",
+            "relationshipNameCapitalized": "ParkingSpace",
+            "relationshipFieldName": "parkingSpace",
+            "otherEntityName": "parkingSpace",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ParkingSpace",
+            "otherEntityRelationshipName": "parkingLocation"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "propertyType",
+            "fieldType": "String",
+            "fieldNameCapitalized": "PropertyType",
+            "fieldNameUnderscored": "property_type",
+            "fieldInJavaBeanMethod": "PropertyType",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "numberOfSpaces",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "NumberOfSpaces",
+            "fieldNameUnderscored": "number_of_spaces",
+            "fieldInJavaBeanMethod": "NumberOfSpaces",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "addressLine1",
+            "fieldType": "String",
+            "fieldNameCapitalized": "AddressLine1",
+            "fieldNameUnderscored": "address_line1",
+            "fieldInJavaBeanMethod": "AddressLine1",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "addressLine2",
+            "fieldType": "String",
+            "fieldNameCapitalized": "AddressLine2",
+            "fieldNameUnderscored": "address_line2",
+            "fieldInJavaBeanMethod": "AddressLine2",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "city",
+            "fieldType": "String",
+            "fieldNameCapitalized": "City",
+            "fieldNameUnderscored": "city",
+            "fieldInJavaBeanMethod": "City",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "state",
+            "fieldType": "String",
+            "fieldNameCapitalized": "State",
+            "fieldNameUnderscored": "state",
+            "fieldInJavaBeanMethod": "State",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "country",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Country",
+            "fieldNameUnderscored": "country",
+            "fieldInJavaBeanMethod": "Country",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "zipCode",
+            "fieldType": "String",
+            "fieldNameCapitalized": "ZipCode",
+            "fieldNameUnderscored": "zip_code",
+            "fieldInJavaBeanMethod": "ZipCode",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "longitude",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Longitude",
+            "fieldNameUnderscored": "longitude",
+            "fieldInJavaBeanMethod": "Longitude",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "lattitude",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "Lattitude",
+            "fieldNameUnderscored": "lattitude",
+            "fieldInJavaBeanMethod": "Lattitude",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CreatedAt",
+            "fieldNameUnderscored": "created_at",
+            "fieldInJavaBeanMethod": "CreatedAt",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "modifiedAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "ModifiedAt",
+            "fieldNameUnderscored": "modified_at",
+            "fieldInJavaBeanMethod": "ModifiedAt",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": true,
+    "fieldsContainOneToMany": true,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610084845",
+    "dto": "no",
+    "pagination": "no",
+    "validation": true
+}

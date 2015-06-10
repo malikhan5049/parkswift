@@ -1,0 +1,126 @@
+<div>
+
+    <h2 translate="parkswiftApp.parkingLocationFacility.home.title">ParkingLocationFacilitys</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveParkingLocationFacilityModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.parkingLocationFacility.home.createLabel">Create a new ParkingLocationFacility</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveParkingLocationFacilityModal" tabindex="-1" role="dialog" aria-labelledby="myParkingLocationFacilityLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myParkingLocationFacilityLabel" translate="parkswiftApp.parkingLocationFacility.home.createOrEditLabel">Create or edit a ParkingLocationFacility</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="parkingLocationFacility.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationFacility.facility">Facility</label>
+                            <input type="text" class="form-control" name="facility"
+                                   ng-model="parkingLocationFacility.facility" required>
+
+                            <div ng-show="editForm.facility.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.facility.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationFacility.parkingLocation">parkingLocation</label>
+                            <select class="form-control" name="parkingLocation" ng-model="parkingLocationFacility.parkingLocation.id" ng-options="parkingLocation.id as parkingLocation.addressLine1 for parkingLocation in parkinglocations">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteParkingLocationFacilityConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(parkingLocationFacility.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.parkingLocationFacility.delete.question" translate-values="{id: '{{parkingLocationFacility.id}}'}">Are you sure you want to delete this ParkingLocationFacility?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.parkingLocationFacility.facility">Facility</th>
+                    <th translate="parkswiftApp.parkingLocationFacility.parkingLocation">parkingLocation</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="parkingLocationFacility in parkingLocationFacilitys">
+                    <td><a ui-sref="parkingLocationFacilityDetail({id:parkingLocationFacility.id})">{{parkingLocationFacility.id}}</a></td>
+                    <td>{{parkingLocationFacility.facility}}</td>
+                    <td>{{parkingLocationFacility.parkingLocation.addressLine1}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="parkingLocationFacilityDetail({id:parkingLocationFacility.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(parkingLocationFacility.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(parkingLocationFacility.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+{
+    "parkswiftApp": {
+        "parkingLocation" : {
+            "home": {
+                "title": "ParkingLocations",
+                "createLabel": "Créer un nouveau ParkingLocation",
+                "createOrEditLabel": "Créer ou éditer un ParkingLocation"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingLocation {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingLocation"
+            },
+            "propertyType": "PropertyType",
+            "numberOfSpaces": "NumberOfSpaces",
+            "addressLine1": "AddressLine1",
+            "addressLine2": "AddressLine2",
+            "city": "City",
+            "state": "State",
+            "country": "Country",
+            "zipCode": "ZipCode",
+            "longitude": "Longitude",
+            "lattitude": "Lattitude",
+            "createdAt": "CreatedAt",
+            "modifiedAt": "ModifiedAt",
+            "parkingLocationContactInfo": "parkingLocationContactInfo",
+            "paypallAccount": "paypallAccount",
+            "user": "user",
+            "parkingLocationFacility": "parkingLocationFacility",
+            "parkingSpace": "parkingSpace"
+        }
+    }
+}
+

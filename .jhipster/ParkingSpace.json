@@ -1,0 +1,37 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parkingLocation",
+            "relationshipNameCapitalized": "ParkingLocation",
+            "relationshipFieldName": "parkingLocation",
+            "otherEntityName": "parkingLocation",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingLocation",
+            "otherEntityField": "addressLine1"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Description",
+            "fieldNameUnderscored": "description",
+            "fieldInJavaBeanMethod": "Description",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610085318",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": false
+}

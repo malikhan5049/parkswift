@@ -1,0 +1,27 @@
+{
+    "parkswiftApp": {
+        "parkingLocationContactInfo" : {
+            "home": {
+                "title": "ParkingLocationContactInfos",
+                "createLabel": "Créer un nouveau ParkingLocationContactInfo",
+                "createOrEditLabel": "Créer ou éditer un ParkingLocationContactInfo"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingLocationContactInfo {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingLocationContactInfo"
+            },
+            "firstName": "FirstName",
+            "lastName": "LastName",
+            "phone1": "Phone1",
+            "phone2": "Phone2",
+            "email1": "Email1",
+            "email2": "Email2",
+            "createdAt": "CreatedAt",
+            "modifiedAt": "ModifiedAt",
+            "parkingLocation": "parkingLocation"
+        }
+    }
+}
+

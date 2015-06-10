@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "parkingLocationFacility" : {
+            "home": {
+                "title": "ParkingLocationFacilitys",
+                "createLabel": "Créer un nouveau ParkingLocationFacility",
+                "createOrEditLabel": "Créer ou éditer un ParkingLocationFacility"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingLocationFacility {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingLocationFacility"
+            },
+            "facility": "Facility",
+            "parkingLocation": "parkingLocation"
+        }
+    }
+}
+

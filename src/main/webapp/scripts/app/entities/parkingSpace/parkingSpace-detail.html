@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span translate="parkswiftApp.parkingSpace.detail.title">ParkingSpace</span> {{parkingSpace.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingSpace.description">Description</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingSpace.description}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingSpace.parkingLocation">parkingLocation</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingSpace.parkingLocation.addressLine1}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="parkingSpace"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

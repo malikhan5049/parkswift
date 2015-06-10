@@ -1,0 +1,86 @@
+
+<div>
+    <h2><span translate="parkswiftApp.parkingLocationContactInfo.detail.title">ParkingLocationContactInfo</span> {{parkingLocationContactInfo.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.firstName">FirstName</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.firstName}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.lastName">LastName</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.lastName}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.phone1">Phone1</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.phone1}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.phone2">Phone2</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.phone2}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.email1">Email1</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.email1}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.email2">Email2</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.email2}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.createdAt">CreatedAt</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.createdAt}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.parkingLocationContactInfo.modifiedAt">ModifiedAt</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{parkingLocationContactInfo.modifiedAt}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="parkingLocationContactInfo"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

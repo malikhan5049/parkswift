@@ -1,0 +1,19 @@
+{
+    "parkswiftApp": {
+        "parkingSpace" : {
+            "home": {
+                "title": "ParkingSpaces",
+                "createLabel": "Create a new ParkingSpace",
+                "createOrEditLabel": "Create or edit a ParkingSpace"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ParkingSpace {{ id }}?"
+            },
+            "detail": {
+                "title": "ParkingSpace"
+            },
+            "description": "Description",
+            "parkingLocation": "parkingLocation"
+        }
+    }
+}

@@ -1,0 +1,169 @@
+<div>
+
+    <h2 translate="parkswiftApp.parkingLocationContactInfo.home.title">ParkingLocationContactInfos</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveParkingLocationContactInfoModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.parkingLocationContactInfo.home.createLabel">Create a new ParkingLocationContactInfo</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveParkingLocationContactInfoModal" tabindex="-1" role="dialog" aria-labelledby="myParkingLocationContactInfoLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myParkingLocationContactInfoLabel" translate="parkswiftApp.parkingLocationContactInfo.home.createOrEditLabel">Create or edit a ParkingLocationContactInfo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="parkingLocationContactInfo.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.firstName">FirstName</label>
+                            <input type="text" class="form-control" name="firstName"
+                                   ng-model="parkingLocationContactInfo.firstName">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.lastName">LastName</label>
+                            <input type="text" class="form-control" name="lastName"
+                                   ng-model="parkingLocationContactInfo.lastName">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.phone1">Phone1</label>
+                            <input type="text" class="form-control" name="phone1"
+                                   ng-model="parkingLocationContactInfo.phone1">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.phone2">Phone2</label>
+                            <input type="text" class="form-control" name="phone2"
+                                   ng-model="parkingLocationContactInfo.phone2">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.email1">Email1</label>
+                            <input type="text" class="form-control" name="email1"
+                                   ng-model="parkingLocationContactInfo.email1">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.email2">Email2</label>
+                            <input type="text" class="form-control" name="email2"
+                                   ng-model="parkingLocationContactInfo.email2">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.createdAt">CreatedAt</label>
+                            <input type="datetime-local" class="form-control" name="createdAt"
+                                   ng-model="parkingLocationContactInfo.createdAt" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocationContactInfo.modifiedAt">ModifiedAt</label>
+                            <input type="datetime-local" class="form-control" name="modifiedAt"
+                                   ng-model="parkingLocationContactInfo.modifiedAt" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteParkingLocationContactInfoConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(parkingLocationContactInfo.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.parkingLocationContactInfo.delete.question" translate-values="{id: '{{parkingLocationContactInfo.id}}'}">Are you sure you want to delete this ParkingLocationContactInfo?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.firstName">FirstName</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.lastName">LastName</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.phone1">Phone1</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.phone2">Phone2</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.email1">Email1</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.email2">Email2</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.createdAt">CreatedAt</th>
+                    <th translate="parkswiftApp.parkingLocationContactInfo.modifiedAt">ModifiedAt</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="parkingLocationContactInfo in parkingLocationContactInfos">
+                    <td><a ui-sref="parkingLocationContactInfoDetail({id:parkingLocationContactInfo.id})">{{parkingLocationContactInfo.id}}</a></td>
+                    <td>{{parkingLocationContactInfo.firstName}}</td>
+                    <td>{{parkingLocationContactInfo.lastName}}</td>
+                    <td>{{parkingLocationContactInfo.phone1}}</td>
+                    <td>{{parkingLocationContactInfo.phone2}}</td>
+                    <td>{{parkingLocationContactInfo.email1}}</td>
+                    <td>{{parkingLocationContactInfo.email2}}</td>
+                    <td>{{parkingLocationContactInfo.createdAt}}</td>
+                    <td>{{parkingLocationContactInfo.modifiedAt}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="parkingLocationContactInfoDetail({id:parkingLocationContactInfo.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(parkingLocationContactInfo.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(parkingLocationContactInfo.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
