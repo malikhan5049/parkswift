@@ -6,6 +6,9 @@
             "home": "Accueil",
             "entities": {
                 "main": "Entités",
+                "lookupEntry": "LookupEntry",
+				"lookupHeader": "LookupHeader",
+				"paypallAccount": "PaypallAccount",
                 "additionalEntity": "Will add additional entities here (do not translate!)"
             },
             "account": {
