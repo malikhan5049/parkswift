@@ -1,0 +1,21 @@
+{
+    "parkswiftApp": {
+        "lookupEntry" : {
+            "home": {
+                "title": "LookupEntrys",
+                "createLabel": "Créer un nouveau LookupEntry",
+                "createOrEditLabel": "Créer ou éditer un LookupEntry"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le LookupEntry {{ id }} ?"
+            },
+            "detail": {
+                "title": "LookupEntry"
+            },
+            "value": "Value",
+            "description": "Description",
+            "lookupHeader": "lookupHeader"
+        }
+    }
+}
+

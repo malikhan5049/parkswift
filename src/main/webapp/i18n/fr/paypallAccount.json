@@ -1,0 +1,21 @@
+{
+    "parkswiftApp": {
+        "paypallAccount" : {
+            "home": {
+                "title": "PaypallAccounts",
+                "createLabel": "Créer un nouveau PaypallAccount",
+                "createOrEditLabel": "Créer ou éditer un PaypallAccount"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le PaypallAccount {{ id }} ?"
+            },
+            "detail": {
+                "title": "PaypallAccount"
+            },
+            "email": "Email",
+            "isDefault": "IsDefault",
+            "user": "user"
+        }
+    }
+}
+

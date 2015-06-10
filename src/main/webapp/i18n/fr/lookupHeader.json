@@ -1,0 +1,21 @@
+{
+    "parkswiftApp": {
+        "lookupHeader" : {
+            "home": {
+                "title": "LookupHeaders",
+                "createLabel": "Créer un nouveau LookupHeader",
+                "createOrEditLabel": "Créer ou éditer un LookupHeader"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le LookupHeader {{ id }} ?"
+            },
+            "detail": {
+                "title": "LookupHeader"
+            },
+            "code": "Code",
+            "description": "Description",
+            "lookupEntry": "lookupEntry"
+        }
+    }
+}
+
