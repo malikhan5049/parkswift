@@ -1,6 +1,6 @@
 package com.ews.parkswift.repository;
 
-import com.ews.parkswift.domain.LookupHeader;
+import com.ews.parkswift.domain.LookupHeader; 
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;

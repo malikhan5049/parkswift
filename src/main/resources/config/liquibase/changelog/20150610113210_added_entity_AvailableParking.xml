@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity AvailableParking.
+    -->
+    <changeSet id="20150610113210" author="jhipster">
+        <createTable tableName="AVAILABLEPARKING">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_start" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_end" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="time_start" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="time_end" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="repeat_basis" type="varchar(255)"/>
+            <column name="repeat_occurrences" type="integer"/>
+            <column name="description" type="varchar(255)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="modified_at" type="timestamp"/>
+            <column name="parkingspace_id" type="bigint"/>
+        </createTable>
+        <dropDefaultValue tableName="AVAILABLEPARKING" columnName="time_start" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="AVAILABLEPARKING" columnName="time_end" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="AVAILABLEPARKING" columnName="created_at" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="AVAILABLEPARKING" columnName="modified_at" columnDataType="datetime"/>
+
+        
+        <addForeignKeyConstraint baseColumnNames="parkingspace_id"
+                                 baseTableName="AVAILABLEPARKING"
+                                 constraintName="fk_availableparking_parkingspace_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="PARKINGSPACE"/>
+
+    </changeSet>
+</databaseChangeLog>

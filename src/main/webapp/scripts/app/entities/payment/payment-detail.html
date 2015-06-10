@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span translate="parkswiftApp.payment.detail.title">Payment</span> {{payment.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.amountPaid">AmountPaid</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.amountPaid}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.transactionDateTime">TransactionDateTime</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.transactionDateTime}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.status">Status</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.status}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.paymentResponse">PaymentResponse</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.paymentResponse}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.createdAt">CreatedAt</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.createdAt}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.payment.user">user</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{payment.user.email}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="payment"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

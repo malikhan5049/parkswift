@@ -1,0 +1,40 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parkingSpace",
+            "relationshipNameCapitalized": "ParkingSpace",
+            "relationshipFieldName": "parkingSpace",
+            "otherEntityName": "parkingSpace",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingSpace",
+            "otherEntityField": "description"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "image",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Image",
+            "fieldNameUnderscored": "image",
+            "fieldInJavaBeanMethod": "Image",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610112522",
+    "dto": "no",
+    "pagination": "no",
+    "validation": true
+}

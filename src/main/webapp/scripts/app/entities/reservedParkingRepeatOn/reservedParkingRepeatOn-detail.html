@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span translate="parkswiftApp.reservedParkingRepeatOn.detail.title">ReservedParkingRepeatOn</span> {{reservedParkingRepeatOn.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.reservedParkingRepeatOn.dateOfMonth">DateOfMonth</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{reservedParkingRepeatOn.dateOfMonth}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.reservedParkingRepeatOn.dayOfWeek">DayOfWeek</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{reservedParkingRepeatOn.dayOfWeek}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.reservedParkingRepeatOn.reservedParking">reservedParking</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{reservedParkingRepeatOn.reservedParking.description}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="reservedParkingRepeatOn"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

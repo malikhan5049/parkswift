@@ -1,0 +1,21 @@
+{
+    "parkswiftApp": {
+        "parkingSpacePriceEntry" : {
+            "home": {
+                "title": "ParkingSpacePriceEntrys",
+                "createLabel": "Créer un nouveau ParkingSpacePriceEntry",
+                "createOrEditLabel": "Créer ou éditer un ParkingSpacePriceEntry"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingSpacePriceEntry {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingSpacePriceEntry"
+            },
+            "type": "Type",
+            "price": "Price",
+            "parkingSpace": "parkingSpace"
+        }
+    }
+}
+

@@ -1,0 +1,126 @@
+<div>
+
+    <h2 translate="parkswiftApp.parkingSpaceImage.home.title">ParkingSpaceImages</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveParkingSpaceImageModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.parkingSpaceImage.home.createLabel">Create a new ParkingSpaceImage</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveParkingSpaceImageModal" tabindex="-1" role="dialog" aria-labelledby="myParkingSpaceImageLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myParkingSpaceImageLabel" translate="parkswiftApp.parkingSpaceImage.home.createOrEditLabel">Create or edit a ParkingSpaceImage</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="parkingSpaceImage.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingSpaceImage.image">Image</label>
+                            <input type="text" class="form-control" name="image"
+                                   ng-model="parkingSpaceImage.image" required>
+
+                            <div ng-show="editForm.image.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.image.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingSpaceImage.parkingSpace">parkingSpace</label>
+                            <select class="form-control" name="parkingSpace" ng-model="parkingSpaceImage.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.description for parkingSpace in parkingspaces">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteParkingSpaceImageConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(parkingSpaceImage.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.parkingSpaceImage.delete.question" translate-values="{id: '{{parkingSpaceImage.id}}'}">Are you sure you want to delete this ParkingSpaceImage?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.parkingSpaceImage.image">Image</th>
+                    <th translate="parkswiftApp.parkingSpaceImage.parkingSpace">parkingSpace</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="parkingSpaceImage in parkingSpaceImages">
+                    <td><a ui-sref="parkingSpaceImageDetail({id:parkingSpaceImage.id})">{{parkingSpaceImage.id}}</a></td>
+                    <td>{{parkingSpaceImage.image}}</td>
+                    <td>{{parkingSpaceImage.parkingSpace.description}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="parkingSpaceImageDetail({id:parkingSpaceImage.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(parkingSpaceImage.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(parkingSpaceImage.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

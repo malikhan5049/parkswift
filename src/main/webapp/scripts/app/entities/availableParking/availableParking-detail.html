@@ -1,0 +1,102 @@
+
+<div>
+    <h2><span translate="parkswiftApp.availableParking.detail.title">AvailableParking</span> {{availableParking.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.dateStart">DateStart</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.dateStart}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.dateEnd">DateEnd</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.dateEnd}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.timeStart">TimeStart</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.timeStart}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.timeEnd">TimeEnd</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.timeEnd}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.repeatBasis">RepeatBasis</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.repeatBasis}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.repeatOccurrences">RepeatOccurrences</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.repeatOccurrences}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.description">Description</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.description}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.createdAt">CreatedAt</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.createdAt}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.modifiedAt">ModifiedAt</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.modifiedAt}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParking.parkingSpace">parkingSpace</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParking.parkingSpace.description}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="availableParking"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

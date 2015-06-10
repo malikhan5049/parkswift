@@ -1,0 +1,86 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "email"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "reservedParking",
+            "relationshipNameCapitalized": "ReservedParking",
+            "relationshipFieldName": "reservedParking",
+            "otherEntityName": "reservedParking",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "ReservedParking",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "amountPaid",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "AmountPaid",
+            "fieldNameUnderscored": "amount_paid",
+            "fieldInJavaBeanMethod": "AmountPaid",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "transactionDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TransactionDateTime",
+            "fieldNameUnderscored": "transaction_date_time",
+            "fieldInJavaBeanMethod": "TransactionDateTime",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Status",
+            "fieldNameUnderscored": "status",
+            "fieldInJavaBeanMethod": "Status",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "paymentResponse",
+            "fieldType": "String",
+            "fieldNameCapitalized": "PaymentResponse",
+            "fieldNameUnderscored": "payment_response",
+            "fieldInJavaBeanMethod": "PaymentResponse",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CreatedAt",
+            "fieldNameUnderscored": "created_at",
+            "fieldInJavaBeanMethod": "CreatedAt",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": true,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610124248",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

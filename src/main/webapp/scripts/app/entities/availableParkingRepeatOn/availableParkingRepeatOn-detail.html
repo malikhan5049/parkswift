@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span translate="parkswiftApp.availableParkingRepeatOn.detail.title">AvailableParkingRepeatOn</span> {{availableParkingRepeatOn.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParkingRepeatOn.dayOfMonth">DayOfMonth</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParkingRepeatOn.dayOfMonth}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParkingRepeatOn.dateOfWeek">DateOfWeek</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParkingRepeatOn.dateOfWeek}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.availableParkingRepeatOn.availableParking">availableParking</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{availableParkingRepeatOn.availableParking.description}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="availableParkingRepeatOn"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

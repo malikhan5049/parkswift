@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "favourite" : {
+            "home": {
+                "title": "Favourites",
+                "createLabel": "Créer un nouveau Favourite",
+                "createOrEditLabel": "Créer ou éditer un Favourite"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Favourite {{ id }} ?"
+            },
+            "detail": {
+                "title": "Favourite"
+            },
+            "user": "user",
+            "parkingSpace": "parkingSpace"
+        }
+    }
+}
+

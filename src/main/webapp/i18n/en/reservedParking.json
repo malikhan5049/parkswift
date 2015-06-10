@@ -1,0 +1,32 @@
+{
+    "parkswiftApp": {
+        "reservedParking" : {
+            "home": {
+                "title": "ReservedParkings",
+                "createLabel": "Create a new ReservedParking",
+                "createOrEditLabel": "Create or edit a ReservedParking"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ReservedParking {{ id }}?"
+            },
+            "detail": {
+                "title": "ReservedParking"
+            },
+            "description": "Description",
+            "dateStart": "DateStart",
+            "dateEnd": "DateEnd",
+            "timeStart": "TimeStart",
+            "timeEnd": "TimeEnd",
+            "repeatBasis": "RepeatBasis",
+            "repeatOccurrences": "RepeatOccurrences",
+            "status": "Status",
+            "reservedOn": "ReservedOn",
+            "parentId": "ParentId",
+            "createdAt": "CreatedAt",
+            "modifiedAt": "ModifiedAt",
+            "parkingSpace": "parkingSpace",
+            "reservedParkingRepeatOn": "reservedParkingRepeatOn",
+            "payment": "payment"
+        }
+    }
+}

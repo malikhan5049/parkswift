@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity ParkingSpacePriceEntry.
+    -->
+    <changeSet id="20150610112633" author="jhipster">
+        <createTable tableName="PARKINGSPACEPRICEENTRY">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" type="decimal(10,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="parkingspace_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="parkingspace_id"
+                                 baseTableName="PARKINGSPACEPRICEENTRY"
+                                 constraintName="fk_parkingspacepriceentry_parkingspace_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="PARKINGSPACE"/>
+
+    </changeSet>
+</databaseChangeLog>

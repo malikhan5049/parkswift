@@ -1,0 +1,28 @@
+{
+    "parkswiftApp": {
+        "availableParking" : {
+            "home": {
+                "title": "AvailableParkings",
+                "createLabel": "Create a new AvailableParking",
+                "createOrEditLabel": "Create or edit a AvailableParking"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete AvailableParking {{ id }}?"
+            },
+            "detail": {
+                "title": "AvailableParking"
+            },
+            "dateStart": "DateStart",
+            "dateEnd": "DateEnd",
+            "timeStart": "TimeStart",
+            "timeEnd": "TimeEnd",
+            "repeatBasis": "RepeatBasis",
+            "repeatOccurrences": "RepeatOccurrences",
+            "description": "Description",
+            "createdAt": "CreatedAt",
+            "modifiedAt": "ModifiedAt",
+            "parkingSpace": "parkingSpace",
+            "availableParkingRepeatOn": "availableParkingRepeatOn"
+        }
+    }
+}

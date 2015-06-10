@@ -1,0 +1,119 @@
+<div>
+
+    <h2 translate="parkswiftApp.favourite.home.title">Favourites</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveFavouriteModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.favourite.home.createLabel">Create a new Favourite</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveFavouriteModal" tabindex="-1" role="dialog" aria-labelledby="myFavouriteLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myFavouriteLabel" translate="parkswiftApp.favourite.home.createOrEditLabel">Create or edit a Favourite</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="favourite.id" readonly>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.favourite.user">user</label>
+                            <select class="form-control" name="user" ng-model="favourite.user.id" ng-options="user.id as user.email for user in users">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.favourite.parkingSpace">parkingSpace</label>
+                            <select class="form-control" name="parkingSpace" ng-model="favourite.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.description for parkingSpace in parkingspaces">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteFavouriteConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(favourite.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.favourite.delete.question" translate-values="{id: '{{favourite.id}}'}">Are you sure you want to delete this Favourite?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.favourite.user">user</th>
+                    <th translate="parkswiftApp.favourite.parkingSpace">parkingSpace</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="favourite in favourites">
+                    <td><a ui-sref="favouriteDetail({id:favourite.id})">{{favourite.id}}</a></td>
+                    <td>{{favourite.user.email}}</td>
+                    <td>{{favourite.parkingSpace.description}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="favouriteDetail({id:favourite.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(favourite.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(favourite.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

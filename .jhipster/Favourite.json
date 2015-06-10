@@ -1,0 +1,37 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "email"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "parkingSpace",
+            "relationshipNameCapitalized": "ParkingSpace",
+            "relationshipFieldName": "parkingSpace",
+            "otherEntityName": "parkingSpace",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingSpace",
+            "otherEntityField": "description"
+        }
+    ],
+    "fields": [],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610090231",
+    "dto": "no",
+    "pagination": "no",
+    "validation": false
+}

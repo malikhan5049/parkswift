@@ -1,0 +1,46 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "availableParking",
+            "relationshipNameCapitalized": "AvailableParking",
+            "relationshipFieldName": "availableParking",
+            "otherEntityName": "availableParking",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "AvailableParking",
+            "otherEntityField": "description"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "dayOfMonth",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "DayOfMonth",
+            "fieldNameUnderscored": "day_of_month",
+            "fieldInJavaBeanMethod": "DayOfMonth",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "dateOfWeek",
+            "fieldType": "String",
+            "fieldNameCapitalized": "DateOfWeek",
+            "fieldNameUnderscored": "date_of_week",
+            "fieldInJavaBeanMethod": "DateOfWeek",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610113355",
+    "dto": "no",
+    "pagination": "no",
+    "validation": false
+}

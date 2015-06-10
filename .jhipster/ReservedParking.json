@@ -1,0 +1,169 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parkingSpace",
+            "relationshipNameCapitalized": "ParkingSpace",
+            "relationshipFieldName": "parkingSpace",
+            "otherEntityName": "parkingSpace",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingSpace",
+            "otherEntityField": "description"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "reservedParkingRepeatOn",
+            "relationshipNameCapitalized": "ReservedParkingRepeatOn",
+            "relationshipFieldName": "reservedParkingRepeatOn",
+            "otherEntityName": "reservedParkingRepeatOn",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ReservedParkingRepeatOn",
+            "otherEntityRelationshipName": "reservedParking"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "payment",
+            "relationshipNameCapitalized": "Payment",
+            "relationshipFieldName": "payment",
+            "otherEntityName": "payment",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "Payment",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "reservedParking"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Description",
+            "fieldNameUnderscored": "description",
+            "fieldInJavaBeanMethod": "Description",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "dateStart",
+            "fieldType": "LocalDate",
+            "fieldNameCapitalized": "DateStart",
+            "fieldNameUnderscored": "date_start",
+            "fieldInJavaBeanMethod": "DateStart",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "dateEnd",
+            "fieldType": "LocalDate",
+            "fieldNameCapitalized": "DateEnd",
+            "fieldNameUnderscored": "date_end",
+            "fieldInJavaBeanMethod": "DateEnd",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "timeStart",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TimeStart",
+            "fieldNameUnderscored": "time_start",
+            "fieldInJavaBeanMethod": "TimeStart",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "timeEnd",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TimeEnd",
+            "fieldNameUnderscored": "time_end",
+            "fieldInJavaBeanMethod": "TimeEnd",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "repeatBasis",
+            "fieldType": "String",
+            "fieldNameCapitalized": "RepeatBasis",
+            "fieldNameUnderscored": "repeat_basis",
+            "fieldInJavaBeanMethod": "RepeatBasis",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "repeatOccurrences",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "RepeatOccurrences",
+            "fieldNameUnderscored": "repeat_occurrences",
+            "fieldInJavaBeanMethod": "RepeatOccurrences",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Status",
+            "fieldNameUnderscored": "status",
+            "fieldInJavaBeanMethod": "Status",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "reservedOn",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "ReservedOn",
+            "fieldNameUnderscored": "reserved_on",
+            "fieldInJavaBeanMethod": "ReservedOn",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "parentId",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "ParentId",
+            "fieldNameUnderscored": "parent_id",
+            "fieldInJavaBeanMethod": "ParentId",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CreatedAt",
+            "fieldNameUnderscored": "created_at",
+            "fieldInJavaBeanMethod": "CreatedAt",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "modifiedAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "ModifiedAt",
+            "fieldNameUnderscored": "modified_at",
+            "fieldInJavaBeanMethod": "ModifiedAt",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": true,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150610124825",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

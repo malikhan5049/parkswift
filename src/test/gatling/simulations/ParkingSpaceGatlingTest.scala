@@ -70,7 +70,7 @@ class ParkingSpaceGatlingTest extends Simulation {
             .exec(http("Create new parkingSpace")
             .put("/api/parkingSpaces")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "description":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "description":"SAMPLE_TEXT", "partOfBatch":null, "batchNumber":"0", "fullReserved":null, "createdAt":"2020-01-01T00:00:00.000Z", "modifiedAt":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_parkingSpace_url")))
             .pause(10)

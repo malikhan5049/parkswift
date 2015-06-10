@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity Payment.
+    -->
+    <changeSet id="20150610124248" author="jhipster">
+        <createTable tableName="PAYMENT">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount_paid" type="decimal(10,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="transaction_date_time" type="timestamp"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="payment_response" type="varchar(255)"/>
+            <column name="created_at" type="timestamp"/>
+            <column name="user_id" type="bigint"/>
+            <column name="reservedparking_id" type="bigint"/>
+        </createTable>
+        <dropDefaultValue tableName="PAYMENT" columnName="transaction_date_time" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="PAYMENT" columnName="created_at" columnDataType="datetime"/>
+
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="PAYMENT"
+                                 constraintName="fk_payment_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="JHI_USER"/>
+
+        <addForeignKeyConstraint baseColumnNames="reservedparking_id"
+                                 baseTableName="PAYMENT"
+                                 constraintName="fk_payment_reservedparking_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="RESERVEDPARKING"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -12,7 +12,17 @@
     <include file="classpath:config/liquibase/changelog/20150610083154_added_entity_ParkingLocationContactInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610084845_added_entity_ParkingLocation.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610085116_added_entity_ParkingLocationFacility.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150610085318_added_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610112244_added_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610090231_added_entity_Favourite.xml" relativeToChangelogFile="false"/>
+    
+    <include file="classpath:config/liquibase/changelog/20150610112522_added_entity_ParkingSpaceImage.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610112633_added_entity_ParkingSpacePriceEntry.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610112750_added_entity_ParkingSpaceVehicleType.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610113210_added_entity_AvailableParking.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610113355_added_entity_AvailableParkingRepeatOn.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610124825_added_entity_ReservedParking.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610124248_added_entity_Payment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610114301_added_entity_ReservedParkingRepeatOn.xml" relativeToChangelogFile="false"/>
+
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

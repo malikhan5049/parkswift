@@ -9,6 +9,56 @@
             "relationshipType": "many-to-one",
             "otherEntityNameCapitalized": "ParkingLocation",
             "otherEntityField": "addressLine1"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "parkingSpaceVehicleType",
+            "relationshipNameCapitalized": "ParkingSpaceVehicleType",
+            "relationshipFieldName": "parkingSpaceVehicleType",
+            "otherEntityName": "parkingSpaceVehicleType",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ParkingSpaceVehicleType",
+            "otherEntityRelationshipName": "parkingSpace"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "parkingSpacePriceEntry",
+            "relationshipNameCapitalized": "ParkingSpacePriceEntry",
+            "relationshipFieldName": "parkingSpacePriceEntry",
+            "otherEntityName": "parkingSpacePriceEntry",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ParkingSpacePriceEntry",
+            "otherEntityRelationshipName": "parkingSpace"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipName": "parkingSpaceImage",
+            "relationshipNameCapitalized": "ParkingSpaceImage",
+            "relationshipFieldName": "parkingSpaceImage",
+            "otherEntityName": "parkingSpaceImage",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ParkingSpaceImage",
+            "otherEntityRelationshipName": "parkingSpace"
+        },
+        {
+            "relationshipId": 5,
+            "relationshipName": "reservedParking",
+            "relationshipNameCapitalized": "ReservedParking",
+            "relationshipFieldName": "reservedParking",
+            "otherEntityName": "reservedParking",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "ReservedParking",
+            "otherEntityRelationshipName": "parkingSpace"
+        },
+        {
+            "relationshipId": 6,
+            "relationshipName": "availableParking",
+            "relationshipNameCapitalized": "AvailableParking",
+            "relationshipFieldName": "availableParking",
+            "otherEntityName": "availableParking",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "AvailableParking",
+            "otherEntityRelationshipName": "parkingSpace"
         }
     ],
     "fields": [
@@ -20,17 +70,62 @@
             "fieldNameUnderscored": "description",
             "fieldInJavaBeanMethod": "Description",
             "fieldValidate": false
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "partOfBatch",
+            "fieldType": "Boolean",
+            "fieldNameCapitalized": "PartOfBatch",
+            "fieldNameUnderscored": "part_of_batch",
+            "fieldInJavaBeanMethod": "PartOfBatch",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "batchNumber",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "BatchNumber",
+            "fieldNameUnderscored": "batch_number",
+            "fieldInJavaBeanMethod": "BatchNumber",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "fullReserved",
+            "fieldType": "Boolean",
+            "fieldNameCapitalized": "FullReserved",
+            "fieldNameUnderscored": "full_reserved",
+            "fieldInJavaBeanMethod": "FullReserved",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "createdAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CreatedAt",
+            "fieldNameUnderscored": "created_at",
+            "fieldInJavaBeanMethod": "CreatedAt",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "modifiedAt",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "ModifiedAt",
+            "fieldNameUnderscored": "modified_at",
+            "fieldInJavaBeanMethod": "ModifiedAt",
+            "fieldValidate": false
         }
     ],
     "fieldsContainOwnerManyToMany": false,
     "fieldsContainOwnerOneToOne": false,
-    "fieldsContainOneToMany": false,
+    "fieldsContainOneToMany": true,
     "fieldsContainLocalDate": false,
-    "fieldsContainCustomTime": false,
+    "fieldsContainCustomTime": true,
     "fieldsContainBigDecimal": false,
-    "fieldsContainDateTime": false,
+    "fieldsContainDateTime": true,
     "fieldsContainDate": false,
-    "changelogDate": "20150610085318",
+    "changelogDate": "20150610112244",
     "dto": "no",
     "pagination": "infinite-scroll",
     "validation": false

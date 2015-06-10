@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "availableParkingRepeatOn" : {
+            "home": {
+                "title": "AvailableParkingRepeatOns",
+                "createLabel": "Create a new AvailableParkingRepeatOn",
+                "createOrEditLabel": "Create or edit a AvailableParkingRepeatOn"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete AvailableParkingRepeatOn {{ id }}?"
+            },
+            "detail": {
+                "title": "AvailableParkingRepeatOn"
+            },
+            "dayOfMonth": "DayOfMonth",
+            "dateOfWeek": "DateOfWeek",
+            "availableParking": "availableParking"
+        }
+    }
+}

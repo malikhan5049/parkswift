@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .controller('ParkingSpaceController', function ($scope, ParkingSpace, ParkingLocation, ParseLinks) {
+    .controller('ParkingSpaceController', function ($scope, ParkingSpace, ParkingLocation, ParkingSpaceVehicleType, ParkingSpacePriceEntry, ParkingSpaceImage, ReservedParking, AvailableParking, ParseLinks) {
         $scope.parkingSpaces = [];
         $scope.parkinglocations = ParkingLocation.query();
+        $scope.parkingspacevehicletypes = ParkingSpaceVehicleType.query();
+        $scope.parkingspacepriceentrys = ParkingSpacePriceEntry.query();
+        $scope.parkingspaceimages = ParkingSpaceImage.query();
+        $scope.reservedparkings = ReservedParking.query();
+        $scope.availableparkings = AvailableParking.query();
         $scope.page = 1;
         $scope.loadAll = function() {
             ParkingSpace.query({page: $scope.page, per_page: 20}, function(result, headers) {
@@ -68,7 +73,7 @@ angular.module('parkswiftApp')
         };
 
         $scope.clear = function () {
-            $scope.parkingSpace = {description: null, id: null};
+            $scope.parkingSpace = {description: null, partOfBatch: null, batchNumber: null, fullReserved: null, createdAt: null, modifiedAt: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

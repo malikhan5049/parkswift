@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "reservedParkingRepeatOn" : {
+            "home": {
+                "title": "ReservedParkingRepeatOns",
+                "createLabel": "Create a new ReservedParkingRepeatOn",
+                "createOrEditLabel": "Create or edit a ReservedParkingRepeatOn"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete ReservedParkingRepeatOn {{ id }}?"
+            },
+            "detail": {
+                "title": "ReservedParkingRepeatOn"
+            },
+            "dateOfMonth": "DateOfMonth",
+            "dayOfWeek": "DayOfWeek",
+            "reservedParking": "reservedParking"
+        }
+    }
+}

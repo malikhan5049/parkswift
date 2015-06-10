@@ -1,0 +1,240 @@
+<div>
+
+    <h2 translate="parkswiftApp.reservedParking.home.title">ReservedParkings</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveReservedParkingModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.reservedParking.home.createLabel">Create a new ReservedParking</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveReservedParkingModal" tabindex="-1" role="dialog" aria-labelledby="myReservedParkingLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myReservedParkingLabel" translate="parkswiftApp.reservedParking.home.createOrEditLabel">Create or edit a ReservedParking</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="reservedParking.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.description">Description</label>
+                            <input type="text" class="form-control" name="description"
+                                   ng-model="reservedParking.description">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.dateStart">DateStart</label>
+                            <input type="date" class="form-control" name="dateStart"
+                                   ng-model="reservedParking.dateStart" required>
+
+                            <div ng-show="editForm.dateStart.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.dateStart.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.dateEnd">DateEnd</label>
+                            <input type="date" class="form-control" name="dateEnd"
+                                   ng-model="reservedParking.dateEnd" required>
+
+                            <div ng-show="editForm.dateEnd.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.dateEnd.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.timeStart">TimeStart</label>
+                            <input type="datetime-local" class="form-control" name="timeStart"
+                                   ng-model="reservedParking.timeStart" ng-model-options="{timezone: 'UTC'}" required>
+
+                            <div ng-show="editForm.timeStart.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.timeStart.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.timeStart.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                    This field should be a date and time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.timeEnd">TimeEnd</label>
+                            <input type="datetime-local" class="form-control" name="timeEnd"
+                                   ng-model="reservedParking.timeEnd" ng-model-options="{timezone: 'UTC'}" required>
+
+                            <div ng-show="editForm.timeEnd.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.timeEnd.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.timeEnd.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                    This field should be a date and time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.repeatBasis">RepeatBasis</label>
+                            <input type="text" class="form-control" name="repeatBasis"
+                                   ng-model="reservedParking.repeatBasis">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.repeatOccurrences">RepeatOccurrences</label>
+                            <input type="number" class="form-control" name="repeatOccurrences"
+                                   ng-model="reservedParking.repeatOccurrences">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.status">Status</label>
+                            <input type="text" class="form-control" name="status"
+                                   ng-model="reservedParking.status">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.reservedOn">ReservedOn</label>
+                            <input type="datetime-local" class="form-control" name="reservedOn"
+                                   ng-model="reservedParking.reservedOn" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.parentId">ParentId</label>
+                            <input type="number" class="form-control" name="parentId"
+                                   ng-model="reservedParking.parentId">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.createdAt">CreatedAt</label>
+                            <input type="datetime-local" class="form-control" name="createdAt"
+                                   ng-model="reservedParking.createdAt" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.modifiedAt">ModifiedAt</label>
+                            <input type="datetime-local" class="form-control" name="modifiedAt"
+                                   ng-model="reservedParking.modifiedAt" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.reservedParking.parkingSpace">parkingSpace</label>
+                            <select class="form-control" name="parkingSpace" ng-model="reservedParking.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.description for parkingSpace in parkingspaces">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteReservedParkingConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(reservedParking.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.reservedParking.delete.question" translate-values="{id: '{{reservedParking.id}}'}">Are you sure you want to delete this ReservedParking?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.reservedParking.description">Description</th>
+                    <th translate="parkswiftApp.reservedParking.dateStart">DateStart</th>
+                    <th translate="parkswiftApp.reservedParking.dateEnd">DateEnd</th>
+                    <th translate="parkswiftApp.reservedParking.timeStart">TimeStart</th>
+                    <th translate="parkswiftApp.reservedParking.timeEnd">TimeEnd</th>
+                    <th translate="parkswiftApp.reservedParking.repeatBasis">RepeatBasis</th>
+                    <th translate="parkswiftApp.reservedParking.repeatOccurrences">RepeatOccurrences</th>
+                    <th translate="parkswiftApp.reservedParking.status">Status</th>
+                    <th translate="parkswiftApp.reservedParking.reservedOn">ReservedOn</th>
+                    <th translate="parkswiftApp.reservedParking.parentId">ParentId</th>
+                    <th translate="parkswiftApp.reservedParking.createdAt">CreatedAt</th>
+                    <th translate="parkswiftApp.reservedParking.modifiedAt">ModifiedAt</th>
+                    <th translate="parkswiftApp.reservedParking.parkingSpace">parkingSpace</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="reservedParking in reservedParkings">
+                    <td><a ui-sref="reservedParkingDetail({id:reservedParking.id})">{{reservedParking.id}}</a></td>
+                    <td>{{reservedParking.description}}</td>
+                    <td>{{reservedParking.dateStart}}</td>
+                    <td>{{reservedParking.dateEnd}}</td>
+                    <td>{{reservedParking.timeStart}}</td>
+                    <td>{{reservedParking.timeEnd}}</td>
+                    <td>{{reservedParking.repeatBasis}}</td>
+                    <td>{{reservedParking.repeatOccurrences}}</td>
+                    <td>{{reservedParking.status}}</td>
+                    <td>{{reservedParking.reservedOn}}</td>
+                    <td>{{reservedParking.parentId}}</td>
+                    <td>{{reservedParking.createdAt}}</td>
+                    <td>{{reservedParking.modifiedAt}}</td>
+                    <td>{{reservedParking.parkingSpace.description}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="reservedParkingDetail({id:reservedParking.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(reservedParking.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(reservedParking.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

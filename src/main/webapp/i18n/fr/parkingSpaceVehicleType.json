@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "parkingSpaceVehicleType" : {
+            "home": {
+                "title": "ParkingSpaceVehicleTypes",
+                "createLabel": "Créer un nouveau ParkingSpaceVehicleType",
+                "createOrEditLabel": "Créer ou éditer un ParkingSpaceVehicleType"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingSpaceVehicleType {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingSpaceVehicleType"
+            },
+            "type": "Type",
+            "parkingSpace": "parkingSpace"
+        }
+    }
+}
+

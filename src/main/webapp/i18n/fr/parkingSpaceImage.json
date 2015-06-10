@@ -1,0 +1,20 @@
+{
+    "parkswiftApp": {
+        "parkingSpaceImage" : {
+            "home": {
+                "title": "ParkingSpaceImages",
+                "createLabel": "Créer un nouveau ParkingSpaceImage",
+                "createOrEditLabel": "Créer ou éditer un ParkingSpaceImage"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le ParkingSpaceImage {{ id }} ?"
+            },
+            "detail": {
+                "title": "ParkingSpaceImage"
+            },
+            "image": "Image",
+            "parkingSpace": "parkingSpace"
+        }
+    }
+}
+

@@ -1,5 +1,3 @@
-"favourite": "Favourite",
-
 {
     "global": {
         "title": "ParkSwift",
@@ -15,6 +13,15 @@
 				"parkingLocationFacility": "ParkingLocationFacility",
 				"parkingLocation": "ParkingLocation",
 				"parkingLocationContactInfo": "ParkingLocationContactInfo",
+				"favourite": "Favourite",
+				"reservedParkingRepeatOn": "ReservedParkingRepeatOn",
+				"reservedParking": "ReservedParking",
+				"payment": "Payment",
+				"availableParkingRepeatOn": "AvailableParkingRepeatOn",
+				"availableParking": "AvailableParking",
+				"parkingSpaceVehicleType": "ParkingSpaceVehicleType",
+				"parkingSpacePriceEntry": "ParkingSpacePriceEntry",
+				"parkingSpaceImage": "ParkingSpaceImage",
                 "additionalEntity": "Will add additional entities here (do not translate!)"
             },
             "account": {
