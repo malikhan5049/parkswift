@@ -1,13 +1,16 @@
 package com.ews.parkswift.config;
 
-import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
-import com.fasterxml.jackson.datatype.joda.ser.JacksonJodaFormat;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.datetime.joda.DateTimeFormatterFactory;
+
+import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+import com.fasterxml.jackson.datatype.joda.ser.JacksonJodaFormat;
 
 @Configuration
 public class JacksonConfiguration {
@@ -20,6 +23,7 @@ public class JacksonConfiguration {
         module.addSerializer(DateTime.class, new DateTimeSerializer(
                 new JacksonJodaFormat(formatterFactory.createDateTimeFormatter()
                         .withZoneUTC())));
+        module.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
         return module;
     }
 }

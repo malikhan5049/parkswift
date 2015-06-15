@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.concurrent.Executor;
 
@@ -44,6 +45,11 @@ public class AsyncConfiguration implements AsyncConfigurer, EnvironmentAware {
         executor.setQueueCapacity(propertyResolver.getProperty("queueCapacity", Integer.class, 10000));
         executor.setThreadNamePrefix("parkswift-Executor-");
         return new ExceptionHandlingAsyncTaskExecutor(executor);
+    }
+    
+    @Bean()
+    public ThreadPoolTaskScheduler taskScheduler() {
+       return new ThreadPoolTaskScheduler();
     }
 
     @Override

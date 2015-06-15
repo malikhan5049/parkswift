@@ -9,7 +9,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +28,7 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if(httpRequest.getHeader("User-Agent")!=null && httpRequest.getHeader("User-Agent").indexOf("Mobile") != -1){
+		if(DeviceUtils.isMobile(httpRequest)){
 			CustomResponseWrapper responseWrapper = new CustomResponseWrapper(
 					(HttpServletResponse) response);
 	
@@ -35,15 +37,19 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			HttpStatus httpStatus = HttpStatus.valueOf(responseWrapper.getStatus());
 			String status = httpStatus.is2xxSuccessful()?"success":"failed";
 			String failureMessage = "";
+			
 			if(httpStatus.is4xxClientError() || httpStatus.is5xxServerError()){
 				failureMessage = responseContent;
 				responseContent = "";
 			}
 			
+			if(httpRequest.getMethod().equals(HttpMethod.POST.name()) && responseWrapper.getHeader("Location")!=null)
+				responseContent = responseWrapper.getHeader("Location");
+			
+			
 			String path = ((HttpServletRequest)request).getRequestURI();
-	
 			RestResponse fullResponse = new RestResponse(status, failureMessage,
-					responseContent, path);
+					httpRequest.getMethod().equals(HttpMethod.GET.name())?mapper.readTree(responseContent):responseContent, path);
 			response.setContentLength(-1); // will limit the response to 20 characters if not set to -1
 			response.setContentType("application/json; charset=UTF-8");
 			mapper.writeValue(response.getOutputStream(), fullResponse);

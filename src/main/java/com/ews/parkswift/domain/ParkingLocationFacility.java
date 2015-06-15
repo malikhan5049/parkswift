@@ -28,6 +28,7 @@ public class ParkingLocationFacility implements Serializable {
     private String facility;
 
     @ManyToOne
+    @JsonIgnore
     private ParkingLocation parkingLocation;
 
     public Long getId() {

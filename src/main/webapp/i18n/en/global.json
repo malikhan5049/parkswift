@@ -22,7 +22,7 @@
 				"parkingSpaceVehicleType": "ParkingSpaceVehicleType",
 				"parkingSpacePriceEntry": "ParkingSpacePriceEntry",
 				"parkingSpaceImage": "ParkingSpaceImage",
-                "additionalEntity": "Will add additional entities here (do not translate!)"
+                "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
                 "main": "Account",

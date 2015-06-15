@@ -1,18 +1,17 @@
 package com.ews.parkswift.web.filter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 
 
 public class RestResponse {
 	private String status;
 	private String failureMessage;
-	private String content;
+	private Object content;
 	private String path;
 	
 	
-	public RestResponse() {
-		super();
-	}
-	public RestResponse(String status, String failureMessage, String content, String path) {
+	public RestResponse(String status, String failureMessage, Object content, String path) {
 		super();
 		this.status = status;
 		this.failureMessage = failureMessage;
@@ -27,7 +26,7 @@ public class RestResponse {
 	public String getFailureMessage() {
 		return failureMessage;
 	}
-	public String getContent() {
+	public Object getContent() {
 		return content;
 	}
 	

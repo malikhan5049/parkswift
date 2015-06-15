@@ -44,7 +44,7 @@ public class UserResourceTest {
 
     @Test
     public void testGetExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/admin")
+        restUserMockMvc.perform(get("/api/users/admin@localhost")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))

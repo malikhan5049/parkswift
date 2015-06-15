@@ -87,10 +87,10 @@ public class ParkingLocation implements Serializable {
     private PaypallAccount paypallAccount;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "parkingLocation")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
 

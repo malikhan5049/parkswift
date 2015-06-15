@@ -1,5 +1,6 @@
 package com.ews.parkswift.security.xauth;
 
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 
 /**
@@ -41,7 +43,7 @@ public class XAuthTokenFilter extends GenericFilterBean {
                 UserDetails details = this.detailsService.loadUserByUsername(username);
                 boolean validateToken = false;
                 HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
-                if(httpRequest.getHeader("User-Agent")!=null && httpRequest.getHeader("User-Agent").indexOf("Mobile") != -1)
+                if(DeviceUtils.isMobile(httpRequest))
                 	validateToken = this.tokenProvider.validateTokenMobile(authToken, details);
                 else
                 	validateToken = this.tokenProvider.validateToken(authToken, details);

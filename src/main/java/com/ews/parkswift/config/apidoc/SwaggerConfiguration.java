@@ -1,10 +1,6 @@
 package com.ews.parkswift.config.apidoc;
 
-import com.ews.parkswift.config.Constants;
-import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
-import com.mangofactory.swagger.models.dto.ApiInfo;
-import com.mangofactory.swagger.plugin.EnableSwagger;
-import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
@@ -15,6 +11,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
+
+import com.ews.parkswift.config.Constants;
+import com.mangofactory.swagger.configuration.SpringSwaggerConfig;
+import com.mangofactory.swagger.models.dto.ApiInfo;
+import com.mangofactory.swagger.plugin.EnableSwagger;
+import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 
 /**
  * Swagger configuration.
@@ -30,7 +32,7 @@ public class SwaggerConfiguration implements EnvironmentAware {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
 
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+    public static final String DEFAULT_INCLUDE_PATTERN = "/api/availableParkings/*";
 
     private RelaxedPropertyResolver propertyResolver;
 
@@ -50,8 +52,8 @@ public class SwaggerConfiguration implements EnvironmentAware {
         SwaggerSpringMvcPlugin swaggerSpringMvcPlugin = new SwaggerSpringMvcPlugin(springSwaggerConfig)
             .apiInfo(apiInfo())
             .genericModelSubstitutes(ResponseEntity.class)
+            .directModelSubstitute(LocalDate.class, String.class)
             .includePatterns(DEFAULT_INCLUDE_PATTERN);
-
         swaggerSpringMvcPlugin.build();
         watch.stop();
         log.debug("Started Swagger in {} ms", watch.getTotalTimeMillis());

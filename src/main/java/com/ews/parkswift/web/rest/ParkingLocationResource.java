@@ -3,6 +3,8 @@ package com.ews.parkswift.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.repository.ParkingLocationRepository;
+import com.ews.parkswift.service.ParkingLocationService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -28,6 +31,8 @@ public class ParkingLocationResource {
 
     @Inject
     private ParkingLocationRepository parkingLocationRepository;
+    @Inject
+    private ParkingLocationService parkingLocationService;
 
     /**
      * POST  /parkingLocations -> Create a new parkingLocation.
@@ -41,7 +46,7 @@ public class ParkingLocationResource {
         if (parkingLocation.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new parkingLocation cannot already have an ID").build();
         }
-        parkingLocationRepository.save(parkingLocation);
+        parkingLocationService.save(parkingLocation);
         return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).build();
     }
 
@@ -57,7 +62,7 @@ public class ParkingLocationResource {
         if (parkingLocation.getId() == null) {
             return create(parkingLocation);
         }
-        parkingLocationRepository.save(parkingLocation);
+        parkingLocationService.save(parkingLocation);
         return ResponseEntity.ok().build();
     }
 
@@ -82,12 +87,15 @@ public class ParkingLocationResource {
     @Timed
     public ResponseEntity<ParkingLocation> get(@PathVariable Long id) {
         log.debug("REST request to get ParkingLocation : {}", id);
-        return Optional.ofNullable(parkingLocationRepository.findOne(id))
+        return Optional.ofNullable(parkingLocationService.findOne(id))
             .map(parkingLocation -> new ResponseEntity<>(
                 parkingLocation,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    
+    
+    
 
     /**
      * DELETE  /parkingLocations/:id -> delete the "id" parkingLocation.
@@ -98,6 +106,6 @@ public class ParkingLocationResource {
     @Timed
     public void delete(@PathVariable Long id) {
         log.debug("REST request to delete ParkingLocation : {}", id);
-        parkingLocationRepository.delete(id);
+        parkingLocationService.delete(id);
     }
 }

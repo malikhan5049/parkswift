@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.AbstractEmbeddedServletContainerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,10 +72,11 @@ public class BasicErrorController implements ErrorController {
 	public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
 		Map<String, Object> body = getErrorAttributes(request, getTraceParameter(request));
 		HttpStatus status = getStatus(request);
-		if(request.getHeader("User-Agent")!=null && request.getHeader("User-Agent").indexOf("Mobile") != -1){
+		if(DeviceUtils.isMobile(request)){
 			Map<String, Object> bodyWithMessageStatusContent = new HashMap<String,Object>();
 			bodyWithMessageStatusContent.put("status", HttpStatus.valueOf(Integer.valueOf(body.get("status").toString())).is2xxSuccessful()?"success":"failed");
 			bodyWithMessageStatusContent.put("failureMessage", body.get("message").toString().split(":")[0]);
+			bodyWithMessageStatusContent.put("content", "");
 			bodyWithMessageStatusContent.put("path",body.get("path"));
 			body = bodyWithMessageStatusContent;
 		}

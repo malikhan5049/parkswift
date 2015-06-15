@@ -1,24 +1,35 @@
 package com.ews.parkswift.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
-import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
+import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A AvailableParking.
