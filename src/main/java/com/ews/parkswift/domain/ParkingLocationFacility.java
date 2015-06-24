@@ -66,14 +66,14 @@ public class ParkingLocationFacility implements Serializable {
 
         ParkingLocationFacility parkingLocationFacility = (ParkingLocationFacility) o;
 
-        if ( ! Objects.equals(id, parkingLocationFacility.id)) return false;
+        if ( ! Objects.equals(facility, parkingLocationFacility.facility)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(facility);
     }
 
     @Override

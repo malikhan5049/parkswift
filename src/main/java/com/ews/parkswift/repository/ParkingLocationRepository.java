@@ -12,5 +12,7 @@ public interface ParkingLocationRepository extends JpaRepository<ParkingLocation
 
     @Query("select parkingLocation from ParkingLocation parkingLocation where parkingLocation.user.login = ?#{principal.username}")
     List<ParkingLocation> findAllForCurrentUser();
+    
+    ParkingLocation findOneByParkingLocationContactInfoId(Long id);
 
 }

@@ -51,7 +51,8 @@ public class ParkingLocationService {
 
 	public ParkingLocation findOne(Long id) {
 		ParkingLocation parkingLocation = parkingLocationRepository.findOne(id);
-		parkingLocation.getParkingLocationFacilitys().size(); 
+		if(parkingLocation!=null)
+			parkingLocation.getParkingLocationFacilitys().size(); 
 		return parkingLocation;
 	}
 
@@ -59,8 +60,10 @@ public class ParkingLocationService {
 
 	public void delete(Long id) {
 		ParkingLocation parkingLocation = findOne(id);
-		parkingLocationContactInfoRepository.delete(parkingLocation.getParkingLocationContactInfo());
-		parkingLocationFacilityRepository.delete(parkingLocation.getParkingLocationFacilitys());
+		if(parkingLocation.getParkingLocationContactInfo()!=null)
+			parkingLocationContactInfoRepository.delete(parkingLocation.getParkingLocationContactInfo());
+		if(!parkingLocation.getParkingLocationFacilitys().isEmpty())
+			parkingLocationFacilityRepository.delete(parkingLocation.getParkingLocationFacilitys());
 		parkingLocationRepository.delete(id);
 		
 	}

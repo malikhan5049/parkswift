@@ -3,11 +3,14 @@ package com.ews.parkswift.web.rest;
 import com.ews.parkswift.Application;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.repository.ParkingLocationRepository;
+import com.ews.parkswift.service.ParkingLocationService;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static org.hamcrest.Matchers.hasItem;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -21,10 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -79,6 +84,8 @@ public class ParkingLocationResourceTest {
 
     @Inject
     private ParkingLocationRepository parkingLocationRepository;
+    @Inject
+    private ParkingLocationService parkingLocationService;
 
     private MockMvc restParkingLocationMockMvc;
 
@@ -89,6 +96,7 @@ public class ParkingLocationResourceTest {
         MockitoAnnotations.initMocks(this);
         ParkingLocationResource parkingLocationResource = new ParkingLocationResource();
         ReflectionTestUtils.setField(parkingLocationResource, "parkingLocationRepository", parkingLocationRepository);
+        ReflectionTestUtils.setField(parkingLocationResource, "parkingLocationService", parkingLocationService);
         this.restParkingLocationMockMvc = MockMvcBuilders.standaloneSetup(parkingLocationResource).build();
     }
 

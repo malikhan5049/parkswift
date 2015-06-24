@@ -49,7 +49,7 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			
 			String path = ((HttpServletRequest)request).getRequestURI();
 			RestResponse fullResponse = new RestResponse(status, failureMessage,
-					httpRequest.getMethod().equals(HttpMethod.GET.name())?mapper.readTree(responseContent):responseContent, path);
+					(httpRequest.getMethod().equals(HttpMethod.GET.name()) || path.contains("/api/authenticatemobile"))?mapper.readTree(responseContent):responseContent, path);
 			response.setContentLength(-1); // will limit the response to 20 characters if not set to -1
 			response.setContentType("application/json; charset=UTF-8");
 			mapper.writeValue(response.getOutputStream(), fullResponse);
