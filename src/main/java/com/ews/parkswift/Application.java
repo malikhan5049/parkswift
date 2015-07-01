@@ -26,6 +26,7 @@ import com.google.common.base.Joiner;
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 public class Application {
 
+
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Inject

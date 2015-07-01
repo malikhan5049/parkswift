@@ -91,6 +91,17 @@ public class UserService {
     	return user;
     }
 
+    public User createUserInformationfromSocialMediaProfile(String login, String firstName,
+			String lastName, String email, String langKey,
+			boolean insertUserActivated) {
+    	User user = createUserInformationforSocialMedia(login, firstName, lastName, email, langKey);
+    	if(insertUserActivated){
+    		user.setActivated(insertUserActivated);
+    		user.setActivationKey(null);
+    	}
+    	return user;
+	}
+    
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
                                       String langKey) {
 
@@ -116,6 +127,28 @@ public class UserService {
         return newUser;
     }
 
+    public User createUserInformationforSocialMedia(String login, String firstName, String lastName, String email,
+            String langKey) {
+
+		User newUser = new User();
+		Authority authority = authorityRepository.findOne("ROLE_USER");
+		Set<Authority> authorities = new HashSet<>();
+		newUser.setLogin(login);
+		// new user gets initially a generated password
+		newUser.setFirstName(firstName);
+		newUser.setLastName(lastName);
+		newUser.setEmail(email);
+		newUser.setLangKey(langKey);
+		// new user is not active
+		newUser.setActivated(false);
+		// new user gets registration key
+		newUser.setActivationKey(RandomUtil.generateActivationKey());
+		authorities.add(authority);
+		newUser.setAuthorities(authorities);
+		userRepository.save(newUser);
+		log.debug("Created Information for User: {}", newUser);
+		return newUser;
+}
     public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
@@ -165,4 +198,6 @@ public class UserService {
             userRepository.delete(user);
         }
     }
+
+	
 }
