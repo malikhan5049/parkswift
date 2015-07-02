@@ -1,11 +1,15 @@
 package com.ews.parkswift.domain;
 
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -16,7 +20,7 @@ import java.util.Objects;
  * A ParkingSpacePriceEntry.
  */
 @Entity
-@Table(name = "PARKINGSPACEPRICEENTRY")
+@Table(name = "PARKING_SPACE_PRICE_ENTRY")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingSpacePriceEntry implements Serializable {
 
@@ -26,6 +30,7 @@ public class ParkingSpacePriceEntry implements Serializable {
 
     @NotNull
     @Column(name = "type", nullable = false)
+    @InLookupHeader(code=LookupHeaderCode.PS_PP)
     private String type;
 
     @NotNull
@@ -33,6 +38,7 @@ public class ParkingSpacePriceEntry implements Serializable {
     private BigDecimal price;
 
     @ManyToOne
+    @JsonIgnore
     private ParkingSpace parkingSpace;
 
     public Long getId() {
@@ -78,14 +84,14 @@ public class ParkingSpacePriceEntry implements Serializable {
 
         ParkingSpacePriceEntry parkingSpacePriceEntry = (ParkingSpacePriceEntry) o;
 
-        if ( ! Objects.equals(id, parkingSpacePriceEntry.id)) return false;
+        if ( ! Objects.equals(type, parkingSpacePriceEntry.type)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(type);
     }
 
     @Override

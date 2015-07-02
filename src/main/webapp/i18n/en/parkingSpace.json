@@ -13,17 +13,16 @@
                 "title": "ParkingSpace"
             },
             "description": "Description",
-            "partOfBatch": "PartOfBatch",
-            "batchNumber": "BatchNumber",
+            "numberOfSpaces": "NumberOfSpaces",
+            "groupRecord": "GroupRecord",
+            "groupNumber": "GroupNumber",
             "fullReserved": "FullReserved",
-            "createdAt": "CreatedAt",
-            "modifiedAt": "ModifiedAt",
-            "parkingLocation": "parkingLocation",
             "parkingSpaceVehicleType": "parkingSpaceVehicleType",
             "parkingSpacePriceEntry": "parkingSpacePriceEntry",
-            "parkingSpaceImage": "parkingSpaceImage",
+            "availableParking": "availableParking",
             "reservedParking": "reservedParking",
-            "availableParking": "availableParking"
+            "parkingSpaceImage": "parkingSpaceImage",
+            "parkingLocation": "parkingLocation"
         }
     }
 }

@@ -10,29 +10,39 @@
     <!--
         Added the entity ParkingSpace.
     -->
-    <changeSet id="20150610112244" author="jhipster">
-        <createTable tableName="PARKINGSPACE">
+    <changeSet id="20150630131707" author="ali.khan">
+        <createTable tableName="PARKING_SPACE">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="description" type="varchar(255)"/>
-            <column name="part_of_batch" type="bit"/>
-            <column name="batch_number" type="integer"/>
+            <column name="number_of_spaces" type="integer"/>
+            <column name="group_record" type="bit"/>
+            <column name="group_number" type="integer"/>
             <column name="full_reserved" type="bit"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="modified_at" type="timestamp"/>
             <column name="parkinglocation_id" type="bigint"/>
+            
+        	<column name="created_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
-        <dropDefaultValue tableName="PARKINGSPACE" columnName="created_at" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="PARKINGSPACE" columnName="modified_at" columnDataType="datetime"/>
-
+        
+        <sql splitStatements="false"  dbms="mysql">
+		  CREATE TRIGGER update_PARKING_SPACE_trg
+		    BEFORE UPDATE ON PARKING_SPACE
+		      FOR EACH ROW BEGIN
+		        SET NEW.last_modified_at = NOW();
+		      END
+		</sql>
         
         <addForeignKeyConstraint baseColumnNames="parkinglocation_id"
-                                 baseTableName="PARKINGSPACE"
+                                 baseTableName="PARKING_SPACE"
                                  constraintName="fk_parkingspace_parkinglocation_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGLOCATION"/>
+                                 referencedTableName="PARKING_LOCATION"/>
 
     </changeSet>
 </databaseChangeLog>

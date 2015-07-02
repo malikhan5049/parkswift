@@ -1,14 +1,8 @@
 package com.ews.parkswift.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +14,7 @@ import java.util.Objects;
  * A ParkingLocationContactInfo.
  */
 @Entity
-@Table(name = "PARKINGLOCATIONCONTACTINFO")
+@Table(name = "PARKING_LOCATION_CONTACT_INFO")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingLocationContactInfo implements Serializable {
 
@@ -45,18 +39,6 @@ public class ParkingLocationContactInfo implements Serializable {
 
     @Column(name = "email2")
     private String email2;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at")
-    private DateTime createdAt;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "modified_at")
-    private DateTime modifiedAt;
 
     @OneToOne(mappedBy = "parkingLocationContactInfo")
     @JsonIgnore
@@ -118,22 +100,6 @@ public class ParkingLocationContactInfo implements Serializable {
         this.email2 = email2;
     }
 
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(DateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
     public ParkingLocation getParkingLocation() {
         return parkingLocation;
     }
@@ -173,8 +139,6 @@ public class ParkingLocationContactInfo implements Serializable {
                 ", phone2='" + phone2 + "'" +
                 ", email1='" + email1 + "'" +
                 ", email2='" + email2 + "'" +
-                ", createdAt='" + createdAt + "'" +
-                ", modifiedAt='" + modifiedAt + "'" +
                 '}';
     }
 }

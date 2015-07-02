@@ -15,7 +15,7 @@ import java.util.Objects;
  * A LookupHeader.
  */
 @Entity
-@Table(name = "LOOKUPHEADER")
+@Table(name = "LOOKUP_HEADER")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class LookupHeader implements Serializable {
 
@@ -24,14 +24,13 @@ public class LookupHeader implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "code", nullable = false)
+    @Column(name = "code", nullable = false, unique = true)
     private String code;
 
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "lookupHeader")
-    @JsonIgnore
+    @OneToMany(mappedBy = "lookupHeader", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<LookupEntry> lookupEntrys = new HashSet<>();
 

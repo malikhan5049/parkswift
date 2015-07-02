@@ -12,15 +12,12 @@
             "detail": {
                 "title": "AvailableParking"
             },
-            "dateStart": "DateStart",
-            "dateEnd": "DateEnd",
-            "timeStart": "TimeStart",
-            "timeEnd": "TimeEnd",
-            "repeatBasis": "RepeatBasis",
+            "startDate": "StartDate",
+            "endDate": "EndDate",
+            "startTime": "StartTime",
+            "endTime": "EndTime",
+            "repeatOn": "RepeatOn",
             "repeatOccurrences": "RepeatOccurrences",
-            "description": "Description",
-            "createdAt": "CreatedAt",
-            "modifiedAt": "ModifiedAt",
             "parkingSpace": "parkingSpace",
             "availableParkingRepeatOn": "availableParkingRepeatOn"
         }

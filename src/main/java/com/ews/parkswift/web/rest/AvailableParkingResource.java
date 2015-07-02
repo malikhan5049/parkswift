@@ -3,8 +3,11 @@ package com.ews.parkswift.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.domain.AvailableParking;
 import com.ews.parkswift.repository.AvailableParkingRepository;
+import com.ews.parkswift.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -68,9 +71,12 @@ public class AvailableParkingResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<AvailableParking> getAll() {
-        log.debug("REST request to get all AvailableParkings");
-        return availableParkingRepository.findAll();
+    public ResponseEntity<List<AvailableParking>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+                                  @RequestParam(value = "per_page", required = false) Integer limit)
+        throws URISyntaxException {
+        Page<AvailableParking> page = availableParkingRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/availableParkings", offset, limit);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

@@ -1,14 +1,27 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .controller('AvailableParkingController', function ($scope, AvailableParking, ParkingSpace, AvailableParkingRepeatOn) {
+    .controller('AvailableParkingController', function ($scope, AvailableParking, ParkingSpace, AvailableParkingRepeatOn, ParseLinks) {
         $scope.availableParkings = [];
         $scope.parkingspaces = ParkingSpace.query();
         $scope.availableparkingrepeatons = AvailableParkingRepeatOn.query();
+        $scope.page = 1;
         $scope.loadAll = function() {
-            AvailableParking.query(function(result) {
-               $scope.availableParkings = result;
+            AvailableParking.query({page: $scope.page, per_page: 20}, function(result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                for (var i = 0; i < result.length; i++) {
+                    $scope.availableParkings.push(result[i]);
+                }
             });
+        };
+        $scope.reset = function() {
+            $scope.page = 1;
+            $scope.availableParkings = [];
+            $scope.loadAll();
+        };
+        $scope.loadPage = function(page) {
+            $scope.page = page;
+            $scope.loadAll();
         };
         $scope.loadAll();
 
@@ -43,20 +56,20 @@ angular.module('parkswiftApp')
         $scope.confirmDelete = function (id) {
             AvailableParking.delete({id: id},
                 function () {
-                    $scope.loadAll();
+                    $scope.reset();
                     $('#deleteAvailableParkingConfirmation').modal('hide');
                     $scope.clear();
                 });
         };
 
         $scope.refresh = function () {
-            $scope.loadAll();
+            $scope.reset();
             $('#saveAvailableParkingModal').modal('hide');
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.availableParking = {dateStart: null, dateEnd: null, timeStart: null, timeEnd: null, repeatBasis: null, repeatOccurrences: null, description: null, createdAt: null, modifiedAt: null, id: null};
+            $scope.availableParking = {startDate: null, endDate: null, startTime: null, endTime: null, repeatOn: null, repeatOccurrences: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

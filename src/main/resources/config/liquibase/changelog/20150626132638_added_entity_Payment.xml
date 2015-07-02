@@ -10,7 +10,7 @@
     <!--
         Added the entity Payment.
     -->
-    <changeSet id="20150610124248" author="jhipster">
+    <changeSet id="20150626132638" author="ali.khan">
         <createTable tableName="PAYMENT">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -20,27 +20,37 @@
             </column>
             <column name="transaction_date_time" type="timestamp"/>
             <column name="status" type="varchar(255)"/>
-            <column name="payment_response" type="varchar(255)"/>
-            <column name="created_at" type="timestamp"/>
+            <column name="paypall_payment_response" type="varchar(255)"/>
             <column name="user_id" type="bigint"/>
             <column name="reservedparking_id" type="bigint"/>
+            <column name="created_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
+        <sql splitStatements="false"  dbms="mysql">
+		  CREATE TRIGGER update_PAYMENT_trg
+		    BEFORE UPDATE ON PAYMENT
+		      FOR EACH ROW BEGIN
+		        SET NEW.last_modified_at = NOW();
+		      END
+		</sql>
         <dropDefaultValue tableName="PAYMENT" columnName="transaction_date_time" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="PAYMENT" columnName="created_at" columnDataType="datetime"/>
 
         
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="PAYMENT"
                                  constraintName="fk_payment_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="JHI_USER"/>
+                                 referencedTableName="USER"/>
 
         <addForeignKeyConstraint baseColumnNames="reservedparking_id"
                                  baseTableName="PAYMENT"
                                  constraintName="fk_payment_reservedparking_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="RESERVEDPARKING"/>
+                                 referencedTableName="PARKING_SPACE_RESERVED_ON"/>
 
     </changeSet>
 </databaseChangeLog>

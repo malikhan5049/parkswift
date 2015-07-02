@@ -18,8 +18,6 @@
             "phone2": "Phone2",
             "email1": "Email1",
             "email2": "Email2",
-            "createdAt": "CreatedAt",
-            "modifiedAt": "ModifiedAt",
             "parkingLocation": "parkingLocation"
         }
     }

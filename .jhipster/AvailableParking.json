@@ -8,7 +8,7 @@
             "otherEntityName": "parkingSpace",
             "relationshipType": "many-to-one",
             "otherEntityNameCapitalized": "ParkingSpace",
-            "otherEntityField": "description"
+            "otherEntityField": "id"
         },
         {
             "relationshipId": 2,
@@ -24,11 +24,11 @@
     "fields": [
         {
             "fieldId": 1,
-            "fieldName": "dateStart",
+            "fieldName": "startDate",
             "fieldType": "LocalDate",
-            "fieldNameCapitalized": "DateStart",
-            "fieldNameUnderscored": "date_start",
-            "fieldInJavaBeanMethod": "DateStart",
+            "fieldNameCapitalized": "StartDate",
+            "fieldNameUnderscored": "start_date",
+            "fieldInJavaBeanMethod": "StartDate",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -36,11 +36,11 @@
         },
         {
             "fieldId": 2,
-            "fieldName": "dateEnd",
+            "fieldName": "endDate",
             "fieldType": "LocalDate",
-            "fieldNameCapitalized": "DateEnd",
-            "fieldNameUnderscored": "date_end",
-            "fieldInJavaBeanMethod": "DateEnd",
+            "fieldNameCapitalized": "EndDate",
+            "fieldNameUnderscored": "end_date",
+            "fieldInJavaBeanMethod": "EndDate",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -48,11 +48,11 @@
         },
         {
             "fieldId": 3,
-            "fieldName": "timeStart",
+            "fieldName": "startTime",
             "fieldType": "DateTime",
-            "fieldNameCapitalized": "TimeStart",
-            "fieldNameUnderscored": "time_start",
-            "fieldInJavaBeanMethod": "TimeStart",
+            "fieldNameCapitalized": "StartTime",
+            "fieldNameUnderscored": "start_time",
+            "fieldInJavaBeanMethod": "StartTime",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -60,11 +60,11 @@
         },
         {
             "fieldId": 4,
-            "fieldName": "timeEnd",
+            "fieldName": "endTime",
             "fieldType": "DateTime",
-            "fieldNameCapitalized": "TimeEnd",
-            "fieldNameUnderscored": "time_end",
-            "fieldInJavaBeanMethod": "TimeEnd",
+            "fieldNameCapitalized": "EndTime",
+            "fieldNameUnderscored": "end_time",
+            "fieldInJavaBeanMethod": "EndTime",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -72,11 +72,11 @@
         },
         {
             "fieldId": 5,
-            "fieldName": "repeatBasis",
+            "fieldName": "repeatOn",
             "fieldType": "String",
-            "fieldNameCapitalized": "RepeatBasis",
-            "fieldNameUnderscored": "repeat_basis",
-            "fieldInJavaBeanMethod": "RepeatBasis",
+            "fieldNameCapitalized": "RepeatOn",
+            "fieldNameUnderscored": "repeat_on",
+            "fieldInJavaBeanMethod": "RepeatOn",
             "fieldValidate": false
         },
         {
@@ -86,33 +86,6 @@
             "fieldNameCapitalized": "RepeatOccurrences",
             "fieldNameUnderscored": "repeat_occurrences",
             "fieldInJavaBeanMethod": "RepeatOccurrences",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 7,
-            "fieldName": "description",
-            "fieldType": "String",
-            "fieldNameCapitalized": "Description",
-            "fieldNameUnderscored": "description",
-            "fieldInJavaBeanMethod": "Description",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 8,
-            "fieldName": "createdAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "CreatedAt",
-            "fieldNameUnderscored": "created_at",
-            "fieldInJavaBeanMethod": "CreatedAt",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 9,
-            "fieldName": "modifiedAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "ModifiedAt",
-            "fieldNameUnderscored": "modified_at",
-            "fieldInJavaBeanMethod": "ModifiedAt",
             "fieldValidate": false
         }
     ],
@@ -124,8 +97,8 @@
     "fieldsContainBigDecimal": false,
     "fieldsContainDateTime": true,
     "fieldsContainDate": false,
-    "changelogDate": "20150610113210",
+    "changelogDate": "20150630125625",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "validation": true
 }

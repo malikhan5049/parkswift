@@ -1,8 +1,8 @@
 package com.ews.parkswift.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.ews.parkswift.domain.ParkingSpaceImage;
-import com.ews.parkswift.repository.ParkingSpaceImageRepository;
+import com.ews.parkswift.domain.ParkingLocationImage;
+import com.ews.parkswift.repository.ParkingLocationImageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,12 +22,12 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ParkingSpaceImageResource {
+public class ParkingLocationImageResource {
 
-    private final Logger log = LoggerFactory.getLogger(ParkingSpaceImageResource.class);
+    private final Logger log = LoggerFactory.getLogger(ParkingLocationImageResource.class);
 
     @Inject
-    private ParkingSpaceImageRepository parkingSpaceImageRepository;
+    private ParkingLocationImageRepository parkingSpaceImageRepository;
 
     /**
      * POST  /parkingSpaceImages -> Create a new parkingSpaceImage.
@@ -36,7 +36,7 @@ public class ParkingSpaceImageResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody ParkingSpaceImage parkingSpaceImage) throws URISyntaxException {
+    public ResponseEntity<Void> create(@Valid @RequestBody ParkingLocationImage parkingSpaceImage) throws URISyntaxException {
         log.debug("REST request to save ParkingSpaceImage : {}", parkingSpaceImage);
         if (parkingSpaceImage.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new parkingSpaceImage cannot already have an ID").build();
@@ -52,7 +52,7 @@ public class ParkingSpaceImageResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody ParkingSpaceImage parkingSpaceImage) throws URISyntaxException {
+    public ResponseEntity<Void> update(@Valid @RequestBody ParkingLocationImage parkingSpaceImage) throws URISyntaxException {
         log.debug("REST request to update ParkingSpaceImage : {}", parkingSpaceImage);
         if (parkingSpaceImage.getId() == null) {
             return create(parkingSpaceImage);
@@ -68,7 +68,7 @@ public class ParkingSpaceImageResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<ParkingSpaceImage> getAll() {
+    public List<ParkingLocationImage> getAll() {
         log.debug("REST request to get all ParkingSpaceImages");
         return parkingSpaceImageRepository.findAll();
     }
@@ -80,7 +80,7 @@ public class ParkingSpaceImageResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ParkingSpaceImage> get(@PathVariable Long id) {
+    public ResponseEntity<ParkingLocationImage> get(@PathVariable Long id) {
         log.debug("REST request to get ParkingSpaceImage : {}", id);
         return Optional.ofNullable(parkingSpaceImageRepository.findOne(id))
             .map(parkingSpaceImage -> new ResponseEntity<>(

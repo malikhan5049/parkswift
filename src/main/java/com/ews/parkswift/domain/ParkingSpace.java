@@ -1,26 +1,32 @@
 package com.ews.parkswift.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.Valid;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A ParkingSpace.
  */
 @Entity
-@Table(name = "PARKINGSPACE")
+@Table(name = "PARKING_SPACE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingSpace implements Serializable {
 
@@ -31,54 +37,45 @@ public class ParkingSpace implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "part_of_batch")
-    private Boolean partOfBatch;
+    @Column(name = "number_of_spaces", nullable = false)
+    private Integer numberOfSpaces;
 
-    @Column(name = "batch_number")
-    private Integer batchNumber;
+    @Column(name = "group_record")
+    @JsonIgnore
+    private Boolean groupRecord;
+
+    @Column(name = "group_number")
+    @JsonIgnore
+    private Integer groupNumber;
 
     @Column(name = "full_reserved")
+    @JsonIgnore
     private Boolean fullReserved;
 
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at")
-    private DateTime createdAt;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "modified_at")
-    private DateTime modifiedAt;
-
     @ManyToOne
+    @JoinColumn(name="parkingLocation_id")
     private ParkingLocation parkingLocation;
-
+    
+    @Valid
     @OneToMany(mappedBy = "parkingSpace")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpaceVehicleType> parkingSpaceVehicleTypes = new HashSet<>();
 
+    @Valid
     @OneToMany(mappedBy = "parkingSpace")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
 
     @OneToMany(mappedBy = "parkingSpace")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ParkingSpaceImage> parkingSpaceImages = new HashSet<>();
-
+    private Set<AvailableParking> availableParkings = new HashSet<>();
+    
     @OneToMany(mappedBy = "parkingSpace")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReservedParking> reservedParkings = new HashSet<>();
 
-    @OneToMany(mappedBy = "parkingSpace")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AvailableParking> availableParkings = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,20 +93,28 @@ public class ParkingSpace implements Serializable {
         this.description = description;
     }
 
-    public Boolean getPartOfBatch() {
-        return partOfBatch;
+    public Integer getNumberOfSpaces() {
+        return numberOfSpaces;
     }
 
-    public void setPartOfBatch(Boolean partOfBatch) {
-        this.partOfBatch = partOfBatch;
+    public void setNumberOfSpaces(Integer numberOfSpaces) {
+        this.numberOfSpaces = numberOfSpaces;
     }
 
-    public Integer getBatchNumber() {
-        return batchNumber;
+    public Boolean getGroupRecord() {
+        return groupRecord;
     }
 
-    public void setBatchNumber(Integer batchNumber) {
-        this.batchNumber = batchNumber;
+    public void setGroupRecord(Boolean groupRecord) {
+        this.groupRecord = groupRecord;
+    }
+
+    public Integer getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(Integer groupNumber) {
+        this.groupNumber = groupNumber;
     }
 
     public Boolean getFullReserved() {
@@ -118,22 +123,6 @@ public class ParkingSpace implements Serializable {
 
     public void setFullReserved(Boolean fullReserved) {
         this.fullReserved = fullReserved;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(DateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
     }
 
     public ParkingLocation getParkingLocation() {
@@ -160,14 +149,14 @@ public class ParkingSpace implements Serializable {
         this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
     }
 
-    public Set<ParkingSpaceImage> getParkingSpaceImages() {
-        return parkingSpaceImages;
+    public Set<AvailableParking> getAvailableParkings() {
+        return availableParkings;
     }
 
-    public void setParkingSpaceImages(Set<ParkingSpaceImage> parkingSpaceImages) {
-        this.parkingSpaceImages = parkingSpaceImages;
+    public void setAvailableParkings(Set<AvailableParking> availableParkings) {
+        this.availableParkings = availableParkings;
     }
-
+    
     public Set<ReservedParking> getReservedParkings() {
         return reservedParkings;
     }
@@ -176,13 +165,6 @@ public class ParkingSpace implements Serializable {
         this.reservedParkings = reservedParkings;
     }
 
-    public Set<AvailableParking> getAvailableParkings() {
-        return availableParkings;
-    }
-
-    public void setAvailableParkings(Set<AvailableParking> availableParkings) {
-        this.availableParkings = availableParkings;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -210,11 +192,10 @@ public class ParkingSpace implements Serializable {
         return "ParkingSpace{" +
                 "id=" + id +
                 ", description='" + description + "'" +
-                ", partOfBatch='" + partOfBatch + "'" +
-                ", batchNumber='" + batchNumber + "'" +
+                ", numberOfSpaces='" + numberOfSpaces + "'" +
+                ", groupRecord='" + groupRecord + "'" +
+                ", groupNumber='" + groupNumber + "'" +
                 ", fullReserved='" + fullReserved + "'" +
-                ", createdAt='" + createdAt + "'" +
-                ", modifiedAt='" + modifiedAt + "'" +
                 '}';
     }
 }

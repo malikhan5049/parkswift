@@ -28,7 +28,7 @@
             "otherEntityName": "user",
             "relationshipType": "many-to-one",
             "otherEntityNameCapitalized": "User",
-            "otherEntityField": "email"
+            "otherEntityField": "login"
         },
         {
             "relationshipId": 4,
@@ -54,11 +54,11 @@
     "fields": [
         {
             "fieldId": 1,
-            "fieldName": "propertyType",
+            "fieldName": "bussinessType",
             "fieldType": "String",
-            "fieldNameCapitalized": "PropertyType",
-            "fieldNameUnderscored": "property_type",
-            "fieldInJavaBeanMethod": "PropertyType",
+            "fieldNameCapitalized": "BussinessType",
+            "fieldNameUnderscored": "bussiness_type",
+            "fieldInJavaBeanMethod": "BussinessType",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -66,18 +66,6 @@
         },
         {
             "fieldId": 2,
-            "fieldName": "numberOfSpaces",
-            "fieldType": "Integer",
-            "fieldNameCapitalized": "NumberOfSpaces",
-            "fieldNameUnderscored": "number_of_spaces",
-            "fieldInJavaBeanMethod": "NumberOfSpaces",
-            "fieldValidate": true,
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldId": 3,
             "fieldName": "addressLine1",
             "fieldType": "String",
             "fieldNameCapitalized": "AddressLine1",
@@ -89,7 +77,7 @@
             ]
         },
         {
-            "fieldId": 4,
+            "fieldId": 3,
             "fieldName": "addressLine2",
             "fieldType": "String",
             "fieldNameCapitalized": "AddressLine2",
@@ -98,7 +86,7 @@
             "fieldValidate": false
         },
         {
-            "fieldId": 5,
+            "fieldId": 4,
             "fieldName": "city",
             "fieldType": "String",
             "fieldNameCapitalized": "City",
@@ -110,7 +98,7 @@
             ]
         },
         {
-            "fieldId": 6,
+            "fieldId": 5,
             "fieldName": "state",
             "fieldType": "String",
             "fieldNameCapitalized": "State",
@@ -119,7 +107,7 @@
             "fieldValidate": false
         },
         {
-            "fieldId": 7,
+            "fieldId": 6,
             "fieldName": "country",
             "fieldType": "String",
             "fieldNameCapitalized": "Country",
@@ -131,7 +119,7 @@
             ]
         },
         {
-            "fieldId": 8,
+            "fieldId": 7,
             "fieldName": "zipCode",
             "fieldType": "String",
             "fieldNameCapitalized": "ZipCode",
@@ -143,7 +131,7 @@
             ]
         },
         {
-            "fieldId": 9,
+            "fieldId": 8,
             "fieldName": "longitude",
             "fieldType": "BigDecimal",
             "fieldNameCapitalized": "Longitude",
@@ -155,7 +143,7 @@
             ]
         },
         {
-            "fieldId": 10,
+            "fieldId": 9,
             "fieldName": "lattitude",
             "fieldType": "BigDecimal",
             "fieldNameCapitalized": "Lattitude",
@@ -165,36 +153,18 @@
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldId": 11,
-            "fieldName": "createdAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "CreatedAt",
-            "fieldNameUnderscored": "created_at",
-            "fieldInJavaBeanMethod": "CreatedAt",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 12,
-            "fieldName": "modifiedAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "ModifiedAt",
-            "fieldNameUnderscored": "modified_at",
-            "fieldInJavaBeanMethod": "ModifiedAt",
-            "fieldValidate": false
         }
     ],
     "fieldsContainOwnerManyToMany": false,
     "fieldsContainOwnerOneToOne": true,
     "fieldsContainOneToMany": true,
     "fieldsContainLocalDate": false,
-    "fieldsContainCustomTime": true,
+    "fieldsContainCustomTime": false,
     "fieldsContainBigDecimal": true,
-    "fieldsContainDateTime": true,
+    "fieldsContainDateTime": false,
     "fieldsContainDate": false,
-    "changelogDate": "20150610084845",
+    "changelogDate": "20150627095123",
     "dto": "no",
-    "pagination": "no",
+    "pagination": "infinite-scroll",
     "validation": true
 }

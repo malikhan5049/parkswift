@@ -43,14 +43,8 @@ public class Payment implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "payment_response")
-    private String paymentResponse;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at", nullable = false)
-    private DateTime createdAt;
+    @Column(name = "paypall_payment_response")
+    private String paypallPaymentResponse;
 
     @ManyToOne
     private User user;
@@ -90,20 +84,12 @@ public class Payment implements Serializable {
         this.status = status;
     }
 
-    public String getPaymentResponse() {
-        return paymentResponse;
+    public String getPaypallPaymentResponse() {
+        return paypallPaymentResponse;
     }
 
-    public void setPaymentResponse(String paymentResponse) {
-        this.paymentResponse = paymentResponse;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setPaypallPaymentResponse(String paypallPaymentResponse) {
+        this.paypallPaymentResponse = paypallPaymentResponse;
     }
 
     public User getUser() {
@@ -150,8 +136,7 @@ public class Payment implements Serializable {
                 ", amountPaid='" + amountPaid + "'" +
                 ", transactionDateTime='" + transactionDateTime + "'" +
                 ", status='" + status + "'" +
-                ", paymentResponse='" + paymentResponse + "'" +
-                ", createdAt='" + createdAt + "'" +
+                ", paypallPaymentResponse='" + paypallPaymentResponse + "'" +
                 '}';
     }
 }

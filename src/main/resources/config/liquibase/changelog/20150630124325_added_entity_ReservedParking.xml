@@ -10,49 +10,54 @@
     <!--
         Added the entity ReservedParking.
     -->
-    <changeSet id="20150610124825" author="jhipster">
-        <createTable tableName="RESERVEDPARKING">
+    <changeSet id="20150630124325" author="ali.khan">
+        <createTable tableName="PARKING_SPACE_RESERVED_ON">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="date_start" type="date">
+            <column name="start_date" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="date_end" type="date">
+            <column name="end_date" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="time_start" type="timestamp">
+            <column name="start_time" type="timestamp">
                 <constraints nullable="false" />
             </column>
-            <column name="time_end" type="timestamp">
+            <column name="end_time" type="timestamp">
                 <constraints nullable="false" />
             </column>
-            <column name="repeat_basis" type="varchar(255)"/>
+            <column name="repeat_on" type="varchar(255)"/>
             <column name="repeat_occurrences" type="integer"/>
             <column name="status" type="varchar(255)"/>
             <column name="reserved_on" type="timestamp"/>
-            <column name="parent_id" type="integer"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="modified_at" type="timestamp"/>
             <column name="parkingspace_id" type="bigint"/>
+            <column name="created_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
-        <dropDefaultValue tableName="RESERVEDPARKING" columnName="time_start" columnDataType="datetime"/>
+        <sql splitStatements="false" dbms="mysql">
+		  CREATE TRIGGER update_PARKING_SPACE_RESERVED_ON_trg
+		    BEFORE UPDATE ON PARKING_SPACE_RESERVED_ON
+		      FOR EACH ROW BEGIN
+		        SET NEW.last_modified_at = NOW();
+		      END
+		</sql>
+        <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="start_time" columnDataType="datetime"/>
 
-        <dropDefaultValue tableName="RESERVEDPARKING" columnName="time_end" columnDataType="datetime"/>
+        <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="end_time" columnDataType="datetime"/>
 
-        <dropDefaultValue tableName="RESERVEDPARKING" columnName="reserved_on" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="RESERVEDPARKING" columnName="created_at" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="RESERVEDPARKING" columnName="modified_at" columnDataType="datetime"/>
+        <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="reserved_on" columnDataType="datetime"/>
 
         
         <addForeignKeyConstraint baseColumnNames="parkingspace_id"
-                                 baseTableName="RESERVEDPARKING"
+                                 baseTableName="PARKING_SPACE_RESERVED_ON"
                                  constraintName="fk_reservedparking_parkingspace_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGSPACE"/>
+                                 referencedTableName="PARKING_SPACE"/>
 
     </changeSet>
 </databaseChangeLog>

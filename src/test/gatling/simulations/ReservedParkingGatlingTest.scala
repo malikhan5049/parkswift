@@ -70,7 +70,7 @@ class ReservedParkingGatlingTest extends Simulation {
             .exec(http("Create new reservedParking")
             .put("/api/reservedParkings")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "description":"SAMPLE_TEXT", "dateStart":"2020-01-01T00:00:00.000Z", "dateEnd":"2020-01-01T00:00:00.000Z", "timeStart":"2020-01-01T00:00:00.000Z", "timeEnd":"2020-01-01T00:00:00.000Z", "repeatBasis":"SAMPLE_TEXT", "repeatOccurrences":"0", "status":"SAMPLE_TEXT", "reservedOn":"2020-01-01T00:00:00.000Z", "parentId":"0", "createdAt":"2020-01-01T00:00:00.000Z", "modifiedAt":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "startTime":"2020-01-01T00:00:00.000Z", "endTime":"2020-01-01T00:00:00.000Z", "repeatOn":"SAMPLE_TEXT", "repeatOccurrences":"0", "status":"SAMPLE_TEXT", "reservedOn":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_reservedParking_url")))
             .pause(10)

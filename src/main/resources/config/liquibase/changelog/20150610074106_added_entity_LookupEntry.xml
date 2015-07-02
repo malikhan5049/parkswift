@@ -10,8 +10,8 @@
     <!--
         Added the entity LookupEntry.
     -->
-    <changeSet id="20150610074106" author="jhipster">
-        <createTable tableName="LOOKUPENTRY">
+    <changeSet id="20150610074106" author="ali.khan">
+        <createTable tableName="LOOKUP_ENTRY">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -23,10 +23,34 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="lookupheader_id"
-                                 baseTableName="LOOKUPENTRY"
+                                 baseTableName="LOOKUP_ENTRY"
                                  constraintName="fk_lookupentry_lookupheader_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="LOOKUPHEADER"/>
+                                 referencedTableName="LOOKUP_HEADER"/>
+        <sql splitStatements="false"  dbms="mysql, h2">
+		  insert into lookup_entry(value, lookupheader_id) 
+			select 'Residential',id from lookup_header where code = 'LOC_TYPE' union
+			select 'Commercial',id from lookup_header where code = 'LOC_TYPE' union
+			select 'WiFi',id from lookup_header where code = 'LOC_FACILITY' union
+			select 'Car Wash',id from lookup_header where code = 'LOC_FACILITY' union
+			select 'Day Hour',id from lookup_header where code = 'PS_PP' union
+			select 'Night Hour',id from lookup_header where code = 'PS_PP' union
+			select 'Full Day',id from lookup_header where code = 'PS_PP' union
+			select '12 Hr(Night)',id from lookup_header where code = 'PS_PP' union
+			select '12 Hr(Day)',id from lookup_header where code = 'PS_PP' union
+			select 'Full Month',id from lookup_header where code = 'PS_PP' union
+			select 'Car',id from lookup_header where code = 'PS_VT' union
+			select 'Mini Van',id from lookup_header where code = 'PS_VT' union
+			select 'Cargo/15 psgr van',id from lookup_header where code = 'PS_VT' union
+			select '10 ft truck',id from lookup_header where code = 'PS_VT' union
+			select '16 ft truck',id from lookup_header where code = 'PS_VT' union
+			select '24 ft truck',id from lookup_header where code = 'PS_VT' union
+			select 'Trailer',id from lookup_header where code = 'PS_VT' union
+			select '53 ft Trailer',id from lookup_header where code = 'PS_VT' union
+			select 'School Bus',id from lookup_header where code = 'PS_VT' union
+			select 'Charter Bus',id from lookup_header where code = 'PS_VT' union
+			select 'All Vehicles',id from lookup_header where code = 'PS_VT'  
+		</sql>
 
     </changeSet>
 </databaseChangeLog>

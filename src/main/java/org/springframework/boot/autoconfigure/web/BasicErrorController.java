@@ -77,7 +77,7 @@ public class BasicErrorController implements ErrorController {
 			bodyWithMessageStatusContent.put("status", HttpStatus.valueOf(Integer.valueOf(body.get("status").toString())).is2xxSuccessful()?"success":"failed");
 			bodyWithMessageStatusContent.put("failureMessage", body.get("message").toString().split(":")[0]);
 			bodyWithMessageStatusContent.put("content", "");
-			bodyWithMessageStatusContent.put("path",body.get("path"));
+			bodyWithMessageStatusContent.put("path",body.get("path")==null?request.getRequestURI():body.get("path"));
 			body = bodyWithMessageStatusContent;
 		}
 		return new ResponseEntity<Map<String, Object>>(body, status);

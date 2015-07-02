@@ -12,50 +12,42 @@
             <tbody>
                 <tr>
                     <td>
-                        <span translate="parkswiftApp.reservedParking.description">Description</span>
+                        <span translate="parkswiftApp.reservedParking.startDate">StartDate</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.description}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span translate="parkswiftApp.reservedParking.dateStart">DateStart</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.dateStart}}" readonly>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.startDate}}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span translate="parkswiftApp.reservedParking.dateEnd">DateEnd</span>
+                        <span translate="parkswiftApp.reservedParking.endDate">EndDate</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.dateEnd}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span translate="parkswiftApp.reservedParking.timeStart">TimeStart</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.timeStart}}" readonly>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.endDate}}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span translate="parkswiftApp.reservedParking.timeEnd">TimeEnd</span>
+                        <span translate="parkswiftApp.reservedParking.startTime">StartTime</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.timeEnd}}" readonly>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.startTime}}" readonly>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span translate="parkswiftApp.reservedParking.repeatBasis">RepeatBasis</span>
+                        <span translate="parkswiftApp.reservedParking.endTime">EndTime</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.repeatBasis}}" readonly>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.endTime}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.reservedParking.repeatOn">RepeatOn</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.repeatOn}}" readonly>
                     </td>
                 </tr>
                 <tr>
@@ -84,34 +76,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <span translate="parkswiftApp.reservedParking.parentId">ParentId</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.parentId}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span translate="parkswiftApp.reservedParking.createdAt">CreatedAt</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.createdAt}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span translate="parkswiftApp.reservedParking.modifiedAt">ModifiedAt</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.modifiedAt}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <span translate="parkswiftApp.reservedParking.parkingSpace">parkingSpace</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{reservedParking.parkingSpace.description}}" readonly>
+                        <input type="text" class="input-sm form-control" value="{{reservedParking.parkingSpace.id}}" readonly>
                     </td>
                 </tr>
             </tbody>

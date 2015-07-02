@@ -8,29 +8,27 @@ angular.module('parkswiftApp')
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.dateStart = DateUtils.convertLocaleDateFromServer(data.dateStart);
-                    data.dateEnd = DateUtils.convertLocaleDateFromServer(data.dateEnd);
-                    data.timeStart = DateUtils.convertDateTimeFromServer(data.timeStart);
-                    data.timeEnd = DateUtils.convertDateTimeFromServer(data.timeEnd);
+                    data.startDate = DateUtils.convertLocaleDateFromServer(data.startDate);
+                    data.endDate = DateUtils.convertLocaleDateFromServer(data.endDate);
+                    data.startTime = DateUtils.convertDateTimeFromServer(data.startTime);
+                    data.endTime = DateUtils.convertDateTimeFromServer(data.endTime);
                     data.reservedOn = DateUtils.convertDateTimeFromServer(data.reservedOn);
-                    data.createdAt = DateUtils.convertDateTimeFromServer(data.createdAt);
-                    data.modifiedAt = DateUtils.convertDateTimeFromServer(data.modifiedAt);
                     return data;
                 }
             },
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
-                    data.dateStart = DateUtils.convertLocaleDateToServer(data.dateStart);
-                    data.dateEnd = DateUtils.convertLocaleDateToServer(data.dateEnd);
+                    data.startDate = DateUtils.convertLocaleDateToServer(data.startDate);
+                    data.endDate = DateUtils.convertLocaleDateToServer(data.endDate);
                     return angular.toJson(data);
                 }
             },
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
-                    data.dateStart = DateUtils.convertLocaleDateToServer(data.dateStart);
-                    data.dateEnd = DateUtils.convertLocaleDateToServer(data.dateEnd);
+                    data.startDate = DateUtils.convertLocaleDateToServer(data.startDate);
+                    data.endDate = DateUtils.convertLocaleDateToServer(data.endDate);
                     return angular.toJson(data);
                 }
             }

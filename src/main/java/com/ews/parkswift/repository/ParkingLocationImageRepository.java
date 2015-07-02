@@ -1,6 +1,6 @@
 package com.ews.parkswift.repository;
 
-import com.ews.parkswift.domain.ParkingSpaceImage;
+import com.ews.parkswift.domain.ParkingLocationImage;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the ParkingSpaceImage entity.
  */
-public interface ParkingSpaceImageRepository extends JpaRepository<ParkingSpaceImage,Long> {
+public interface ParkingLocationImageRepository extends JpaRepository<ParkingLocationImage,Long> {
 
 }

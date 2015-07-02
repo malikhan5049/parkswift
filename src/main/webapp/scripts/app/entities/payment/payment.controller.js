@@ -69,7 +69,7 @@ angular.module('parkswiftApp')
         };
 
         $scope.clear = function () {
-            $scope.payment = {amountPaid: null, transactionDateTime: null, status: null, paymentResponse: null, createdAt: null, id: null};
+            $scope.payment = {amountPaid: null, transactionDateTime: null, status: null, paypallPaymentResponse: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

@@ -12,21 +12,17 @@
             "detail": {
                 "title": "ReservedParking"
             },
-            "description": "Description",
-            "dateStart": "DateStart",
-            "dateEnd": "DateEnd",
-            "timeStart": "TimeStart",
-            "timeEnd": "TimeEnd",
-            "repeatBasis": "RepeatBasis",
+            "startDate": "StartDate",
+            "endDate": "EndDate",
+            "startTime": "StartTime",
+            "endTime": "EndTime",
+            "repeatOn": "RepeatOn",
             "repeatOccurrences": "RepeatOccurrences",
             "status": "Status",
             "reservedOn": "ReservedOn",
-            "parentId": "ParentId",
-            "createdAt": "CreatedAt",
-            "modifiedAt": "ModifiedAt",
-            "parkingSpace": "parkingSpace",
+            "payment": "payment",
             "reservedParkingRepeatOn": "reservedParkingRepeatOn",
-            "payment": "payment"
+            "parkingSpace": "parkingSpace"
         }
     }
 }

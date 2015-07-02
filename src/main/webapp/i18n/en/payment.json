@@ -15,8 +15,7 @@
             "amountPaid": "AmountPaid",
             "transactionDateTime": "TransactionDateTime",
             "status": "Status",
-            "paymentResponse": "PaymentResponse",
-            "createdAt": "CreatedAt",
+            "paypallPaymentResponse": "PaypallPaymentResponse",
             "user": "user",
             "reservedParking": "reservedParking"
         }

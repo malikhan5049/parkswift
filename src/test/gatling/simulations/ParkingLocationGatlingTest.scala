@@ -70,7 +70,7 @@ class ParkingLocationGatlingTest extends Simulation {
             .exec(http("Create new parkingLocation")
             .put("/api/parkingLocations")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "propertyType":"SAMPLE_TEXT", "numberOfSpaces":"0", "addressLine1":"SAMPLE_TEXT", "addressLine2":"SAMPLE_TEXT", "city":"SAMPLE_TEXT", "state":"SAMPLE_TEXT", "country":"SAMPLE_TEXT", "zipCode":"SAMPLE_TEXT", "longitude":null, "lattitude":null, "createdAt":"2020-01-01T00:00:00.000Z", "modifiedAt":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "bussinessType":"SAMPLE_TEXT", "addressLine1":"SAMPLE_TEXT", "addressLine2":"SAMPLE_TEXT", "city":"SAMPLE_TEXT", "state":"SAMPLE_TEXT", "country":"SAMPLE_TEXT", "zipCode":"SAMPLE_TEXT", "longitude":null, "lattitude":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_parkingLocation_url")))
             .pause(10)

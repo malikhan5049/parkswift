@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -18,28 +19,27 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A LookupEntry.
+ * A ParkingSpaceImage.
  */
+
 @Entity
-@Table(name = "LOOKUP_ENTRY")
+@Table(name = "PARKING_LOCATION_IMAGE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class LookupEntry implements Serializable {
+public class ParkingLocationImage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
-    @Column(name = "value", nullable = false)
-    private String value;
-
-    @Column(name = "description")
-    private String description;
+    @Column(name = "image", nullable = false)
+    @Lob
+    private byte[] image;
 
     @ManyToOne
     @JsonIgnore
-    private LookupHeader lookupHeader;
-    
+    private ParkingLocation parkingLocation;
+
     public Long getId() {
         return id;
     }
@@ -48,28 +48,20 @@ public class LookupEntry implements Serializable {
         this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
-    public String getDescription() {
-        return description;
+    public ParkingLocation getParkingLocation() {
+        return parkingLocation;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LookupHeader getLookupHeader() {
-        return lookupHeader;
-    }
-
-    public void setLookupHeader(LookupHeader lookupHeader) {
-        this.lookupHeader = lookupHeader;
+    public void setParkingLocation(ParkingLocation parkingLocation) {
+        this.parkingLocation = parkingLocation;
     }
 
     @Override
@@ -81,24 +73,23 @@ public class LookupEntry implements Serializable {
             return false;
         }
 
-        LookupEntry lookupEntry = (LookupEntry) o;
+        ParkingLocationImage parkingSpaceImage = (ParkingLocationImage) o;
 
-        if ( ! Objects.equals(id, lookupEntry.id)) return false;
+        if ( ! Objects.equals(image, parkingSpaceImage.image)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(image);
     }
 
     @Override
     public String toString() {
-        return "LookupEntry{" +
+        return "ParkingSpaceImage{" +
                 "id=" + id +
-                ", value='" + value + "'" +
-                ", description='" + description + "'" +
+                ", image='" + image + "'" +
                 '}';
     }
 }

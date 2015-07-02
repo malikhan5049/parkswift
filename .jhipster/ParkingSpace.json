@@ -2,16 +2,6 @@
     "relationships": [
         {
             "relationshipId": 1,
-            "relationshipName": "parkingLocation",
-            "relationshipNameCapitalized": "ParkingLocation",
-            "relationshipFieldName": "parkingLocation",
-            "otherEntityName": "parkingLocation",
-            "relationshipType": "many-to-one",
-            "otherEntityNameCapitalized": "ParkingLocation",
-            "otherEntityField": "addressLine1"
-        },
-        {
-            "relationshipId": 2,
             "relationshipName": "parkingSpaceVehicleType",
             "relationshipNameCapitalized": "ParkingSpaceVehicleType",
             "relationshipFieldName": "parkingSpaceVehicleType",
@@ -21,7 +11,7 @@
             "otherEntityRelationshipName": "parkingSpace"
         },
         {
-            "relationshipId": 3,
+            "relationshipId": 2,
             "relationshipName": "parkingSpacePriceEntry",
             "relationshipNameCapitalized": "ParkingSpacePriceEntry",
             "relationshipFieldName": "parkingSpacePriceEntry",
@@ -31,17 +21,17 @@
             "otherEntityRelationshipName": "parkingSpace"
         },
         {
-            "relationshipId": 4,
-            "relationshipName": "parkingSpaceImage",
-            "relationshipNameCapitalized": "ParkingSpaceImage",
-            "relationshipFieldName": "parkingSpaceImage",
-            "otherEntityName": "parkingSpaceImage",
+            "relationshipId": 3,
+            "relationshipName": "availableParking",
+            "relationshipNameCapitalized": "AvailableParking",
+            "relationshipFieldName": "availableParking",
+            "otherEntityName": "availableParking",
             "relationshipType": "one-to-many",
-            "otherEntityNameCapitalized": "ParkingSpaceImage",
+            "otherEntityNameCapitalized": "AvailableParking",
             "otherEntityRelationshipName": "parkingSpace"
         },
         {
-            "relationshipId": 5,
+            "relationshipId": 4,
             "relationshipName": "reservedParking",
             "relationshipNameCapitalized": "ReservedParking",
             "relationshipFieldName": "reservedParking",
@@ -51,14 +41,24 @@
             "otherEntityRelationshipName": "parkingSpace"
         },
         {
-            "relationshipId": 6,
-            "relationshipName": "availableParking",
-            "relationshipNameCapitalized": "AvailableParking",
-            "relationshipFieldName": "availableParking",
-            "otherEntityName": "availableParking",
+            "relationshipId": 5,
+            "relationshipName": "parkingSpaceImage",
+            "relationshipNameCapitalized": "ParkingSpaceImage",
+            "relationshipFieldName": "parkingSpaceImage",
+            "otherEntityName": "parkingSpaceImage",
             "relationshipType": "one-to-many",
-            "otherEntityNameCapitalized": "AvailableParking",
+            "otherEntityNameCapitalized": "ParkingSpaceImage",
             "otherEntityRelationshipName": "parkingSpace"
+        },
+        {
+            "relationshipId": 6,
+            "relationshipName": "parkingLocation",
+            "relationshipNameCapitalized": "ParkingLocation",
+            "relationshipFieldName": "parkingLocation",
+            "otherEntityName": "parkingLocation",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingLocation",
+            "otherEntityField": "addressLine1"
         }
     ],
     "fields": [
@@ -73,47 +73,38 @@
         },
         {
             "fieldId": 2,
-            "fieldName": "partOfBatch",
-            "fieldType": "Boolean",
-            "fieldNameCapitalized": "PartOfBatch",
-            "fieldNameUnderscored": "part_of_batch",
-            "fieldInJavaBeanMethod": "PartOfBatch",
+            "fieldName": "numberOfSpaces",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "NumberOfSpaces",
+            "fieldNameUnderscored": "number_of_spaces",
+            "fieldInJavaBeanMethod": "NumberOfSpaces",
             "fieldValidate": false
         },
         {
             "fieldId": 3,
-            "fieldName": "batchNumber",
-            "fieldType": "Integer",
-            "fieldNameCapitalized": "BatchNumber",
-            "fieldNameUnderscored": "batch_number",
-            "fieldInJavaBeanMethod": "BatchNumber",
+            "fieldName": "groupRecord",
+            "fieldType": "Boolean",
+            "fieldNameCapitalized": "GroupRecord",
+            "fieldNameUnderscored": "group_record",
+            "fieldInJavaBeanMethod": "GroupRecord",
             "fieldValidate": false
         },
         {
             "fieldId": 4,
+            "fieldName": "groupNumber",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "GroupNumber",
+            "fieldNameUnderscored": "group_number",
+            "fieldInJavaBeanMethod": "GroupNumber",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
             "fieldName": "fullReserved",
             "fieldType": "Boolean",
             "fieldNameCapitalized": "FullReserved",
             "fieldNameUnderscored": "full_reserved",
             "fieldInJavaBeanMethod": "FullReserved",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 5,
-            "fieldName": "createdAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "CreatedAt",
-            "fieldNameUnderscored": "created_at",
-            "fieldInJavaBeanMethod": "CreatedAt",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 6,
-            "fieldName": "modifiedAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "ModifiedAt",
-            "fieldNameUnderscored": "modified_at",
-            "fieldInJavaBeanMethod": "ModifiedAt",
             "fieldValidate": false
         }
     ],
@@ -121,12 +112,12 @@
     "fieldsContainOwnerOneToOne": false,
     "fieldsContainOneToMany": true,
     "fieldsContainLocalDate": false,
-    "fieldsContainCustomTime": true,
+    "fieldsContainCustomTime": false,
     "fieldsContainBigDecimal": false,
-    "fieldsContainDateTime": true,
+    "fieldsContainDateTime": false,
     "fieldsContainDate": false,
-    "changelogDate": "20150610112244",
+    "changelogDate": "20150630131707",
     "dto": "no",
-    "pagination": "infinite-scroll",
+    "pagination": "no",
     "validation": false
 }

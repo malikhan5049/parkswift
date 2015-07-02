@@ -24,7 +24,7 @@ import java.util.Objects;
  * A ReservedParking.
  */
 @Entity
-@Table(name = "RESERVEDPARKING")
+@Table(name = "PARKING_SPACE_RESERVED_ON")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ReservedParking implements Serializable {
 
@@ -32,39 +32,36 @@ public class ReservedParking implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "description")
-    private String description;
+    @NotNull
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
     @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
-    @Column(name = "date_start", nullable = false)
-    private LocalDate dateStart;
-
-    @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
-    @Column(name = "date_end", nullable = false)
-    private LocalDate dateEnd;
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
 
     @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "time_start", nullable = false)
-    private DateTime timeStart;
+    @Column(name = "start_time", nullable = false)
+    private DateTime startTime;
 
     @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @JsonSerialize(using = CustomDateTimeSerializer.class)
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "time_end", nullable = false)
-    private DateTime timeEnd;
+    @Column(name = "end_time", nullable = false)
+    private DateTime endTime;
 
-    @Column(name = "repeat_basis")
-    private String repeatBasis;
+    @Column(name = "repeat_on")
+    private String repeatOn;
 
     @Column(name = "repeat_occurrences")
     private Integer repeatOccurrences;
@@ -78,32 +75,17 @@ public class ReservedParking implements Serializable {
     @Column(name = "reserved_on", nullable = false)
     private DateTime reservedOn;
 
-    @Column(name = "parent_id")
-    private Integer parentId;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at", nullable = false)
-    private DateTime createdAt;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "modified_at", nullable = false)
-    private DateTime modifiedAt;
-
-    @ManyToOne
-    private ParkingSpace parkingSpace;
+    @OneToOne(mappedBy = "reservedParking")
+    @JsonIgnore
+    private Payment payment;
 
     @OneToMany(mappedBy = "reservedParking")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReservedParkingRepeatOn> reservedParkingRepeatOns = new HashSet<>();
 
-    @OneToOne(mappedBy = "reservedParking")
-    @JsonIgnore
-    private Payment payment;
+    @ManyToOne
+    private ParkingSpace parkingSpace;
 
     public Long getId() {
         return id;
@@ -113,52 +95,44 @@ public class ReservedParking implements Serializable {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getDateStart() {
-        return dateStart;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public LocalDate getDateEnd() {
-        return dateEnd;
+    public DateTime getStartTime() {
+        return startTime;
     }
 
-    public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setStartTime(DateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public DateTime getTimeStart() {
-        return timeStart;
+    public DateTime getEndTime() {
+        return endTime;
     }
 
-    public void setTimeStart(DateTime timeStart) {
-        this.timeStart = timeStart;
+    public void setEndTime(DateTime endTime) {
+        this.endTime = endTime;
     }
 
-    public DateTime getTimeEnd() {
-        return timeEnd;
+    public String getRepeatOn() {
+        return repeatOn;
     }
 
-    public void setTimeEnd(DateTime timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public String getRepeatBasis() {
-        return repeatBasis;
-    }
-
-    public void setRepeatBasis(String repeatBasis) {
-        this.repeatBasis = repeatBasis;
+    public void setRepeatOn(String repeatOn) {
+        this.repeatOn = repeatOn;
     }
 
     public Integer getRepeatOccurrences() {
@@ -185,36 +159,12 @@ public class ReservedParking implements Serializable {
         this.reservedOn = reservedOn;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(DateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
-    public ParkingSpace getParkingSpace() {
-        return parkingSpace;
-    }
-
-    public void setParkingSpace(ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Set<ReservedParkingRepeatOn> getReservedParkingRepeatOns() {
@@ -225,12 +175,12 @@ public class ReservedParking implements Serializable {
         this.reservedParkingRepeatOns = reservedParkingRepeatOns;
     }
 
-    public Payment getPayment() {
-        return payment;
+    public ParkingSpace getParkingSpace() {
+        return parkingSpace;
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public void setParkingSpace(ParkingSpace parkingSpace) {
+        this.parkingSpace = parkingSpace;
     }
 
     @Override
@@ -258,18 +208,14 @@ public class ReservedParking implements Serializable {
     public String toString() {
         return "ReservedParking{" +
                 "id=" + id +
-                ", description='" + description + "'" +
-                ", dateStart='" + dateStart + "'" +
-                ", dateEnd='" + dateEnd + "'" +
-                ", timeStart='" + timeStart + "'" +
-                ", timeEnd='" + timeEnd + "'" +
-                ", repeatBasis='" + repeatBasis + "'" +
+                ", startDate='" + startDate + "'" +
+                ", endDate='" + endDate + "'" +
+                ", startTime='" + startTime + "'" +
+                ", endTime='" + endTime + "'" +
+                ", repeatOn='" + repeatOn + "'" +
                 ", repeatOccurrences='" + repeatOccurrences + "'" +
                 ", status='" + status + "'" +
                 ", reservedOn='" + reservedOn + "'" +
-                ", parentId='" + parentId + "'" +
-                ", createdAt='" + createdAt + "'" +
-                ", modifiedAt='" + modifiedAt + "'" +
                 '}';
     }
 }

@@ -21,10 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,8 +38,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class ParkingLocationContactInfoResourceTest {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
     private static final String DEFAULT_FIRST_NAME = "SAMPLE_TEXT";
     private static final String UPDATED_FIRST_NAME = "UPDATED_TEXT";
     private static final String DEFAULT_LAST_NAME = "SAMPLE_TEXT";
@@ -56,14 +50,6 @@ public class ParkingLocationContactInfoResourceTest {
     private static final String UPDATED_EMAIL1 = "UPDATED_TEXT";
     private static final String DEFAULT_EMAIL2 = "SAMPLE_TEXT";
     private static final String UPDATED_EMAIL2 = "UPDATED_TEXT";
-
-    private static final DateTime DEFAULT_CREATED_AT = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_CREATED_AT = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_CREATED_AT_STR = dateTimeFormatter.print(DEFAULT_CREATED_AT);
-
-    private static final DateTime DEFAULT_MODIFIED_AT = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_MODIFIED_AT = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_MODIFIED_AT_STR = dateTimeFormatter.print(DEFAULT_MODIFIED_AT);
 
     @Inject
     private ParkingLocationContactInfoRepository parkingLocationContactInfoRepository;
@@ -89,8 +75,6 @@ public class ParkingLocationContactInfoResourceTest {
         parkingLocationContactInfo.setPhone2(DEFAULT_PHONE2);
         parkingLocationContactInfo.setEmail1(DEFAULT_EMAIL1);
         parkingLocationContactInfo.setEmail2(DEFAULT_EMAIL2);
-        parkingLocationContactInfo.setCreatedAt(DEFAULT_CREATED_AT);
-        parkingLocationContactInfo.setModifiedAt(DEFAULT_MODIFIED_AT);
     }
 
     @Test
@@ -114,8 +98,6 @@ public class ParkingLocationContactInfoResourceTest {
         assertThat(testParkingLocationContactInfo.getPhone2()).isEqualTo(DEFAULT_PHONE2);
         assertThat(testParkingLocationContactInfo.getEmail1()).isEqualTo(DEFAULT_EMAIL1);
         assertThat(testParkingLocationContactInfo.getEmail2()).isEqualTo(DEFAULT_EMAIL2);
-        assertThat(testParkingLocationContactInfo.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testParkingLocationContactInfo.getModifiedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_MODIFIED_AT);
     }
 
     @Test
@@ -134,9 +116,7 @@ public class ParkingLocationContactInfoResourceTest {
                 .andExpect(jsonPath("$.[*].phone1").value(hasItem(DEFAULT_PHONE1.toString())))
                 .andExpect(jsonPath("$.[*].phone2").value(hasItem(DEFAULT_PHONE2.toString())))
                 .andExpect(jsonPath("$.[*].email1").value(hasItem(DEFAULT_EMAIL1.toString())))
-                .andExpect(jsonPath("$.[*].email2").value(hasItem(DEFAULT_EMAIL2.toString())))
-                .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT_STR)))
-                .andExpect(jsonPath("$.[*].modifiedAt").value(hasItem(DEFAULT_MODIFIED_AT_STR)));
+                .andExpect(jsonPath("$.[*].email2").value(hasItem(DEFAULT_EMAIL2.toString())));
     }
 
     @Test
@@ -155,9 +135,7 @@ public class ParkingLocationContactInfoResourceTest {
             .andExpect(jsonPath("$.phone1").value(DEFAULT_PHONE1.toString()))
             .andExpect(jsonPath("$.phone2").value(DEFAULT_PHONE2.toString()))
             .andExpect(jsonPath("$.email1").value(DEFAULT_EMAIL1.toString()))
-            .andExpect(jsonPath("$.email2").value(DEFAULT_EMAIL2.toString()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT_STR))
-            .andExpect(jsonPath("$.modifiedAt").value(DEFAULT_MODIFIED_AT_STR));
+            .andExpect(jsonPath("$.email2").value(DEFAULT_EMAIL2.toString()));
     }
 
     @Test
@@ -183,8 +161,6 @@ public class ParkingLocationContactInfoResourceTest {
         parkingLocationContactInfo.setPhone2(UPDATED_PHONE2);
         parkingLocationContactInfo.setEmail1(UPDATED_EMAIL1);
         parkingLocationContactInfo.setEmail2(UPDATED_EMAIL2);
-        parkingLocationContactInfo.setCreatedAt(UPDATED_CREATED_AT);
-        parkingLocationContactInfo.setModifiedAt(UPDATED_MODIFIED_AT);
         restParkingLocationContactInfoMockMvc.perform(put("/api/parkingLocationContactInfos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(parkingLocationContactInfo)))
@@ -200,8 +176,6 @@ public class ParkingLocationContactInfoResourceTest {
         assertThat(testParkingLocationContactInfo.getPhone2()).isEqualTo(UPDATED_PHONE2);
         assertThat(testParkingLocationContactInfo.getEmail1()).isEqualTo(UPDATED_EMAIL1);
         assertThat(testParkingLocationContactInfo.getEmail2()).isEqualTo(UPDATED_EMAIL2);
-        assertThat(testParkingLocationContactInfo.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testParkingLocationContactInfo.getModifiedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_MODIFIED_AT);
     }
 
     @Test

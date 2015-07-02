@@ -1,13 +1,15 @@
 package com.ews.parkswift.web.rest;
 
 import com.ews.parkswift.Application;
-import com.ews.parkswift.domain.ParkingSpaceImage;
-import com.ews.parkswift.repository.ParkingSpaceImageRepository;
+import com.ews.parkswift.domain.ParkingLocationImage;
+import com.ews.parkswift.repository.ParkingLocationImageRepository;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static org.hamcrest.Matchers.hasItem;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -21,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.sql.rowset.serial.SerialBlob;
+
+import java.sql.Blob;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,35 +35,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test class for the ParkingSpaceImageResource REST controller.
  *
- * @see ParkingSpaceImageResource
+ * @see ParkingLocationImageResource
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
-public class ParkingSpaceImageResourceTest {
+public class ParkingLocationImageResourceTest {
 
-    private static final String DEFAULT_IMAGE = "SAMPLE_TEXT";
-    private static final String UPDATED_IMAGE = "UPDATED_TEXT";
+    private static final byte[] DEFAULT_IMAGE = "SAMPLE_TEXT".getBytes();
+    private static final byte[] UPDATED_IMAGE = "UPDATED_TEXT".getBytes();
 
     @Inject
-    private ParkingSpaceImageRepository parkingSpaceImageRepository;
+    private ParkingLocationImageRepository parkingSpaceImageRepository;
 
     private MockMvc restParkingSpaceImageMockMvc;
 
-    private ParkingSpaceImage parkingSpaceImage;
+    private ParkingLocationImage parkingSpaceImage;
 
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ParkingSpaceImageResource parkingSpaceImageResource = new ParkingSpaceImageResource();
+        ParkingLocationImageResource parkingSpaceImageResource = new ParkingLocationImageResource();
         ReflectionTestUtils.setField(parkingSpaceImageResource, "parkingSpaceImageRepository", parkingSpaceImageRepository);
         this.restParkingSpaceImageMockMvc = MockMvcBuilders.standaloneSetup(parkingSpaceImageResource).build();
     }
 
     @Before
     public void initTest() {
-        parkingSpaceImage = new ParkingSpaceImage();
+        parkingSpaceImage = new ParkingLocationImage();
         parkingSpaceImage.setImage(DEFAULT_IMAGE);
     }
 
@@ -74,9 +79,9 @@ public class ParkingSpaceImageResourceTest {
                 .andExpect(status().isCreated());
 
         // Validate the ParkingSpaceImage in the database
-        List<ParkingSpaceImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
+        List<ParkingLocationImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
         assertThat(parkingSpaceImages).hasSize(databaseSizeBeforeCreate + 1);
-        ParkingSpaceImage testParkingSpaceImage = parkingSpaceImages.get(parkingSpaceImages.size() - 1);
+        ParkingLocationImage testParkingSpaceImage = parkingSpaceImages.get(parkingSpaceImages.size() - 1);
         assertThat(testParkingSpaceImage.getImage()).isEqualTo(DEFAULT_IMAGE);
     }
 
@@ -95,7 +100,7 @@ public class ParkingSpaceImageResourceTest {
                 .andExpect(status().isBadRequest());
 
         // Validate the database is still empty
-        List<ParkingSpaceImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
+        List<ParkingLocationImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
         assertThat(parkingSpaceImages).hasSize(0);
     }
 
@@ -151,9 +156,9 @@ public class ParkingSpaceImageResourceTest {
                 .andExpect(status().isOk());
 
         // Validate the ParkingSpaceImage in the database
-        List<ParkingSpaceImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
+        List<ParkingLocationImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
         assertThat(parkingSpaceImages).hasSize(databaseSizeBeforeUpdate);
-        ParkingSpaceImage testParkingSpaceImage = parkingSpaceImages.get(parkingSpaceImages.size() - 1);
+        ParkingLocationImage testParkingSpaceImage = parkingSpaceImages.get(parkingSpaceImages.size() - 1);
         assertThat(testParkingSpaceImage.getImage()).isEqualTo(UPDATED_IMAGE);
     }
 
@@ -171,7 +176,7 @@ public class ParkingSpaceImageResourceTest {
                 .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<ParkingSpaceImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
+        List<ParkingLocationImage> parkingSpaceImages = parkingSpaceImageRepository.findAll();
         assertThat(parkingSpaceImages).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

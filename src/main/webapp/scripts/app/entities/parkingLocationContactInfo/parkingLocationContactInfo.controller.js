@@ -55,7 +55,7 @@ angular.module('parkswiftApp')
         };
 
         $scope.clear = function () {
-            $scope.parkingLocationContactInfo = {firstName: null, lastName: null, phone1: null, phone2: null, email1: null, email2: null, createdAt: null, modifiedAt: null, id: null};
+            $scope.parkingLocationContactInfo = {firstName: null, lastName: null, phone1: null, phone2: null, email1: null, email2: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

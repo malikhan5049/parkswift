@@ -11,6 +11,6 @@
         Added the entity user.
     -->
     <changeSet id="20150603055707" author="ali.khan">
-        <modifyDataType tableName="JHI_USER" columnName="login" newDataType="varchar(100)"/>
+        <modifyDataType tableName="USER" columnName="login" newDataType="varchar(100)"/>
     </changeSet>
 </databaseChangeLog>

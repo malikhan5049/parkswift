@@ -10,8 +10,8 @@
     <!--
         Added the entity ParkingLocationFacility.
     -->
-    <changeSet id="20150610085116" author="jhipster">
-        <createTable tableName="PARKINGLOCATIONFACILITY">
+    <changeSet id="20150610085116" author="ali.khan">
+        <createTable tableName="PARKING_LOCATION_FACILITY">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -22,10 +22,10 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="parkinglocation_id"
-                                 baseTableName="PARKINGLOCATIONFACILITY"
+                                 baseTableName="PARKING_LOCATION_FACILITY"
                                  constraintName="fk_parkinglocationfacility_parkinglocation_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGLOCATION"/>
+                                 referencedTableName="PARKING_LOCATION"/>
 
     </changeSet>
 </databaseChangeLog>

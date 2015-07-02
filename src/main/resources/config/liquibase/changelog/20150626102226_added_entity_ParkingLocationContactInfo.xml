@@ -10,8 +10,8 @@
     <!--
         Added the entity ParkingLocationContactInfo.
     -->
-    <changeSet id="20150610083154" author="jhipster">
-        <createTable tableName="PARKINGLOCATIONCONTACTINFO">
+    <changeSet id="20150626102226" author="ali.khan">
+        <createTable tableName="PARKING_LOCATION_CONTACT_INFO">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -21,13 +21,21 @@
             <column name="phone2" type="varchar(255)"/>
             <column name="email1" type="varchar(255)"/>
             <column name="email2" type="varchar(255)"/>
-            <column name="created_at" type="timestamp"/>
-            <column name="modified_at" type="timestamp"/>
+            <column name="created_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
-        <dropDefaultValue tableName="PARKINGLOCATIONCONTACTINFO" columnName="created_at" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="PARKINGLOCATIONCONTACTINFO" columnName="modified_at" columnDataType="datetime"/>
-
+        
+        <sql splitStatements="false"  dbms="mysql">
+		  CREATE TRIGGER update_PARKING_LOCATION_CONTACT_INFO_trg
+		    BEFORE UPDATE ON PARKING_LOCATION_CONTACT_INFO
+		      FOR EACH ROW BEGIN
+		        SET NEW.last_modified_at = NOW();
+		      END
+		</sql>
         
     </changeSet>
 </databaseChangeLog>

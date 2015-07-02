@@ -10,7 +10,7 @@ spring:
         databaseName: 
         serverName: 
         username: root
-        password: parkpass123 
+        password: rootpark 
         cachePrepStmts: true
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048

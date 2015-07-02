@@ -70,7 +70,7 @@ public class PaypallAccountResource {
     @Timed
     public List<PaypallAccount> getAll() {
         log.debug("REST request to get all PaypallAccounts");
-        return paypallAccountRepository.findAll();
+        return paypallAccountRepository.findAllForCurrentUser();
     }
 
     /**

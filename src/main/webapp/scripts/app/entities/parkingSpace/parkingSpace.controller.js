@@ -1,31 +1,18 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .controller('ParkingSpaceController', function ($scope, ParkingSpace, ParkingLocation, ParkingSpaceVehicleType, ParkingSpacePriceEntry, ParkingSpaceImage, ReservedParking, AvailableParking, ParseLinks) {
+    .controller('ParkingSpaceController', function ($scope, ParkingSpace, ParkingSpaceVehicleType, ParkingSpacePriceEntry, AvailableParking, ReservedParking, ParkingSpaceImage, ParkingLocation) {
         $scope.parkingSpaces = [];
-        $scope.parkinglocations = ParkingLocation.query();
         $scope.parkingspacevehicletypes = ParkingSpaceVehicleType.query();
         $scope.parkingspacepriceentrys = ParkingSpacePriceEntry.query();
-        $scope.parkingspaceimages = ParkingSpaceImage.query();
-        $scope.reservedparkings = ReservedParking.query();
         $scope.availableparkings = AvailableParking.query();
-        $scope.page = 1;
+        $scope.reservedparkings = ReservedParking.query();
+        $scope.parkingspaceimages = ParkingSpaceImage.query();
+        $scope.parkinglocations = ParkingLocation.query();
         $scope.loadAll = function() {
-            ParkingSpace.query({page: $scope.page, per_page: 20}, function(result, headers) {
-                $scope.links = ParseLinks.parse(headers('link'));
-                for (var i = 0; i < result.length; i++) {
-                    $scope.parkingSpaces.push(result[i]);
-                }
+            ParkingSpace.query(function(result) {
+               $scope.parkingSpaces = result;
             });
-        };
-        $scope.reset = function() {
-            $scope.page = 1;
-            $scope.parkingSpaces = [];
-            $scope.loadAll();
-        };
-        $scope.loadPage = function(page) {
-            $scope.page = page;
-            $scope.loadAll();
         };
         $scope.loadAll();
 
@@ -60,20 +47,20 @@ angular.module('parkswiftApp')
         $scope.confirmDelete = function (id) {
             ParkingSpace.delete({id: id},
                 function () {
-                    $scope.reset();
+                    $scope.loadAll();
                     $('#deleteParkingSpaceConfirmation').modal('hide');
                     $scope.clear();
                 });
         };
 
         $scope.refresh = function () {
-            $scope.reset();
+            $scope.loadAll();
             $('#saveParkingSpaceModal').modal('hide');
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.parkingSpace = {description: null, partOfBatch: null, batchNumber: null, fullReserved: null, createdAt: null, modifiedAt: null, id: null};
+            $scope.parkingSpace = {description: null, numberOfSpaces: null, groupRecord: null, groupNumber: null, fullReserved: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

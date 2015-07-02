@@ -12,8 +12,7 @@
             "detail": {
                 "title": "ParkingLocation"
             },
-            "propertyType": "PropertyType",
-            "numberOfSpaces": "NumberOfSpaces",
+            "bussinessType": "BussinessType",
             "addressLine1": "AddressLine1",
             "addressLine2": "AddressLine2",
             "city": "City",
@@ -22,8 +21,6 @@
             "zipCode": "ZipCode",
             "longitude": "Longitude",
             "lattitude": "Lattitude",
-            "createdAt": "CreatedAt",
-            "modifiedAt": "ModifiedAt",
             "parkingLocationContactInfo": "parkingLocationContactInfo",
             "paypallAccount": "paypallAccount",
             "user": "user",

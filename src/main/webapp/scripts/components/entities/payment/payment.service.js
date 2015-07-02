@@ -9,7 +9,6 @@ angular.module('parkswiftApp')
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
                     data.transactionDateTime = DateUtils.convertDateTimeFromServer(data.transactionDateTime);
-                    data.createdAt = DateUtils.convertDateTimeFromServer(data.createdAt);
                     return data;
                 }
             },

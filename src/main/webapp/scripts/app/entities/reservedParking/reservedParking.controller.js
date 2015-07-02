@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .controller('ReservedParkingController', function ($scope, ReservedParking, ParkingSpace, ReservedParkingRepeatOn, Payment, ParseLinks) {
+    .controller('ReservedParkingController', function ($scope, ReservedParking, Payment, ReservedParkingRepeatOn, ParkingSpace, ParseLinks) {
         $scope.reservedParkings = [];
-        $scope.parkingspaces = ParkingSpace.query();
-        $scope.reservedparkingrepeatons = ReservedParkingRepeatOn.query();
         $scope.payments = Payment.query();
+        $scope.reservedparkingrepeatons = ReservedParkingRepeatOn.query();
+        $scope.parkingspaces = ParkingSpace.query();
         $scope.page = 1;
         $scope.loadAll = function() {
             ReservedParking.query({page: $scope.page, per_page: 20}, function(result, headers) {
@@ -70,7 +70,7 @@ angular.module('parkswiftApp')
         };
 
         $scope.clear = function () {
-            $scope.reservedParking = {description: null, dateStart: null, dateEnd: null, timeStart: null, timeEnd: null, repeatBasis: null, repeatOccurrences: null, status: null, reservedOn: null, parentId: null, createdAt: null, modifiedAt: null, id: null};
+            $scope.reservedParking = {startDate: null, endDate: null, startTime: null, endTime: null, repeatOn: null, repeatOccurrences: null, status: null, reservedOn: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

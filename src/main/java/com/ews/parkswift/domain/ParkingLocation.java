@@ -1,17 +1,16 @@
 package com.ews.parkswift.domain;
 
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -22,7 +21,7 @@ import java.util.Objects;
  * A ParkingLocation.
  */
 @Entity
-@Table(name = "PARKINGLOCATION")
+@Table(name = "PARKING_LOCATION")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingLocation implements Serializable {
 
@@ -31,12 +30,9 @@ public class ParkingLocation implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "property_type", nullable = false)
-    private String propertyType;
-
-    @NotNull
-    @Column(name = "number_of_spaces", nullable = false)
-    private Integer numberOfSpaces;
+    @Column(name = "bussiness_type", nullable = false)
+    @InLookupHeader(code = LookupHeaderCode.LOC_TYPE)
+    private String bussinessType;
 
     @NotNull
     @Column(name = "address_line1", nullable = false)
@@ -61,45 +57,55 @@ public class ParkingLocation implements Serializable {
     private String zipCode;
 
     @NotNull
-    @Column(name = "longitude", precision=10, scale=2, nullable = false)
+    @Column(name = "longitude", precision=10, scale=7, nullable = false)
     private BigDecimal longitude;
 
     @NotNull
-    @Column(name = "lattitude", precision=10, scale=2, nullable = false)
+    @Column(name = "lattitude", precision=10, scale=7, nullable = false)
     private BigDecimal lattitude;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "created_at", nullable = false)
-    private DateTime createdAt;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "modified_at", nullable = false)
-    private DateTime modifiedAt;
-
+    
+    @Valid
     @OneToOne
     private ParkingLocationContactInfo parkingLocationContactInfo;
-
+    
+    @Valid
     @ManyToOne
     private PaypallAccount paypallAccount;
 
     @ManyToOne
     @JsonIgnore
     private User user;
-
-    @OneToMany(mappedBy = "parkingLocation")
+    
+    @Valid
+    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
-
+    
+    @OneToMany(mappedBy = "parkingLocation", cascade = {CascadeType.ALL})
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<ParkingLocationImage> parkingLocationImages = new HashSet<>();
+    
     @OneToMany(mappedBy = "parkingLocation")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpace> parkingSpaces = new HashSet<>();
+    
+    
+    
+    
+    
 
-    public Long getId() {
+    public Set<ParkingLocationImage> getParkingLocationImages() {
+		return parkingLocationImages;
+	}
+
+	public void setParkingLocationImages(
+			Set<ParkingLocationImage> parkingLocationImages) {
+		this.parkingLocationImages = parkingLocationImages;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -107,20 +113,12 @@ public class ParkingLocation implements Serializable {
         this.id = id;
     }
 
-    public String getPropertyType() {
-        return propertyType;
+    public String getBussinessType() {
+        return bussinessType;
     }
 
-    public void setPropertyType(String propertyType) {
-        this.propertyType = propertyType;
-    }
-
-    public Integer getNumberOfSpaces() {
-        return numberOfSpaces;
-    }
-
-    public void setNumberOfSpaces(Integer numberOfSpaces) {
-        this.numberOfSpaces = numberOfSpaces;
+    public void setBussinessType(String bussinessType) {
+        this.bussinessType = bussinessType;
     }
 
     public String getAddressLine1() {
@@ -185,22 +183,6 @@ public class ParkingLocation implements Serializable {
 
     public void setLattitude(BigDecimal lattitude) {
         this.lattitude = lattitude;
-    }
-
-    public DateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(DateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public DateTime getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(DateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
     }
 
     public ParkingLocationContactInfo getParkingLocationContactInfo() {
@@ -268,8 +250,7 @@ public class ParkingLocation implements Serializable {
     public String toString() {
         return "ParkingLocation{" +
                 "id=" + id +
-                ", propertyType='" + propertyType + "'" +
-                ", numberOfSpaces='" + numberOfSpaces + "'" +
+                ", bussinessType='" + bussinessType + "'" +
                 ", addressLine1='" + addressLine1 + "'" +
                 ", addressLine2='" + addressLine2 + "'" +
                 ", city='" + city + "'" +
@@ -278,8 +259,6 @@ public class ParkingLocation implements Serializable {
                 ", zipCode='" + zipCode + "'" +
                 ", longitude='" + longitude + "'" +
                 ", lattitude='" + lattitude + "'" +
-                ", createdAt='" + createdAt + "'" +
-                ", modifiedAt='" + modifiedAt + "'" +
                 '}';
     }
 }

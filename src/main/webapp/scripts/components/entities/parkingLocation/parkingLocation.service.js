@@ -8,8 +8,6 @@ angular.module('parkswiftApp')
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.createdAt = DateUtils.convertDateTimeFromServer(data.createdAt);
-                    data.modifiedAt = DateUtils.convertDateTimeFromServer(data.modifiedAt);
                     return data;
                 }
             },

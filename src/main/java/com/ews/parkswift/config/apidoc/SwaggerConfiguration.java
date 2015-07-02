@@ -32,7 +32,7 @@ public class SwaggerConfiguration implements EnvironmentAware {
 
     private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
 
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/availableParkings/*";
+    public static final String DEFAULT_INCLUDE_PATTERN = "/api/availableParkingss/*";
 
     private RelaxedPropertyResolver propertyResolver;
 

@@ -10,16 +10,23 @@
     <!--
         Added the entity LookupHeader.
     -->
-    <changeSet id="20150610073956" author="jhipster">
-        <createTable tableName="LOOKUPHEADER">
+    <changeSet id="20150610073956" author="ali.khan">
+        <createTable tableName="LOOKUP_HEADER">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="code" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="description" type="varchar(255)"/>
         </createTable>
-        
+        <sql splitStatements="false"  dbms="mysql, h2">
+		  insert into lookup_header(code, description)
+		  values ('LOC_TYPE', 'Location Types (Residential, Commercial)'),
+		  ('LOC_FACILITY', 'Location Facilities'),
+		  ('PS_PP', 'Parking Space Price plan'),
+		  ('PS_VT', 'Parking Space Vehicle Type')
+		</sql>
+		
     </changeSet>
 </databaseChangeLog>

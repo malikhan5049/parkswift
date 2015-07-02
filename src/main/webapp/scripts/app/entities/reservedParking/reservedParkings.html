@@ -31,71 +31,65 @@
                         </div>
 
                         <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.description">Description</label>
-                            <input type="text" class="form-control" name="description"
-                                   ng-model="reservedParking.description">
+                            <label translate="parkswiftApp.reservedParking.startDate">StartDate</label>
+                            <input type="date" class="form-control" name="startDate"
+                                   ng-model="reservedParking.startDate" required>
 
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.dateStart">DateStart</label>
-                            <input type="date" class="form-control" name="dateStart"
-                                   ng-model="reservedParking.dateStart" required>
-
-                            <div ng-show="editForm.dateStart.$invalid">
+                            <div ng-show="editForm.startDate.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.dateStart.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.startDate.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.dateEnd">DateEnd</label>
-                            <input type="date" class="form-control" name="dateEnd"
-                                   ng-model="reservedParking.dateEnd" required>
+                            <label translate="parkswiftApp.reservedParking.endDate">EndDate</label>
+                            <input type="date" class="form-control" name="endDate"
+                                   ng-model="reservedParking.endDate" required>
 
-                            <div ng-show="editForm.dateEnd.$invalid">
+                            <div ng-show="editForm.endDate.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.dateEnd.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.endDate.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.timeStart">TimeStart</label>
-                            <input type="datetime-local" class="form-control" name="timeStart"
-                                   ng-model="reservedParking.timeStart" ng-model-options="{timezone: 'UTC'}" required>
+                            <label translate="parkswiftApp.reservedParking.startTime">StartTime</label>
+                            <input type="datetime-local" class="form-control" name="startTime"
+                                   ng-model="reservedParking.startTime" ng-model-options="{timezone: 'UTC'}" required>
 
-                            <div ng-show="editForm.timeStart.$invalid">
+                            <div ng-show="editForm.startTime.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.timeStart.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.startTime.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.timeStart.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                   ng-show="editForm.startTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
                                     This field should be a date and time.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.timeEnd">TimeEnd</label>
-                            <input type="datetime-local" class="form-control" name="timeEnd"
-                                   ng-model="reservedParking.timeEnd" ng-model-options="{timezone: 'UTC'}" required>
+                            <label translate="parkswiftApp.reservedParking.endTime">EndTime</label>
+                            <input type="datetime-local" class="form-control" name="endTime"
+                                   ng-model="reservedParking.endTime" ng-model-options="{timezone: 'UTC'}" required>
 
-                            <div ng-show="editForm.timeEnd.$invalid">
+                            <div ng-show="editForm.endTime.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.timeEnd.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.endTime.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.timeEnd.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                   ng-show="editForm.endTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
                                     This field should be a date and time.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.repeatBasis">RepeatBasis</label>
-                            <input type="text" class="form-control" name="repeatBasis"
-                                   ng-model="reservedParking.repeatBasis">
+                            <label translate="parkswiftApp.reservedParking.repeatOn">RepeatOn</label>
+                            <input type="text" class="form-control" name="repeatOn"
+                                   ng-model="reservedParking.repeatOn">
 
                         </div>
                         <div class="form-group">
@@ -116,28 +110,10 @@
                                    ng-model="reservedParking.reservedOn" ng-model-options="{timezone: 'UTC'}">
 
                         </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.parentId">ParentId</label>
-                            <input type="number" class="form-control" name="parentId"
-                                   ng-model="reservedParking.parentId">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.createdAt">CreatedAt</label>
-                            <input type="datetime-local" class="form-control" name="createdAt"
-                                   ng-model="reservedParking.createdAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.reservedParking.modifiedAt">ModifiedAt</label>
-                            <input type="datetime-local" class="form-control" name="modifiedAt"
-                                   ng-model="reservedParking.modifiedAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
 
                         <div class="form-group">
                             <label translate="parkswiftApp.reservedParking.parkingSpace">parkingSpace</label>
-                            <select class="form-control" name="parkingSpace" ng-model="reservedParking.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.description for parkingSpace in parkingspaces">
+                            <select class="form-control" name="parkingSpace" ng-model="reservedParking.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.id for parkingSpace in parkingspaces">
                             </select>
                         </div>
                     </div>
@@ -184,18 +160,14 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th translate="parkswiftApp.reservedParking.description">Description</th>
-                    <th translate="parkswiftApp.reservedParking.dateStart">DateStart</th>
-                    <th translate="parkswiftApp.reservedParking.dateEnd">DateEnd</th>
-                    <th translate="parkswiftApp.reservedParking.timeStart">TimeStart</th>
-                    <th translate="parkswiftApp.reservedParking.timeEnd">TimeEnd</th>
-                    <th translate="parkswiftApp.reservedParking.repeatBasis">RepeatBasis</th>
+                    <th translate="parkswiftApp.reservedParking.startDate">StartDate</th>
+                    <th translate="parkswiftApp.reservedParking.endDate">EndDate</th>
+                    <th translate="parkswiftApp.reservedParking.startTime">StartTime</th>
+                    <th translate="parkswiftApp.reservedParking.endTime">EndTime</th>
+                    <th translate="parkswiftApp.reservedParking.repeatOn">RepeatOn</th>
                     <th translate="parkswiftApp.reservedParking.repeatOccurrences">RepeatOccurrences</th>
                     <th translate="parkswiftApp.reservedParking.status">Status</th>
                     <th translate="parkswiftApp.reservedParking.reservedOn">ReservedOn</th>
-                    <th translate="parkswiftApp.reservedParking.parentId">ParentId</th>
-                    <th translate="parkswiftApp.reservedParking.createdAt">CreatedAt</th>
-                    <th translate="parkswiftApp.reservedParking.modifiedAt">ModifiedAt</th>
                     <th translate="parkswiftApp.reservedParking.parkingSpace">parkingSpace</th>
                     <th></th>
                 </tr>
@@ -203,19 +175,15 @@
             <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
                 <tr ng-repeat="reservedParking in reservedParkings">
                     <td><a ui-sref="reservedParkingDetail({id:reservedParking.id})">{{reservedParking.id}}</a></td>
-                    <td>{{reservedParking.description}}</td>
-                    <td>{{reservedParking.dateStart}}</td>
-                    <td>{{reservedParking.dateEnd}}</td>
-                    <td>{{reservedParking.timeStart}}</td>
-                    <td>{{reservedParking.timeEnd}}</td>
-                    <td>{{reservedParking.repeatBasis}}</td>
+                    <td>{{reservedParking.startDate}}</td>
+                    <td>{{reservedParking.endDate}}</td>
+                    <td>{{reservedParking.startTime}}</td>
+                    <td>{{reservedParking.endTime}}</td>
+                    <td>{{reservedParking.repeatOn}}</td>
                     <td>{{reservedParking.repeatOccurrences}}</td>
                     <td>{{reservedParking.status}}</td>
                     <td>{{reservedParking.reservedOn}}</td>
-                    <td>{{reservedParking.parentId}}</td>
-                    <td>{{reservedParking.createdAt}}</td>
-                    <td>{{reservedParking.modifiedAt}}</td>
-                    <td>{{reservedParking.parkingSpace.description}}</td>
+                    <td>{{reservedParking.parkingSpace.id}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="reservedParkingDetail({id:reservedParking.id})"

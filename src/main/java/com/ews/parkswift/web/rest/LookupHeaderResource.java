@@ -73,20 +73,19 @@ public class LookupHeaderResource {
         return lookupHeaderRepository.findAll();
     }
 
-    /**
-     * GET  /lookupHeaders/:id -> get the "id" lookupHeader.
-     */
-    @RequestMapping(value = "/lookupHeaders/{id}",
+
+    
+    @RequestMapping(value = "/lookupHeaders/{code}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<LookupHeader> get(@PathVariable Long id) {
-        log.debug("REST request to get LookupHeader : {}", id);
-        return Optional.ofNullable(lookupHeaderRepository.findOne(id))
-            .map(lookupHeader -> new ResponseEntity<>(
-                lookupHeader,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<LookupHeader> getByCode(@PathVariable String code) {
+        log.debug("REST request to get LookupHeader : {}", code);
+        return Optional.ofNullable(lookupHeaderRepository.findAllByCode(code))
+                .map(lookupHeader -> new ResponseEntity<>(
+                    lookupHeader,
+                    HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**

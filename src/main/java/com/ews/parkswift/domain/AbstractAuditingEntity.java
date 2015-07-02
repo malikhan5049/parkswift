@@ -33,7 +33,7 @@ public abstract class AbstractAuditingEntity {
     @CreatedDate
     @NotNull
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_at", nullable = false)
     @JsonIgnore
     private DateTime createdDate = DateTime.now();
 
@@ -44,7 +44,7 @@ public abstract class AbstractAuditingEntity {
 
     @LastModifiedDate
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "last_modified_date")
+    @Column(name = "last_modified_at")
     @JsonIgnore
     private DateTime lastModifiedDate = DateTime.now();
 

@@ -10,8 +10,8 @@
     <!--
         Added the entity AvailableParkingRepeatOn.
     -->
-    <changeSet id="20150610113355" author="jhipster">
-        <createTable tableName="AVAILABLEPARKINGREPEATON">
+    <changeSet id="20150610113355" author="ali.khan">
+        <createTable tableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -21,10 +21,10 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="availableparking_id"
-                                 baseTableName="AVAILABLEPARKINGREPEATON"
+                                 baseTableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON"
                                  constraintName="fk_availableparkingrepeaton_availableparking_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="AVAILABLEPARKING"/>
+                                 referencedTableName="PARKING_SPACE_AVAILABLE_ON"/>
 
     </changeSet>
 </databaseChangeLog>

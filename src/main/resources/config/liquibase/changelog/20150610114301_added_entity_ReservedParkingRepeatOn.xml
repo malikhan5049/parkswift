@@ -10,8 +10,8 @@
     <!--
         Added the entity ReservedParkingRepeatOn.
     -->
-    <changeSet id="20150610114301" author="jhipster">
-        <createTable tableName="RESERVEDPARKINGREPEATON">
+    <changeSet id="20150610114301" author="ali.khan">
+        <createTable tableName="PARKING_SPACE_RESERVATION_REPEAT_ON">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -21,10 +21,10 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="reservedparking_id"
-                                 baseTableName="RESERVEDPARKINGREPEATON"
+                                 baseTableName="PARKING_SPACE_RESERVATION_REPEAT_ON"
                                  constraintName="fk_reservedparkingrepeaton_reservedparking_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="RESERVEDPARKING"/>
+                                 referencedTableName="PARKING_SPACE_RESERVED_ON"/>
 
     </changeSet>
 </databaseChangeLog>

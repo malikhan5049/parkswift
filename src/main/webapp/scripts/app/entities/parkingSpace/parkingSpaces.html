@@ -37,33 +37,27 @@
 
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.parkingSpace.partOfBatch">PartOfBatch</label>
-                            <input type="checkbox" class="form-control" name="partOfBatch"
-                                   ng-model="parkingSpace.partOfBatch">
+                            <label translate="parkswiftApp.parkingSpace.numberOfSpaces">NumberOfSpaces</label>
+                            <input type="number" class="form-control" name="numberOfSpaces"
+                                   ng-model="parkingSpace.numberOfSpaces">
 
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.parkingSpace.batchNumber">BatchNumber</label>
-                            <input type="number" class="form-control" name="batchNumber"
-                                   ng-model="parkingSpace.batchNumber">
+                            <label translate="parkswiftApp.parkingSpace.groupRecord">GroupRecord</label>
+                            <input type="checkbox" class="form-control" name="groupRecord"
+                                   ng-model="parkingSpace.groupRecord">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingSpace.groupNumber">GroupNumber</label>
+                            <input type="number" class="form-control" name="groupNumber"
+                                   ng-model="parkingSpace.groupNumber">
 
                         </div>
                         <div class="form-group">
                             <label translate="parkswiftApp.parkingSpace.fullReserved">FullReserved</label>
                             <input type="checkbox" class="form-control" name="fullReserved"
                                    ng-model="parkingSpace.fullReserved">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingSpace.createdAt">CreatedAt</label>
-                            <input type="datetime-local" class="form-control" name="createdAt"
-                                   ng-model="parkingSpace.createdAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingSpace.modifiedAt">ModifiedAt</label>
-                            <input type="datetime-local" class="form-control" name="modifiedAt"
-                                   ng-model="parkingSpace.modifiedAt" ng-model-options="{timezone: 'UTC'}">
 
                         </div>
 
@@ -117,24 +111,22 @@
                 <tr>
                     <th>ID</th>
                     <th translate="parkswiftApp.parkingSpace.description">Description</th>
-                    <th translate="parkswiftApp.parkingSpace.partOfBatch">PartOfBatch</th>
-                    <th translate="parkswiftApp.parkingSpace.batchNumber">BatchNumber</th>
+                    <th translate="parkswiftApp.parkingSpace.numberOfSpaces">NumberOfSpaces</th>
+                    <th translate="parkswiftApp.parkingSpace.groupRecord">GroupRecord</th>
+                    <th translate="parkswiftApp.parkingSpace.groupNumber">GroupNumber</th>
                     <th translate="parkswiftApp.parkingSpace.fullReserved">FullReserved</th>
-                    <th translate="parkswiftApp.parkingSpace.createdAt">CreatedAt</th>
-                    <th translate="parkswiftApp.parkingSpace.modifiedAt">ModifiedAt</th>
                     <th translate="parkswiftApp.parkingSpace.parkingLocation">parkingLocation</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+            <tbody>
                 <tr ng-repeat="parkingSpace in parkingSpaces">
                     <td><a ui-sref="parkingSpaceDetail({id:parkingSpace.id})">{{parkingSpace.id}}</a></td>
                     <td>{{parkingSpace.description}}</td>
-                    <td>{{parkingSpace.partOfBatch}}</td>
-                    <td>{{parkingSpace.batchNumber}}</td>
+                    <td>{{parkingSpace.numberOfSpaces}}</td>
+                    <td>{{parkingSpace.groupRecord}}</td>
+                    <td>{{parkingSpace.groupNumber}}</td>
                     <td>{{parkingSpace.fullReserved}}</td>
-                    <td>{{parkingSpace.createdAt}}</td>
-                    <td>{{parkingSpace.modifiedAt}}</td>
                     <td>{{parkingSpace.parkingLocation.addressLine1}}</td>
                     <td>
                         <button type="submit"

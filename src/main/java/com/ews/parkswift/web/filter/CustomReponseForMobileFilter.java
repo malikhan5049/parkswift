@@ -41,7 +41,10 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			if(httpStatus.is4xxClientError() || httpStatus.is5xxServerError()){
 				failureMessage = responseContent;
 				responseContent = "";
+				if(responseWrapper.getHeader("Failure")!=null)
+					failureMessage = responseWrapper.getHeader("Failure");
 			}
+			
 			
 			if(httpRequest.getMethod().equals(HttpMethod.POST.name()) && responseWrapper.getHeader("Location")!=null)
 				responseContent = responseWrapper.getHeader("Location");

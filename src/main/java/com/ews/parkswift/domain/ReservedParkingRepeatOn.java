@@ -14,7 +14,7 @@ import java.util.Objects;
  * A ReservedParkingRepeatOn.
  */
 @Entity
-@Table(name = "RESERVEDPARKINGREPEATON")
+@Table(name = "PARKING_SPACE_RESERVATION_REPEAT_ON")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ReservedParkingRepeatOn implements Serializable {
 

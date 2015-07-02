@@ -54,12 +54,8 @@ public class PaymentResourceTest {
     private static final String DEFAULT_TRANSACTION_DATE_TIME_STR = dateTimeFormatter.print(DEFAULT_TRANSACTION_DATE_TIME);
     private static final String DEFAULT_STATUS = "SAMPLE_TEXT";
     private static final String UPDATED_STATUS = "UPDATED_TEXT";
-    private static final String DEFAULT_PAYMENT_RESPONSE = "SAMPLE_TEXT";
-    private static final String UPDATED_PAYMENT_RESPONSE = "UPDATED_TEXT";
-
-    private static final DateTime DEFAULT_CREATED_AT = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_CREATED_AT = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_CREATED_AT_STR = dateTimeFormatter.print(DEFAULT_CREATED_AT);
+    private static final String DEFAULT_PAYPALL_PAYMENT_RESPONSE = "SAMPLE_TEXT";
+    private static final String UPDATED_PAYPALL_PAYMENT_RESPONSE = "UPDATED_TEXT";
 
     @Inject
     private PaymentRepository paymentRepository;
@@ -82,8 +78,7 @@ public class PaymentResourceTest {
         payment.setAmountPaid(DEFAULT_AMOUNT_PAID);
         payment.setTransactionDateTime(DEFAULT_TRANSACTION_DATE_TIME);
         payment.setStatus(DEFAULT_STATUS);
-        payment.setPaymentResponse(DEFAULT_PAYMENT_RESPONSE);
-        payment.setCreatedAt(DEFAULT_CREATED_AT);
+        payment.setPaypallPaymentResponse(DEFAULT_PAYPALL_PAYMENT_RESPONSE);
     }
 
     @Test
@@ -104,8 +99,7 @@ public class PaymentResourceTest {
         assertThat(testPayment.getAmountPaid()).isEqualTo(DEFAULT_AMOUNT_PAID);
         assertThat(testPayment.getTransactionDateTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_TRANSACTION_DATE_TIME);
         assertThat(testPayment.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testPayment.getPaymentResponse()).isEqualTo(DEFAULT_PAYMENT_RESPONSE);
-        assertThat(testPayment.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testPayment.getPaypallPaymentResponse()).isEqualTo(DEFAULT_PAYPALL_PAYMENT_RESPONSE);
     }
 
     @Test
@@ -141,8 +135,7 @@ public class PaymentResourceTest {
                 .andExpect(jsonPath("$.[*].amountPaid").value(hasItem(DEFAULT_AMOUNT_PAID.intValue())))
                 .andExpect(jsonPath("$.[*].transactionDateTime").value(hasItem(DEFAULT_TRANSACTION_DATE_TIME_STR)))
                 .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-                .andExpect(jsonPath("$.[*].paymentResponse").value(hasItem(DEFAULT_PAYMENT_RESPONSE.toString())))
-                .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT_STR)));
+                .andExpect(jsonPath("$.[*].paypallPaymentResponse").value(hasItem(DEFAULT_PAYPALL_PAYMENT_RESPONSE.toString())));
     }
 
     @Test
@@ -159,8 +152,7 @@ public class PaymentResourceTest {
             .andExpect(jsonPath("$.amountPaid").value(DEFAULT_AMOUNT_PAID.intValue()))
             .andExpect(jsonPath("$.transactionDateTime").value(DEFAULT_TRANSACTION_DATE_TIME_STR))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.paymentResponse").value(DEFAULT_PAYMENT_RESPONSE.toString()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT_STR));
+            .andExpect(jsonPath("$.paypallPaymentResponse").value(DEFAULT_PAYPALL_PAYMENT_RESPONSE.toString()));
     }
 
     @Test
@@ -183,8 +175,7 @@ public class PaymentResourceTest {
         payment.setAmountPaid(UPDATED_AMOUNT_PAID);
         payment.setTransactionDateTime(UPDATED_TRANSACTION_DATE_TIME);
         payment.setStatus(UPDATED_STATUS);
-        payment.setPaymentResponse(UPDATED_PAYMENT_RESPONSE);
-        payment.setCreatedAt(UPDATED_CREATED_AT);
+        payment.setPaypallPaymentResponse(UPDATED_PAYPALL_PAYMENT_RESPONSE);
         restPaymentMockMvc.perform(put("/api/payments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(payment)))
@@ -197,8 +188,7 @@ public class PaymentResourceTest {
         assertThat(testPayment.getAmountPaid()).isEqualTo(UPDATED_AMOUNT_PAID);
         assertThat(testPayment.getTransactionDateTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_TRANSACTION_DATE_TIME);
         assertThat(testPayment.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testPayment.getPaymentResponse()).isEqualTo(UPDATED_PAYMENT_RESPONSE);
-        assertThat(testPayment.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testPayment.getPaypallPaymentResponse()).isEqualTo(UPDATED_PAYPALL_PAYMENT_RESPONSE);
     }
 
     @Test

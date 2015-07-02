@@ -31,30 +31,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocation.propertyType">PropertyType</label>
-                            <input type="text" class="form-control" name="propertyType"
-                                   ng-model="parkingLocation.propertyType" required>
+                            <label translate="parkswiftApp.parkingLocation.bussinessType">BussinessType</label>
+                            <input type="text" class="form-control" name="bussinessType"
+                                   ng-model="parkingLocation.bussinessType" required>
 
-                            <div ng-show="editForm.propertyType.$invalid">
+                            <div ng-show="editForm.bussinessType.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.propertyType.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.bussinessType.$error.required" translate="entity.validation.required">
                                     This field is required.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocation.numberOfSpaces">NumberOfSpaces</label>
-                            <input type="number" class="form-control" name="numberOfSpaces"
-                                   ng-model="parkingLocation.numberOfSpaces" required>
-
-                            <div ng-show="editForm.numberOfSpaces.$invalid">
-                                <p class="help-block"
-                                   ng-show="editForm.numberOfSpaces.$error.required" translate="entity.validation.required">
-                                    This field is required.
-                                </p>
-                                <p class="help-block"
-                                   ng-show="editForm.numberOfSpaces.$error.number" translate="entity.validation.number">
-                                    This field should be a number.
                                 </p>
                             </div>
                         </div>
@@ -150,18 +134,6 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocation.createdAt">CreatedAt</label>
-                            <input type="datetime-local" class="form-control" name="createdAt"
-                                   ng-model="parkingLocation.createdAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocation.modifiedAt">ModifiedAt</label>
-                            <input type="datetime-local" class="form-control" name="modifiedAt"
-                                   ng-model="parkingLocation.modifiedAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
 
                         <div class="form-group">
                             <label translate="parkswiftApp.parkingLocation.paypallAccount">paypallAccount</label>
@@ -170,7 +142,7 @@
                         </div>
                         <div class="form-group">
                             <label translate="parkswiftApp.parkingLocation.user">user</label>
-                            <select class="form-control" name="user" ng-model="parkingLocation.user.id" ng-options="user.id as user.email for user in users">
+                            <select class="form-control" name="user" ng-model="parkingLocation.user.id" ng-options="user.id as user.login for user in users">
                             </select>
                         </div>
                     </div>
@@ -217,8 +189,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th translate="parkswiftApp.parkingLocation.propertyType">PropertyType</th>
-                    <th translate="parkswiftApp.parkingLocation.numberOfSpaces">NumberOfSpaces</th>
+                    <th translate="parkswiftApp.parkingLocation.bussinessType">BussinessType</th>
                     <th translate="parkswiftApp.parkingLocation.addressLine1">AddressLine1</th>
                     <th translate="parkswiftApp.parkingLocation.addressLine2">AddressLine2</th>
                     <th translate="parkswiftApp.parkingLocation.city">City</th>
@@ -227,18 +198,15 @@
                     <th translate="parkswiftApp.parkingLocation.zipCode">ZipCode</th>
                     <th translate="parkswiftApp.parkingLocation.longitude">Longitude</th>
                     <th translate="parkswiftApp.parkingLocation.lattitude">Lattitude</th>
-                    <th translate="parkswiftApp.parkingLocation.createdAt">CreatedAt</th>
-                    <th translate="parkswiftApp.parkingLocation.modifiedAt">ModifiedAt</th>
                     <th translate="parkswiftApp.parkingLocation.paypallAccount">paypallAccount</th>
                     <th translate="parkswiftApp.parkingLocation.user">user</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
                 <tr ng-repeat="parkingLocation in parkingLocations">
                     <td><a ui-sref="parkingLocationDetail({id:parkingLocation.id})">{{parkingLocation.id}}</a></td>
-                    <td>{{parkingLocation.propertyType}}</td>
-                    <td>{{parkingLocation.numberOfSpaces}}</td>
+                    <td>{{parkingLocation.bussinessType}}</td>
                     <td>{{parkingLocation.addressLine1}}</td>
                     <td>{{parkingLocation.addressLine2}}</td>
                     <td>{{parkingLocation.city}}</td>
@@ -247,10 +215,8 @@
                     <td>{{parkingLocation.zipCode}}</td>
                     <td>{{parkingLocation.longitude}}</td>
                     <td>{{parkingLocation.lattitude}}</td>
-                    <td>{{parkingLocation.createdAt}}</td>
-                    <td>{{parkingLocation.modifiedAt}}</td>
                     <td>{{parkingLocation.paypallAccount.email}}</td>
-                    <td>{{parkingLocation.user.email}}</td>
+                    <td>{{parkingLocation.user.login}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="parkingLocationDetail({id:parkingLocation.id})"

@@ -1,6 +1,7 @@
 package com.ews.parkswift.repository;
 
 import com.ews.parkswift.domain.ParkingLocation;
+
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface ParkingLocationRepository extends JpaRepository<ParkingLocation
 
     @Query("select parkingLocation from ParkingLocation parkingLocation where parkingLocation.user.login = ?#{principal.username}")
     List<ParkingLocation> findAllForCurrentUser();
-    
-    ParkingLocation findOneByParkingLocationContactInfoId(Long id);
+
+	ParkingLocation findOneByParkingLocationContactInfoId(Long id);
 
 }

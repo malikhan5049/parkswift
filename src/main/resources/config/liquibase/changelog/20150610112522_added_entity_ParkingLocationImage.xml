@@ -10,22 +10,22 @@
     <!--
         Added the entity ParkingSpaceImage.
     -->
-    <changeSet id="20150610112522" author="jhipster">
-        <createTable tableName="PARKINGSPACEIMAGE">
+    <changeSet id="20150610112522" author="ali.khan">
+        <createTable tableName="PARKING_LOCATION_IMAGE">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="image" type="varchar(255)">
+            <column name="image" type="longblob">
                 <constraints nullable="false" />
             </column>
-            <column name="parkingspace_id" type="bigint"/>
+            <column name="parkinglocation_id" type="bigint"/>
         </createTable>
         
-        <addForeignKeyConstraint baseColumnNames="parkingspace_id"
-                                 baseTableName="PARKINGSPACEIMAGE"
-                                 constraintName="fk_parkingspaceimage_parkingspace_id"
+        <addForeignKeyConstraint baseColumnNames="parkinglocation_id"
+                                 baseTableName="PARKING_LOCATION_IMAGE"
+                                 constraintName="fk_parkinglocationimage_parkinglocation_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGSPACE"/>
+                                 referencedTableName="PARKING_LOCATION"/>
 
     </changeSet>
 </databaseChangeLog>

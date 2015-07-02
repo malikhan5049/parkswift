@@ -10,23 +10,23 @@
     <!--
         Added the entity PaypallAccount.
     -->
-    <changeSet id="20150610081902" author="jhipster">
-        <createTable tableName="PAYPALLACCOUNT">
+    <changeSet id="20150610081902" author="ali.khan">
+        <createTable tableName="PAYPALL_ACCOUNT">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="email" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="false" unique="true" />
             </column>
             <column name="is_default" type="bit"/>
             <column name="user_id" type="bigint"/>
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="PAYPALLACCOUNT"
+                                 baseTableName="PAYPALL_ACCOUNT"
                                  constraintName="fk_paypallaccount_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="JHI_USER"/>
+                                 referencedTableName="USER"/>
 
     </changeSet>
 </databaseChangeLog>

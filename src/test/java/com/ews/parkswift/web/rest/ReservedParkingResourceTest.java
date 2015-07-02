@@ -45,24 +45,22 @@ public class ReservedParkingResourceTest {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-    private static final String DEFAULT_DESCRIPTION = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION = "UPDATED_TEXT";
 
-    private static final LocalDate DEFAULT_DATE_START = new LocalDate(0L);
-    private static final LocalDate UPDATED_DATE_START = new LocalDate();
+    private static final LocalDate DEFAULT_START_DATE = new LocalDate(0L);
+    private static final LocalDate UPDATED_START_DATE = new LocalDate();
 
-    private static final LocalDate DEFAULT_DATE_END = new LocalDate(0L);
-    private static final LocalDate UPDATED_DATE_END = new LocalDate();
+    private static final LocalDate DEFAULT_END_DATE = new LocalDate(0L);
+    private static final LocalDate UPDATED_END_DATE = new LocalDate();
 
-    private static final DateTime DEFAULT_TIME_START = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_TIME_START = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_TIME_START_STR = dateTimeFormatter.print(DEFAULT_TIME_START);
+    private static final DateTime DEFAULT_START_TIME = new DateTime(0L, DateTimeZone.UTC);
+    private static final DateTime UPDATED_START_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final String DEFAULT_START_TIME_STR = dateTimeFormatter.print(DEFAULT_START_TIME);
 
-    private static final DateTime DEFAULT_TIME_END = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_TIME_END = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_TIME_END_STR = dateTimeFormatter.print(DEFAULT_TIME_END);
-    private static final String DEFAULT_REPEAT_BASIS = "SAMPLE_TEXT";
-    private static final String UPDATED_REPEAT_BASIS = "UPDATED_TEXT";
+    private static final DateTime DEFAULT_END_TIME = new DateTime(0L, DateTimeZone.UTC);
+    private static final DateTime UPDATED_END_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final String DEFAULT_END_TIME_STR = dateTimeFormatter.print(DEFAULT_END_TIME);
+    private static final String DEFAULT_REPEAT_ON = "SAMPLE_TEXT";
+    private static final String UPDATED_REPEAT_ON = "UPDATED_TEXT";
 
     private static final Integer DEFAULT_REPEAT_OCCURRENCES = 0;
     private static final Integer UPDATED_REPEAT_OCCURRENCES = 1;
@@ -72,17 +70,6 @@ public class ReservedParkingResourceTest {
     private static final DateTime DEFAULT_RESERVED_ON = new DateTime(0L, DateTimeZone.UTC);
     private static final DateTime UPDATED_RESERVED_ON = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
     private static final String DEFAULT_RESERVED_ON_STR = dateTimeFormatter.print(DEFAULT_RESERVED_ON);
-
-    private static final Integer DEFAULT_PARENT_ID = 0;
-    private static final Integer UPDATED_PARENT_ID = 1;
-
-    private static final DateTime DEFAULT_CREATED_AT = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_CREATED_AT = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_CREATED_AT_STR = dateTimeFormatter.print(DEFAULT_CREATED_AT);
-
-    private static final DateTime DEFAULT_MODIFIED_AT = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_MODIFIED_AT = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
-    private static final String DEFAULT_MODIFIED_AT_STR = dateTimeFormatter.print(DEFAULT_MODIFIED_AT);
 
     @Inject
     private ReservedParkingRepository reservedParkingRepository;
@@ -102,18 +89,14 @@ public class ReservedParkingResourceTest {
     @Before
     public void initTest() {
         reservedParking = new ReservedParking();
-        reservedParking.setDescription(DEFAULT_DESCRIPTION);
-        reservedParking.setDateStart(DEFAULT_DATE_START);
-        reservedParking.setDateEnd(DEFAULT_DATE_END);
-        reservedParking.setTimeStart(DEFAULT_TIME_START);
-        reservedParking.setTimeEnd(DEFAULT_TIME_END);
-        reservedParking.setRepeatBasis(DEFAULT_REPEAT_BASIS);
+        reservedParking.setStartDate(DEFAULT_START_DATE);
+        reservedParking.setEndDate(DEFAULT_END_DATE);
+        reservedParking.setStartTime(DEFAULT_START_TIME);
+        reservedParking.setEndTime(DEFAULT_END_TIME);
+        reservedParking.setRepeatOn(DEFAULT_REPEAT_ON);
         reservedParking.setRepeatOccurrences(DEFAULT_REPEAT_OCCURRENCES);
         reservedParking.setStatus(DEFAULT_STATUS);
         reservedParking.setReservedOn(DEFAULT_RESERVED_ON);
-        reservedParking.setParentId(DEFAULT_PARENT_ID);
-        reservedParking.setCreatedAt(DEFAULT_CREATED_AT);
-        reservedParking.setModifiedAt(DEFAULT_MODIFIED_AT);
     }
 
     @Test
@@ -131,27 +114,23 @@ public class ReservedParkingResourceTest {
         List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(databaseSizeBeforeCreate + 1);
         ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
-        assertThat(testReservedParking.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testReservedParking.getDateStart()).isEqualTo(DEFAULT_DATE_START);
-        assertThat(testReservedParking.getDateEnd()).isEqualTo(DEFAULT_DATE_END);
-        assertThat(testReservedParking.getTimeStart().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_TIME_START);
-        assertThat(testReservedParking.getTimeEnd().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_TIME_END);
-        assertThat(testReservedParking.getRepeatBasis()).isEqualTo(DEFAULT_REPEAT_BASIS);
+        assertThat(testReservedParking.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testReservedParking.getEndDate()).isEqualTo(DEFAULT_END_DATE);
+        assertThat(testReservedParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testReservedParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testReservedParking.getRepeatOn()).isEqualTo(DEFAULT_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(DEFAULT_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testReservedParking.getReservedOn().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_RESERVED_ON);
-        assertThat(testReservedParking.getParentId()).isEqualTo(DEFAULT_PARENT_ID);
-        assertThat(testReservedParking.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_CREATED_AT);
-        assertThat(testReservedParking.getModifiedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_MODIFIED_AT);
     }
 
     @Test
     @Transactional
-    public void checkDateStartIsRequired() throws Exception {
+    public void checkStartDateIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(reservedParkingRepository.findAll()).hasSize(0);
         // set the field null
-        reservedParking.setDateStart(null);
+        reservedParking.setStartDate(null);
 
         // Create the ReservedParking, which fails.
         restReservedParkingMockMvc.perform(post("/api/reservedParkings")
@@ -166,11 +145,11 @@ public class ReservedParkingResourceTest {
 
     @Test
     @Transactional
-    public void checkDateEndIsRequired() throws Exception {
+    public void checkEndDateIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(reservedParkingRepository.findAll()).hasSize(0);
         // set the field null
-        reservedParking.setDateEnd(null);
+        reservedParking.setEndDate(null);
 
         // Create the ReservedParking, which fails.
         restReservedParkingMockMvc.perform(post("/api/reservedParkings")
@@ -185,11 +164,11 @@ public class ReservedParkingResourceTest {
 
     @Test
     @Transactional
-    public void checkTimeStartIsRequired() throws Exception {
+    public void checkStartTimeIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(reservedParkingRepository.findAll()).hasSize(0);
         // set the field null
-        reservedParking.setTimeStart(null);
+        reservedParking.setStartTime(null);
 
         // Create the ReservedParking, which fails.
         restReservedParkingMockMvc.perform(post("/api/reservedParkings")
@@ -204,11 +183,11 @@ public class ReservedParkingResourceTest {
 
     @Test
     @Transactional
-    public void checkTimeEndIsRequired() throws Exception {
+    public void checkEndTimeIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(reservedParkingRepository.findAll()).hasSize(0);
         // set the field null
-        reservedParking.setTimeEnd(null);
+        reservedParking.setEndTime(null);
 
         // Create the ReservedParking, which fails.
         restReservedParkingMockMvc.perform(post("/api/reservedParkings")
@@ -232,18 +211,14 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(reservedParking.getId().intValue())))
-                .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
-                .andExpect(jsonPath("$.[*].dateStart").value(hasItem(DEFAULT_DATE_START.toString())))
-                .andExpect(jsonPath("$.[*].dateEnd").value(hasItem(DEFAULT_DATE_END.toString())))
-                .andExpect(jsonPath("$.[*].timeStart").value(hasItem(DEFAULT_TIME_START_STR)))
-                .andExpect(jsonPath("$.[*].timeEnd").value(hasItem(DEFAULT_TIME_END_STR)))
-                .andExpect(jsonPath("$.[*].repeatBasis").value(hasItem(DEFAULT_REPEAT_BASIS.toString())))
+                .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
+                .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+                .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME_STR)))
+                .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME_STR)))
+                .andExpect(jsonPath("$.[*].repeatOn").value(hasItem(DEFAULT_REPEAT_ON.toString())))
                 .andExpect(jsonPath("$.[*].repeatOccurrences").value(hasItem(DEFAULT_REPEAT_OCCURRENCES)))
                 .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-                .andExpect(jsonPath("$.[*].reservedOn").value(hasItem(DEFAULT_RESERVED_ON_STR)))
-                .andExpect(jsonPath("$.[*].parentId").value(hasItem(DEFAULT_PARENT_ID)))
-                .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT_STR)))
-                .andExpect(jsonPath("$.[*].modifiedAt").value(hasItem(DEFAULT_MODIFIED_AT_STR)));
+                .andExpect(jsonPath("$.[*].reservedOn").value(hasItem(DEFAULT_RESERVED_ON_STR)));
     }
 
     @Test
@@ -257,18 +232,14 @@ public class ReservedParkingResourceTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(reservedParking.getId().intValue()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
-            .andExpect(jsonPath("$.dateStart").value(DEFAULT_DATE_START.toString()))
-            .andExpect(jsonPath("$.dateEnd").value(DEFAULT_DATE_END.toString()))
-            .andExpect(jsonPath("$.timeStart").value(DEFAULT_TIME_START_STR))
-            .andExpect(jsonPath("$.timeEnd").value(DEFAULT_TIME_END_STR))
-            .andExpect(jsonPath("$.repeatBasis").value(DEFAULT_REPEAT_BASIS.toString()))
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME_STR))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME_STR))
+            .andExpect(jsonPath("$.repeatOn").value(DEFAULT_REPEAT_ON.toString()))
             .andExpect(jsonPath("$.repeatOccurrences").value(DEFAULT_REPEAT_OCCURRENCES))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.reservedOn").value(DEFAULT_RESERVED_ON_STR))
-            .andExpect(jsonPath("$.parentId").value(DEFAULT_PARENT_ID))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT_STR))
-            .andExpect(jsonPath("$.modifiedAt").value(DEFAULT_MODIFIED_AT_STR));
+            .andExpect(jsonPath("$.reservedOn").value(DEFAULT_RESERVED_ON_STR));
     }
 
     @Test
@@ -288,18 +259,14 @@ public class ReservedParkingResourceTest {
 		int databaseSizeBeforeUpdate = reservedParkingRepository.findAll().size();
 
         // Update the reservedParking
-        reservedParking.setDescription(UPDATED_DESCRIPTION);
-        reservedParking.setDateStart(UPDATED_DATE_START);
-        reservedParking.setDateEnd(UPDATED_DATE_END);
-        reservedParking.setTimeStart(UPDATED_TIME_START);
-        reservedParking.setTimeEnd(UPDATED_TIME_END);
-        reservedParking.setRepeatBasis(UPDATED_REPEAT_BASIS);
+        reservedParking.setStartDate(UPDATED_START_DATE);
+        reservedParking.setEndDate(UPDATED_END_DATE);
+        reservedParking.setStartTime(UPDATED_START_TIME);
+        reservedParking.setEndTime(UPDATED_END_TIME);
+        reservedParking.setRepeatOn(UPDATED_REPEAT_ON);
         reservedParking.setRepeatOccurrences(UPDATED_REPEAT_OCCURRENCES);
         reservedParking.setStatus(UPDATED_STATUS);
         reservedParking.setReservedOn(UPDATED_RESERVED_ON);
-        reservedParking.setParentId(UPDATED_PARENT_ID);
-        reservedParking.setCreatedAt(UPDATED_CREATED_AT);
-        reservedParking.setModifiedAt(UPDATED_MODIFIED_AT);
         restReservedParkingMockMvc.perform(put("/api/reservedParkings")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(reservedParking)))
@@ -309,18 +276,14 @@ public class ReservedParkingResourceTest {
         List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(databaseSizeBeforeUpdate);
         ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
-        assertThat(testReservedParking.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testReservedParking.getDateStart()).isEqualTo(UPDATED_DATE_START);
-        assertThat(testReservedParking.getDateEnd()).isEqualTo(UPDATED_DATE_END);
-        assertThat(testReservedParking.getTimeStart().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_TIME_START);
-        assertThat(testReservedParking.getTimeEnd().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_TIME_END);
-        assertThat(testReservedParking.getRepeatBasis()).isEqualTo(UPDATED_REPEAT_BASIS);
+        assertThat(testReservedParking.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertThat(testReservedParking.getEndDate()).isEqualTo(UPDATED_END_DATE);
+        assertThat(testReservedParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_START_TIME);
+        assertThat(testReservedParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_END_TIME);
+        assertThat(testReservedParking.getRepeatOn()).isEqualTo(UPDATED_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(UPDATED_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testReservedParking.getReservedOn().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_RESERVED_ON);
-        assertThat(testReservedParking.getParentId()).isEqualTo(UPDATED_PARENT_ID);
-        assertThat(testReservedParking.getCreatedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_CREATED_AT);
-        assertThat(testReservedParking.getModifiedAt().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_MODIFIED_AT);
     }
 
     @Test

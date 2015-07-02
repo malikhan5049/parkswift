@@ -10,15 +10,12 @@
     <!--
         Added the entity ParkingLocation.
     -->
-    <changeSet id="20150610084845" author="jhipster">
-        <createTable tableName="PARKINGLOCATION">
+    <changeSet id="20150627095123" author="ali.khan">
+        <createTable tableName="PARKING_LOCATION">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="property_type" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="number_of_spaces" type="integer">
+            <column name="bussiness_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="address_line1" type="varchar(255)">
@@ -35,40 +32,52 @@
             <column name="zip_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="longitude" type="decimal(10,2)">
+            <column name="longitude" type="decimal(10,7)">
                 <constraints nullable="false" />
             </column>
-            <column name="lattitude" type="decimal(10,2)">
+            <column name="lattitude" type="decimal(10,7)">
                 <constraints nullable="false" />
             </column>
-            <column name="created_at" type="timestamp"/>
-            <column name="modified_at" type="timestamp"/>
             <column name="parkinglocationcontactinfo_id" type="bigint"/>
             <column name="paypallaccount_id" type="bigint"/>
             <column name="user_id" type="bigint"/>
+            <column name="created_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_at" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false" />
+            </column>
         </createTable>
-        <dropDefaultValue tableName="PARKINGLOCATION" columnName="created_at" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="PARKINGLOCATION" columnName="modified_at" columnDataType="datetime"/>
-
+        
+        <sql splitStatements="false"  dbms="mysql">
+		  CREATE TRIGGER update_PARKING_LOCATION_trg
+		    BEFORE UPDATE ON PARKING_LOCATION
+		      FOR EACH ROW BEGIN
+		        SET NEW.last_modified_at = NOW();
+		      END
+		</sql>
+		<sql splitStatements="false" dbms="h2">
+			insert into PARKING_LOCATION(id,bussiness_type, address_line1, city, state, country, zip_code, longitude, lattitude)
+			values(1,'residential','asdf','asdf','asdf','asdf','adsf','12','12')
+		</sql>
         
         <addForeignKeyConstraint baseColumnNames="parkinglocationcontactinfo_id"
-                                 baseTableName="PARKINGLOCATION"
+                                 baseTableName="PARKING_LOCATION"
                                  constraintName="fk_parkinglocation_parkinglocationcontactinfo_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGLOCATIONCONTACTINFO"/>
+                                 referencedTableName="PARKING_LOCATION_CONTACT_INFO"/>
 
         <addForeignKeyConstraint baseColumnNames="paypallaccount_id"
-                                 baseTableName="PARKINGLOCATION"
+                                 baseTableName="PARKING_LOCATION"
                                  constraintName="fk_parkinglocation_paypallaccount_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PAYPALLACCOUNT"/>
+                                 referencedTableName="PAYPALL_ACCOUNT"/>
 
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="PARKINGLOCATION"
+                                 baseTableName="PARKING_LOCATION"
                                  constraintName="fk_parkinglocation_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="JHI_USER"/>
+                                 referencedTableName="USER"/>
 
     </changeSet>
 </databaseChangeLog>

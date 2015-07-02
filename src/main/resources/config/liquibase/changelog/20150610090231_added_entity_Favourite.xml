@@ -10,7 +10,7 @@
     <!--
         Added the entity Favourite.
     -->
-    <changeSet id="20150610090231" author="jhipster">
+    <changeSet id="20150610090231" author="ali.khan">
         <createTable tableName="FAVOURITE">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -23,13 +23,13 @@
                                  baseTableName="FAVOURITE"
                                  constraintName="fk_favourite_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="JHI_USER"/>
+                                 referencedTableName="USER"/>
 
         <addForeignKeyConstraint baseColumnNames="parkingspace_id"
                                  baseTableName="FAVOURITE"
                                  constraintName="fk_favourite_parkingspace_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PARKINGSPACE"/>
+                                 referencedTableName="PARKING_SPACE"/>
 
     </changeSet>
 </databaseChangeLog>

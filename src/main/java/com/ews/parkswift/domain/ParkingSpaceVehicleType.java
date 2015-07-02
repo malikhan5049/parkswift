@@ -1,33 +1,43 @@
 package com.ews.parkswift.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A ParkingSpaceVehicleType.
  */
 @Entity
-@Table(name = "PARKINGSPACEVEHICLETYPE")
+@Table(name = "PARKING_SPACE_SUPPORTED_VEHICLE_TYPE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingSpaceVehicleType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @NotNull
     @Column(name = "type", nullable = false)
+    @InLookupHeader(code=LookupHeaderCode.PS_VT)
     private String type;
 
     @ManyToOne
+    @JsonIgnore
     private ParkingSpace parkingSpace;
 
     public Long getId() {
@@ -65,14 +75,14 @@ public class ParkingSpaceVehicleType implements Serializable {
 
         ParkingSpaceVehicleType parkingSpaceVehicleType = (ParkingSpaceVehicleType) o;
 
-        if ( ! Objects.equals(id, parkingSpaceVehicleType.id)) return false;
+        if ( ! Objects.equals(type, parkingSpaceVehicleType.type)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(type);
     }
 
     @Override

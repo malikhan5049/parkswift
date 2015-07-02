@@ -31,65 +31,65 @@
                         </div>
 
                         <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.dateStart">DateStart</label>
-                            <input type="date" class="form-control" name="dateStart"
-                                   ng-model="availableParking.dateStart" required>
+                            <label translate="parkswiftApp.availableParking.startDate">StartDate</label>
+                            <input type="date" class="form-control" name="startDate"
+                                   ng-model="availableParking.startDate" required>
 
-                            <div ng-show="editForm.dateStart.$invalid">
+                            <div ng-show="editForm.startDate.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.dateStart.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.startDate.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.dateEnd">DateEnd</label>
-                            <input type="date" class="form-control" name="dateEnd"
-                                   ng-model="availableParking.dateEnd" required>
+                            <label translate="parkswiftApp.availableParking.endDate">EndDate</label>
+                            <input type="date" class="form-control" name="endDate"
+                                   ng-model="availableParking.endDate" required>
 
-                            <div ng-show="editForm.dateEnd.$invalid">
+                            <div ng-show="editForm.endDate.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.dateEnd.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.endDate.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.timeStart">TimeStart</label>
-                            <input type="datetime-local" class="form-control" name="timeStart"
-                                   ng-model="availableParking.timeStart" ng-model-options="{timezone: 'UTC'}" required>
+                            <label translate="parkswiftApp.availableParking.startTime">StartTime</label>
+                            <input type="datetime-local" class="form-control" name="startTime"
+                                   ng-model="availableParking.startTime" ng-model-options="{timezone: 'UTC'}" required>
 
-                            <div ng-show="editForm.timeStart.$invalid">
+                            <div ng-show="editForm.startTime.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.timeStart.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.startTime.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.timeStart.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                   ng-show="editForm.startTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
                                     This field should be a date and time.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.timeEnd">TimeEnd</label>
-                            <input type="datetime-local" class="form-control" name="timeEnd"
-                                   ng-model="availableParking.timeEnd" ng-model-options="{timezone: 'UTC'}" required>
+                            <label translate="parkswiftApp.availableParking.endTime">EndTime</label>
+                            <input type="datetime-local" class="form-control" name="endTime"
+                                   ng-model="availableParking.endTime" ng-model-options="{timezone: 'UTC'}" required>
 
-                            <div ng-show="editForm.timeEnd.$invalid">
+                            <div ng-show="editForm.endTime.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.timeEnd.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.endTime.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.timeEnd.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                   ng-show="editForm.endTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
                                     This field should be a date and time.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.repeatBasis">RepeatBasis</label>
-                            <input type="text" class="form-control" name="repeatBasis"
-                                   ng-model="availableParking.repeatBasis">
+                            <label translate="parkswiftApp.availableParking.repeatOn">RepeatOn</label>
+                            <input type="text" class="form-control" name="repeatOn"
+                                   ng-model="availableParking.repeatOn">
 
                         </div>
                         <div class="form-group">
@@ -98,28 +98,10 @@
                                    ng-model="availableParking.repeatOccurrences">
 
                         </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.description">Description</label>
-                            <input type="text" class="form-control" name="description"
-                                   ng-model="availableParking.description">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.createdAt">CreatedAt</label>
-                            <input type="datetime-local" class="form-control" name="createdAt"
-                                   ng-model="availableParking.createdAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.availableParking.modifiedAt">ModifiedAt</label>
-                            <input type="datetime-local" class="form-control" name="modifiedAt"
-                                   ng-model="availableParking.modifiedAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
 
                         <div class="form-group">
                             <label translate="parkswiftApp.availableParking.parkingSpace">parkingSpace</label>
-                            <select class="form-control" name="parkingSpace" ng-model="availableParking.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.description for parkingSpace in parkingspaces">
+                            <select class="form-control" name="parkingSpace" ng-model="availableParking.parkingSpace.id" ng-options="parkingSpace.id as parkingSpace.id for parkingSpace in parkingspaces">
                             </select>
                         </div>
                     </div>
@@ -166,32 +148,26 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th translate="parkswiftApp.availableParking.dateStart">DateStart</th>
-                    <th translate="parkswiftApp.availableParking.dateEnd">DateEnd</th>
-                    <th translate="parkswiftApp.availableParking.timeStart">TimeStart</th>
-                    <th translate="parkswiftApp.availableParking.timeEnd">TimeEnd</th>
-                    <th translate="parkswiftApp.availableParking.repeatBasis">RepeatBasis</th>
+                    <th translate="parkswiftApp.availableParking.startDate">StartDate</th>
+                    <th translate="parkswiftApp.availableParking.endDate">EndDate</th>
+                    <th translate="parkswiftApp.availableParking.startTime">StartTime</th>
+                    <th translate="parkswiftApp.availableParking.endTime">EndTime</th>
+                    <th translate="parkswiftApp.availableParking.repeatOn">RepeatOn</th>
                     <th translate="parkswiftApp.availableParking.repeatOccurrences">RepeatOccurrences</th>
-                    <th translate="parkswiftApp.availableParking.description">Description</th>
-                    <th translate="parkswiftApp.availableParking.createdAt">CreatedAt</th>
-                    <th translate="parkswiftApp.availableParking.modifiedAt">ModifiedAt</th>
                     <th translate="parkswiftApp.availableParking.parkingSpace">parkingSpace</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
                 <tr ng-repeat="availableParking in availableParkings">
                     <td><a ui-sref="availableParkingDetail({id:availableParking.id})">{{availableParking.id}}</a></td>
-                    <td>{{availableParking.dateStart}}</td>
-                    <td>{{availableParking.dateEnd}}</td>
-                    <td>{{availableParking.timeStart}}</td>
-                    <td>{{availableParking.timeEnd}}</td>
-                    <td>{{availableParking.repeatBasis}}</td>
+                    <td>{{availableParking.startDate}}</td>
+                    <td>{{availableParking.endDate}}</td>
+                    <td>{{availableParking.startTime}}</td>
+                    <td>{{availableParking.endTime}}</td>
+                    <td>{{availableParking.repeatOn}}</td>
                     <td>{{availableParking.repeatOccurrences}}</td>
-                    <td>{{availableParking.description}}</td>
-                    <td>{{availableParking.createdAt}}</td>
-                    <td>{{availableParking.modifiedAt}}</td>
-                    <td>{{availableParking.parkingSpace.description}}</td>
+                    <td>{{availableParking.parkingSpace.id}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="availableParkingDetail({id:availableParking.id})"

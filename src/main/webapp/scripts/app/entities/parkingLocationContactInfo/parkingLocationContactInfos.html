@@ -66,18 +66,6 @@
                                    ng-model="parkingLocationContactInfo.email2">
 
                         </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocationContactInfo.createdAt">CreatedAt</label>
-                            <input type="datetime-local" class="form-control" name="createdAt"
-                                   ng-model="parkingLocationContactInfo.createdAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="parkswiftApp.parkingLocationContactInfo.modifiedAt">ModifiedAt</label>
-                            <input type="datetime-local" class="form-control" name="modifiedAt"
-                                   ng-model="parkingLocationContactInfo.modifiedAt" ng-model-options="{timezone: 'UTC'}">
-
-                        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -129,8 +117,6 @@
                     <th translate="parkswiftApp.parkingLocationContactInfo.phone2">Phone2</th>
                     <th translate="parkswiftApp.parkingLocationContactInfo.email1">Email1</th>
                     <th translate="parkswiftApp.parkingLocationContactInfo.email2">Email2</th>
-                    <th translate="parkswiftApp.parkingLocationContactInfo.createdAt">CreatedAt</th>
-                    <th translate="parkswiftApp.parkingLocationContactInfo.modifiedAt">ModifiedAt</th>
                     <th></th>
                 </tr>
             </thead>
@@ -143,8 +129,6 @@
                     <td>{{parkingLocationContactInfo.phone2}}</td>
                     <td>{{parkingLocationContactInfo.email1}}</td>
                     <td>{{parkingLocationContactInfo.email2}}</td>
-                    <td>{{parkingLocationContactInfo.createdAt}}</td>
-                    <td>{{parkingLocationContactInfo.modifiedAt}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="parkingLocationContactInfoDetail({id:parkingLocationContactInfo.id})"

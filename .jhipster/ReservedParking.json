@@ -2,13 +2,14 @@
     "relationships": [
         {
             "relationshipId": 1,
-            "relationshipName": "parkingSpace",
-            "relationshipNameCapitalized": "ParkingSpace",
-            "relationshipFieldName": "parkingSpace",
-            "otherEntityName": "parkingSpace",
-            "relationshipType": "many-to-one",
-            "otherEntityNameCapitalized": "ParkingSpace",
-            "otherEntityField": "description"
+            "relationshipName": "payment",
+            "relationshipNameCapitalized": "Payment",
+            "relationshipFieldName": "payment",
+            "otherEntityName": "payment",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "Payment",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "reservedParking"
         },
         {
             "relationshipId": 2,
@@ -22,33 +23,35 @@
         },
         {
             "relationshipId": 3,
-            "relationshipName": "payment",
-            "relationshipNameCapitalized": "Payment",
-            "relationshipFieldName": "payment",
-            "otherEntityName": "payment",
-            "relationshipType": "one-to-one",
-            "otherEntityNameCapitalized": "Payment",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "reservedParking"
+            "relationshipName": "parkingSpace",
+            "relationshipNameCapitalized": "ParkingSpace",
+            "relationshipFieldName": "parkingSpace",
+            "otherEntityName": "parkingSpace",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingSpace",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
         {
             "fieldId": 1,
-            "fieldName": "description",
-            "fieldType": "String",
-            "fieldNameCapitalized": "Description",
-            "fieldNameUnderscored": "description",
-            "fieldInJavaBeanMethod": "Description",
-            "fieldValidate": false
+            "fieldName": "startDate",
+            "fieldType": "LocalDate",
+            "fieldNameCapitalized": "StartDate",
+            "fieldNameUnderscored": "start_date",
+            "fieldInJavaBeanMethod": "StartDate",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
         },
         {
             "fieldId": 2,
-            "fieldName": "dateStart",
+            "fieldName": "endDate",
             "fieldType": "LocalDate",
-            "fieldNameCapitalized": "DateStart",
-            "fieldNameUnderscored": "date_start",
-            "fieldInJavaBeanMethod": "DateStart",
+            "fieldNameCapitalized": "EndDate",
+            "fieldNameUnderscored": "end_date",
+            "fieldInJavaBeanMethod": "EndDate",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -56,11 +59,11 @@
         },
         {
             "fieldId": 3,
-            "fieldName": "dateEnd",
-            "fieldType": "LocalDate",
-            "fieldNameCapitalized": "DateEnd",
-            "fieldNameUnderscored": "date_end",
-            "fieldInJavaBeanMethod": "DateEnd",
+            "fieldName": "startTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "StartTime",
+            "fieldNameUnderscored": "start_time",
+            "fieldInJavaBeanMethod": "StartTime",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -68,11 +71,11 @@
         },
         {
             "fieldId": 4,
-            "fieldName": "timeStart",
+            "fieldName": "endTime",
             "fieldType": "DateTime",
-            "fieldNameCapitalized": "TimeStart",
-            "fieldNameUnderscored": "time_start",
-            "fieldInJavaBeanMethod": "TimeStart",
+            "fieldNameCapitalized": "EndTime",
+            "fieldNameUnderscored": "end_time",
+            "fieldInJavaBeanMethod": "EndTime",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"
@@ -80,27 +83,15 @@
         },
         {
             "fieldId": 5,
-            "fieldName": "timeEnd",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "TimeEnd",
-            "fieldNameUnderscored": "time_end",
-            "fieldInJavaBeanMethod": "TimeEnd",
-            "fieldValidate": true,
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldId": 6,
-            "fieldName": "repeatBasis",
+            "fieldName": "repeatOn",
             "fieldType": "String",
-            "fieldNameCapitalized": "RepeatBasis",
-            "fieldNameUnderscored": "repeat_basis",
-            "fieldInJavaBeanMethod": "RepeatBasis",
+            "fieldNameCapitalized": "RepeatOn",
+            "fieldNameUnderscored": "repeat_on",
+            "fieldInJavaBeanMethod": "RepeatOn",
             "fieldValidate": false
         },
         {
-            "fieldId": 7,
+            "fieldId": 6,
             "fieldName": "repeatOccurrences",
             "fieldType": "Integer",
             "fieldNameCapitalized": "RepeatOccurrences",
@@ -109,7 +100,7 @@
             "fieldValidate": false
         },
         {
-            "fieldId": 8,
+            "fieldId": 7,
             "fieldName": "status",
             "fieldType": "String",
             "fieldNameCapitalized": "Status",
@@ -118,39 +109,12 @@
             "fieldValidate": false
         },
         {
-            "fieldId": 9,
+            "fieldId": 8,
             "fieldName": "reservedOn",
             "fieldType": "DateTime",
             "fieldNameCapitalized": "ReservedOn",
             "fieldNameUnderscored": "reserved_on",
             "fieldInJavaBeanMethod": "ReservedOn",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 10,
-            "fieldName": "parentId",
-            "fieldType": "Integer",
-            "fieldNameCapitalized": "ParentId",
-            "fieldNameUnderscored": "parent_id",
-            "fieldInJavaBeanMethod": "ParentId",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 11,
-            "fieldName": "createdAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "CreatedAt",
-            "fieldNameUnderscored": "created_at",
-            "fieldInJavaBeanMethod": "CreatedAt",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 12,
-            "fieldName": "modifiedAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "ModifiedAt",
-            "fieldNameUnderscored": "modified_at",
-            "fieldInJavaBeanMethod": "ModifiedAt",
             "fieldValidate": false
         }
     ],
@@ -162,7 +126,7 @@
     "fieldsContainBigDecimal": false,
     "fieldsContainDateTime": true,
     "fieldsContainDate": false,
-    "changelogDate": "20150610124825",
+    "changelogDate": "20150630124325",
     "dto": "no",
     "pagination": "infinite-scroll",
     "validation": true

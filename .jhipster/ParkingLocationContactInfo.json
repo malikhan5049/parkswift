@@ -66,35 +66,17 @@
             "fieldNameUnderscored": "email2",
             "fieldInJavaBeanMethod": "Email2",
             "fieldValidate": false
-        },
-        {
-            "fieldId": 7,
-            "fieldName": "createdAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "CreatedAt",
-            "fieldNameUnderscored": "created_at",
-            "fieldInJavaBeanMethod": "CreatedAt",
-            "fieldValidate": false
-        },
-        {
-            "fieldId": 8,
-            "fieldName": "modifiedAt",
-            "fieldType": "DateTime",
-            "fieldNameCapitalized": "ModifiedAt",
-            "fieldNameUnderscored": "modified_at",
-            "fieldInJavaBeanMethod": "ModifiedAt",
-            "fieldValidate": false
         }
     ],
     "fieldsContainOwnerManyToMany": false,
     "fieldsContainOwnerOneToOne": false,
     "fieldsContainOneToMany": false,
     "fieldsContainLocalDate": false,
-    "fieldsContainCustomTime": true,
+    "fieldsContainCustomTime": false,
     "fieldsContainBigDecimal": false,
-    "fieldsContainDateTime": true,
+    "fieldsContainDateTime": false,
     "fieldsContainDate": false,
-    "changelogDate": "20150610083154",
+    "changelogDate": "20150626102226",
     "dto": "no",
     "pagination": "no",
     "validation": false

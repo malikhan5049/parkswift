@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('parkswiftApp')
-    .controller('ReservedParkingDetailController', function ($scope, $stateParams, ReservedParking, ParkingSpace, ReservedParkingRepeatOn, Payment) {
+    .controller('ReservedParkingDetailController', function ($scope, $stateParams, ReservedParking, Payment, ReservedParkingRepeatOn, ParkingSpace) {
         $scope.reservedParking = {};
         $scope.load = function (id) {
             ReservedParking.get({id: id}, function(result) {

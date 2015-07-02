@@ -1,11 +1,15 @@
 package com.ews.parkswift.domain;
 
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +19,7 @@ import java.util.Objects;
  * A ParkingLocationFacility.
  */
 @Entity
-@Table(name = "PARKINGLOCATIONFACILITY")
+@Table(name = "PARKING_LOCATION_FACILITY")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingLocationFacility implements Serializable {
 
@@ -25,6 +29,7 @@ public class ParkingLocationFacility implements Serializable {
 
     @NotNull
     @Column(name = "facility", nullable = false)
+    @InLookupHeader(code=LookupHeaderCode.LOC_FACILITY)
     private String facility;
 
     @ManyToOne
