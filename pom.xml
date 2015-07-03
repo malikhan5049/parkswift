@@ -66,6 +66,16 @@
 	<artifactId>scribe</artifactId>
 	<version>1.0.6</version>
 </dependency>
+<dependency>
+	<groupId>com.google.apis</groupId>
+	<artifactId>google-api-services-plusDomains</artifactId>
+	<version>v1-rev7-1.17.0-rc</version>
+</dependency>
+<dependency>
+    <groupId>com.google.http-client</groupId>
+    <artifactId>google-http-client-jackson2</artifactId>
+    <version>1.12.0-beta</version>
+</dependency>
 	 <dependency>
 	<groupId>org.apache.commons</groupId>
 	<artifactId>commons-io</artifactId>

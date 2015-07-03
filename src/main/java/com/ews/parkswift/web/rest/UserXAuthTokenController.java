@@ -42,6 +42,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.CredentialRefreshListener;
+import com.google.api.client.auth.oauth2.TokenErrorResponse;
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.plusDomains.PlusDomains;
+import com.google.api.services.plusDomains.model.Person;
+
 import io.gatling.core.json.JSON;
 import io.gatling.recorder.util.Json;
 
@@ -69,12 +79,7 @@ import org.json.JSONObject;
 @RequestMapping("/api")
 public class UserXAuthTokenController {
 
-	// start for login with facebook
-	public static final String FB_APP_ID = "502018279946405";
-	public static final String FB_APP_SECRET = "b2ad575154ef4bde345c2f23d3b1cde5";
-	public static final String REDIRECT_URI = "http://localhost:8080/Facebook_Login/fbhome";
-	static String accessToken = "";
-	// end for login with facebook
+	
     @Inject
     private TokenProvider tokenProvider;
 
@@ -121,22 +126,46 @@ public class UserXAuthTokenController {
     @RequestMapping(value = "/authenticategoogleplus",
             method = RequestMethod.POST)
     @Timed
-    public Map<String, String> authorizewithGooglePlus(@RequestParam String token) throws MalformedURLException, JSONException, IOException {
+    public Person authorizewithGooglePlus(@RequestParam String token) throws MalformedURLException, JSONException, IOException {
     	
-    	OAuthService service = new ServiceBuilder().provider(GoogleApi.class).apiKey("AIzaSyDRBUmklUXhmtzcqg_LLB1nboyiIvJtcnQ")
-        .apiSecret("MenVMqSS5-OkbgpYv13umPXZ").build();
-    	
-    	org.scribe.model.Token requestToken = service.getRequestToken();
-    	//String authUrl = service.getAuthorizationUrl(requestToken);
-    	//String authUrl = service.getAccessToken(requestToken);
-    	Verifier v = new Verifier("verifier you got from the user");
-    	org.scribe.model.Token accessToken = service.getAccessToken(requestToken, v); // the requestToken you had from step 2
-    	
-    	OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.twitter.com/1/account/verify_credentials.xml");
-    	service.signRequest(accessToken, request); // the access token from step 4
-    	Response response = request.send();
-    	System.out.println(response.getBody());
-		return null;
+    	GoogleCredential credential = new GoogleCredential.Builder()
+        .setTransport(new NetHttpTransport())
+        .setJsonFactory(new JacksonFactory())
+        .setClientSecrets("872550699005-o80it1noveuijc5ar4q9vs23qdldjf2o.apps.googleusercontent.com", "MenVMqSS5-OkbgpYv13umPXZ")
+        .addRefreshListener(new CredentialRefreshListener() {
+
+		@Override
+		public void onTokenErrorResponse(Credential arg0,
+				TokenErrorResponse arg1) throws IOException {
+			// TODO Auto-generated method stub
+			 // Handle success.
+            System.out.println("Credential was refreshed successfully.");
+		}
+
+		@Override
+		public void onTokenResponse(Credential arg0, TokenResponse arg1)
+				throws IOException {
+			// TODO Auto-generated method stub
+			 // Handle error.
+            System.err.println("Credential was not refreshed successfully. "
+                + "Redirect to error page or login screen.");
+		}
+        })
+        // You can also add a credential store listener to have credentials
+        // stored automatically.
+        //.addRefreshListener(new CredentialStoreRefreshListener(userId, credentialStore))
+        .build();
+
+    	PlusDomains plusDomains = new PlusDomains.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
+    	Person mePerson = plusDomains.people().get("me").execute();
+
+    	System.out.println("ID:\t" + mePerson.getId());
+    	System.out.println("Display Name:\t" + mePerson.getDisplayName());
+    	System.out.println("Image URL:\t" + mePerson.getImage().getUrl());
+    	System.out.println("Profile URL:\t" + mePerson.getUrl());
+    	System.out.println("Profile email address:\t" + mePerson.getVerified());
+
+		return mePerson;
         }      
    
    
@@ -165,28 +194,4 @@ public class UserXAuthTokenController {
         , HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/authenticatemobilefb",
-            method = RequestMethod.POST)
-    @Timed
-    public ResponseEntity<UserDTOMobile> authorizeMobilefb(@Valid @RequestBody UserDTO userDTO, HttpServletResponse response, Device device) {
-    	
-    	if(device.isNormal())
-    		return null;
-    	
-    	String username = userDTO.getEmail();
-    	String password = userDTO.getPassword();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = this.authenticationManager.authenticate(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails details = this.userDetailsService.loadUserByUsername(username);
-        
-        Token tokenMobile = tokenProvider.createTokenMobile(details);
-        response.addHeader("x-auth-token", tokenMobile.getToken());
-        
-        User user = userService.getUserWithAuthorities();
-        
-        return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(
-        		user.getFirstName(), user.getLastName(), user.getEmail(),user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)))
-        , HttpStatus.OK);
-    }
 }
