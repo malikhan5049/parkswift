@@ -58,7 +58,7 @@ public class AccountResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
-    	return userRepository.findOneByLogin(userDTO.getLogin())
+        return userRepository.findOneByLogin(userDTO.getLogin())
             .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
                 .map(user -> new ResponseEntity<>("e-mail address already in use", HttpStatus.BAD_REQUEST))
@@ -69,6 +69,37 @@ public class AccountResource {
                     User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
                     userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
                     userDTO.getLangKey(), insertUserActivated);
+                    String baseUrl = request.getScheme() + // "http"
+                    "://" +                                // "://"
+                    request.getServerName() +              // "myhost"
+                    ":" +                                  // ":"
+                    request.getServerPort();               // "80"
+
+                    if(!insertUserActivated)
+                    	mailService.sendActivationEmail(user, baseUrl);
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+                })
+        );
+    }
+    
+    /**
+     * POST  /registerfromSocialMedia -> register the user from Social Media.
+     */
+    @RequestMapping(value = "/registerSocialMedia",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> registerAccountfromSocialMedia(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
+        return userRepository.findOneByLogin(userDTO.getLogin())
+            .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
+            .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
+                .map(user -> new ResponseEntity<>("e-mail address already in use", HttpStatus.BAD_REQUEST))
+                .orElseGet(() -> {
+                	boolean insertUserActivated = false;
+                	if(DeviceUtils.isMobile(request))
+                		insertUserActivated = true;
+                    User user = userService.createUserInformationfromSocialMediaProfile(userDTO.getLogin(), userDTO.getFirstName(),
+                    		userDTO.getLastName(), userDTO.getEmail().toLowerCase(), userDTO.getLangKey(), insertUserActivated);
                     String baseUrl = request.getScheme() + // "http"
                     "://" +                                // "://"
                     request.getServerName() +              // "myhost"
