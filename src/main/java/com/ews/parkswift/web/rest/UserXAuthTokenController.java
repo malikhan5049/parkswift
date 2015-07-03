@@ -1,14 +1,11 @@
 package com.ews.parkswift.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.ews.parkswift.domain.Authority;
-import com.ews.parkswift.domain.User;
-import com.ews.parkswift.repository.UserRepository;
-import com.ews.parkswift.security.xauth.Token;
-import com.ews.parkswift.security.xauth.TokenProvider;
-import com.ews.parkswift.service.UserService;
-import com.ews.parkswift.web.rest.dto.UserDTO;
-import com.ews.parkswift.web.rest.dto.UserDTOMobile;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+import com.codahale.metrics.annotation.Timed;
+import com.ews.parkswift.domain.Authority;
+import com.ews.parkswift.domain.User;
+import com.ews.parkswift.security.xauth.Token;
+import com.ews.parkswift.security.xauth.TokenProvider;
+import com.ews.parkswift.service.UserService;
+import com.ews.parkswift.web.rest.dto.UserDTO;
+import com.ews.parkswift.web.rest.dto.UserDTOMobile;
 
 @RestController
 @RequestMapping("/api")

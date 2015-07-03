@@ -81,7 +81,7 @@ public class ParkingLocation implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
     
-    @OneToMany(mappedBy = "parkingLocation", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationImage> parkingLocationImages = new HashSet<>();

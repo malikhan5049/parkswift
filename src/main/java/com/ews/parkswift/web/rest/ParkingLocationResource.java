@@ -53,7 +53,7 @@ public class ParkingLocationResource {
     private final Logger log = LoggerFactory.getLogger(ParkingLocationResource.class);
     private final ObjectMapper mapper =  new ObjectMapper();
     
-    private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+    private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     @Inject
     private ParkingLocationRepository parkingLocationRepository;
     @Inject
