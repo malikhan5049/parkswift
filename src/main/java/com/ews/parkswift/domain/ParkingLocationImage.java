@@ -35,6 +35,10 @@ public class ParkingLocationImage implements Serializable {
     @Column(name = "image", nullable = false)
     @Lob
     private byte[] image;
+    
+    @NotNull
+    @Column(name = "type", nullable = false)
+    private String type;
 
     @ManyToOne
     @JsonIgnore
@@ -63,6 +67,15 @@ public class ParkingLocationImage implements Serializable {
     public void setParkingLocation(ParkingLocation parkingLocation) {
         this.parkingLocation = parkingLocation;
     }
+    
+    public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
     @Override
     public boolean equals(Object o) {
@@ -84,8 +97,11 @@ public class ParkingLocationImage implements Serializable {
     public int hashCode() {
         return Objects.hashCode(image);
     }
+    
+    
 
-    @Override
+    
+	@Override
     public String toString() {
         return "ParkingSpaceImage{" +
                 "id=" + id +

@@ -3,6 +3,7 @@ package com.ews.parkswift.web.rest;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -65,11 +66,11 @@ public class ParkingLocationResource {
      * @throws JsonMappingException 
      * @throws JsonParseException 
      */
-    @RequestMapping(value = "/parkingLocations",
+    @RequestMapping(value = "/parkingLocations/multipart",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@RequestPart(value = "json") String parkignLocationStr,
+    public ResponseEntity<Void> createMultipart(@RequestPart(value = "json") String parkignLocationStr,
     		@RequestParam(value = "images", required = false) List<MultipartFile> images) throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
         log.debug("REST request to save ParkingLocation : {}", parkignLocationStr);
         ParkingLocation parkingLocation = mapper.readValue(parkignLocationStr, ParkingLocation.class);
@@ -83,6 +84,26 @@ public class ParkingLocationResource {
     		parkingLocationImages.add(parkingLocationImage);
     	}
     	parkingLocation.setParkingLocationImages(parkingLocationImages);
+        if (parkingLocation.getId() != null) {
+            return ResponseEntity.badRequest().header("Failure", "A new parkingLocation cannot already have an ID").build();
+        }
+        
+        parkingLocationService.save(parkingLocation);
+        return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).build();
+    }
+    
+    /**
+     * POST  /parkingLocations -> Create a new parkingLocation.
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
+     */
+    @RequestMapping(value = "/parkingLocations",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> create(@Valid @RequestBody ParkingLocation parkingLocation) throws Exception {
+        
         if (parkingLocation.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new parkingLocation cannot already have an ID").build();
         }

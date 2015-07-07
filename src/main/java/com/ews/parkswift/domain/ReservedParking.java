@@ -1,24 +1,37 @@
 package com.ews.parkswift.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
-import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
+import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
+import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
+import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A ReservedParking.
@@ -47,18 +60,18 @@ public class ReservedParking implements Serializable {
     private LocalDate endDate;
 
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalTime")
+    @JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
     @Column(name = "start_time", nullable = false)
-    private DateTime startTime;
+    private LocalTime startTime;
 
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalTime")
+    @JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
     @Column(name = "end_time", nullable = false)
-    private DateTime endTime;
+    private LocalTime endTime;
 
     @Column(name = "repeat_on")
     private String repeatOn;
@@ -111,19 +124,19 @@ public class ReservedParking implements Serializable {
         this.endDate = endDate;
     }
 
-    public DateTime getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(DateTime startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public DateTime getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(DateTime endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 

@@ -63,7 +63,7 @@ public class AvailableParkingRepeatOnResourceTest {
     public void initTest() {
         availableParkingRepeatOn = new AvailableParkingRepeatOn();
         availableParkingRepeatOn.setDayOfMonth(DEFAULT_DAY_OF_MONTH);
-        availableParkingRepeatOn.setDateOfWeek(DEFAULT_DATE_OF_WEEK);
+        availableParkingRepeatOn.setDayOfWeek(DEFAULT_DATE_OF_WEEK);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class AvailableParkingRepeatOnResourceTest {
         assertThat(availableParkingRepeatOns).hasSize(databaseSizeBeforeCreate + 1);
         AvailableParkingRepeatOn testAvailableParkingRepeatOn = availableParkingRepeatOns.get(availableParkingRepeatOns.size() - 1);
         assertThat(testAvailableParkingRepeatOn.getDayOfMonth()).isEqualTo(DEFAULT_DAY_OF_MONTH);
-        assertThat(testAvailableParkingRepeatOn.getDateOfWeek()).isEqualTo(DEFAULT_DATE_OF_WEEK);
+        assertThat(testAvailableParkingRepeatOn.getDayOfWeek()).isEqualTo(DEFAULT_DATE_OF_WEEK);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class AvailableParkingRepeatOnResourceTest {
 
         // Update the availableParkingRepeatOn
         availableParkingRepeatOn.setDayOfMonth(UPDATED_DAY_OF_MONTH);
-        availableParkingRepeatOn.setDateOfWeek(UPDATED_DATE_OF_WEEK);
+        availableParkingRepeatOn.setDayOfWeek(UPDATED_DATE_OF_WEEK);
         restAvailableParkingRepeatOnMockMvc.perform(put("/api/availableParkingRepeatOns")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(availableParkingRepeatOn)))
@@ -144,7 +144,7 @@ public class AvailableParkingRepeatOnResourceTest {
         assertThat(availableParkingRepeatOns).hasSize(databaseSizeBeforeUpdate);
         AvailableParkingRepeatOn testAvailableParkingRepeatOn = availableParkingRepeatOns.get(availableParkingRepeatOns.size() - 1);
         assertThat(testAvailableParkingRepeatOn.getDayOfMonth()).isEqualTo(UPDATED_DAY_OF_MONTH);
-        assertThat(testAvailableParkingRepeatOn.getDateOfWeek()).isEqualTo(UPDATED_DATE_OF_WEEK);
+        assertThat(testAvailableParkingRepeatOn.getDayOfWeek()).isEqualTo(UPDATED_DATE_OF_WEEK);
     }
 
     @Test

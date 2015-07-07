@@ -21,10 +21,10 @@
             <column name="end_date" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="start_time" type="timestamp">
+            <column name="start_time" type="time">
                 <constraints nullable="false" />
             </column>
-            <column name="end_time" type="timestamp">
+            <column name="end_time" type="time">
                 <constraints nullable="false" />
             </column>
             <column name="repeat_on" type="varchar(255)"/>
@@ -46,10 +46,7 @@
 		        SET NEW.last_modified_at = NOW();
 		      END
 		</sql>
-        <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="start_time" columnDataType="datetime"/>
-
-        <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="end_time" columnDataType="datetime"/>
-
+        
         <dropDefaultValue tableName="PARKING_SPACE_RESERVED_ON" columnName="reserved_on" columnDataType="datetime"/>
 
         

@@ -7,7 +7,9 @@ import com.ews.parkswift.repository.AvailableParkingRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static org.hamcrest.Matchers.hasItem;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -21,11 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
 import org.joda.time.LocalDate;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,12 +57,12 @@ public class AvailableParkingResourceTest {
     private static final LocalDate DEFAULT_END_DATE = new LocalDate(0L);
     private static final LocalDate UPDATED_END_DATE = new LocalDate();
 
-    private static final DateTime DEFAULT_START_TIME = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_START_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final LocalTime DEFAULT_START_TIME = new LocalTime(0L, DateTimeZone.UTC);
+    private static final LocalTime UPDATED_START_TIME = new LocalTime(DateTimeZone.UTC).withMillisOfSecond(0);
     private static final String DEFAULT_START_TIME_STR = dateTimeFormatter.print(DEFAULT_START_TIME);
 
-    private static final DateTime DEFAULT_END_TIME = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_END_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final LocalTime DEFAULT_END_TIME = new LocalTime(0L, DateTimeZone.UTC);
+    private static final LocalTime UPDATED_END_TIME = new LocalTime(DateTimeZone.UTC).withMillisOfSecond(0);
     private static final String DEFAULT_END_TIME_STR = dateTimeFormatter.print(DEFAULT_END_TIME);
     private static final String DEFAULT_REPEAT_ON = "SAMPLE_TEXT";
     private static final String UPDATED_REPEAT_ON = "UPDATED_TEXT";
@@ -108,8 +113,8 @@ public class AvailableParkingResourceTest {
         AvailableParking testAvailableParking = availableParkings.get(availableParkings.size() - 1);
         assertThat(testAvailableParking.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testAvailableParking.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-        assertThat(testAvailableParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_START_TIME);
-        assertThat(testAvailableParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testAvailableParking.getStartTime()).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testAvailableParking.getEndTime()).isEqualTo(DEFAULT_END_TIME);
         assertThat(testAvailableParking.getRepeatOn()).isEqualTo(DEFAULT_REPEAT_ON);
         assertThat(testAvailableParking.getRepeatOccurrences()).isEqualTo(DEFAULT_REPEAT_OCCURRENCES);
     }
@@ -262,8 +267,8 @@ public class AvailableParkingResourceTest {
         AvailableParking testAvailableParking = availableParkings.get(availableParkings.size() - 1);
         assertThat(testAvailableParking.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testAvailableParking.getEndDate()).isEqualTo(UPDATED_END_DATE);
-        assertThat(testAvailableParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_START_TIME);
-        assertThat(testAvailableParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_END_TIME);
+        assertThat(testAvailableParking.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testAvailableParking.getEndTime()).isEqualTo(UPDATED_END_TIME);
         assertThat(testAvailableParking.getRepeatOn()).isEqualTo(UPDATED_REPEAT_ON);
         assertThat(testAvailableParking.getRepeatOccurrences()).isEqualTo(UPDATED_REPEAT_OCCURRENCES);
     }

@@ -1,20 +1,32 @@
 package com.ews.parkswift.web.rest;
 
-import com.ews.parkswift.Application;
-import com.ews.parkswift.domain.ParkingLocation;
-import com.ews.parkswift.domain.ParkingLocationContactInfo;
-import com.ews.parkswift.domain.ParkingLocationFacility;
-import com.ews.parkswift.domain.PaypallAccount;
-import com.ews.parkswift.domain.User;
-import com.ews.parkswift.repository.ParkingLocationRepository;
-import com.ews.parkswift.service.ParkingLocationService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.apache.commons.io.IOUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.Matchers.hasItem;
-
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -26,16 +38,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.ews.parkswift.Application;
+import com.ews.parkswift.domain.ParkingLocation;
+import com.ews.parkswift.domain.ParkingLocationContactInfo;
+import com.ews.parkswift.domain.ParkingLocationFacility;
+import com.ews.parkswift.domain.ParkingLocationImage;
+import com.ews.parkswift.domain.PaypallAccount;
+import com.ews.parkswift.domain.User;
+import com.ews.parkswift.repository.ParkingLocationRepository;
+import com.ews.parkswift.service.ParkingLocationService;
 
 /**
  * Test class for the ParkingLocationResource REST controller.
@@ -88,7 +99,7 @@ public class ParkingLocationResourceTest {
     }
 
     @Before
-    public void initTest() {
+    public void initTest() throws IOException {
         parkingLocation = new ParkingLocation();
         parkingLocation.setBussinessType(DEFAULT_BUSSINESS_TYPE);
         parkingLocation.setAddressLine1(DEFAULT_ADDRESS_LINE1);
@@ -103,8 +114,12 @@ public class ParkingLocationResourceTest {
         parkingLocation.setParkingLocationContactInfo(new ParkingLocationContactInfo(){{setFirstName("Ali Khan");}});
         parkingLocation.setPaypallAccount(new PaypallAccount(){{setEmail("asdf@asdf");}});
         parkingLocation.setParkingLocationFacilitys(new HashSet<ParkingLocationFacility>(){{add(new ParkingLocationFacility(){{setFacility("car wash");}});}});
+        byte[] bytearr_base64_image = Base64.getEncoder().encode(IOUtils.toByteArray(new FileInputStream(new File("src/main/webapp/assets/images/development_ribbon.png"))));
+        parkingLocation.setParkingLocationImages(new HashSet<ParkingLocationImage>(){{add(new ParkingLocationImage(){{setImage(bytearr_base64_image);}});}});
         
     }
+    
+    
 
     @Test
     @Transactional
@@ -112,7 +127,10 @@ public class ParkingLocationResourceTest {
         int databaseSizeBeforeCreate = parkingLocationRepository.findAll().size();
 
         // Create the ParkingLocation
-        restParkingLocationMockMvc.perform(post("/api/parkingLocations")
+        restParkingLocationMockMvc.perform(post("/api/parkingLocations").with(request -> {
+			            request.setRemoteUser("admin@localhost");
+			            return request;
+			        })
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(parkingLocation)))
                 .andExpect(status().isCreated());

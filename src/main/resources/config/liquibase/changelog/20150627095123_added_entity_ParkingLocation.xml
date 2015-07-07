@@ -39,7 +39,9 @@
                 <constraints nullable="false" />
             </column>
             <column name="parkinglocationcontactinfo_id" type="bigint"/>
-            <column name="paypallaccount_id" type="bigint"/>
+            <column name="paypallaccount_id" type="bigint">
+            	<constraints nullable="false"/>
+            </column>
             <column name="user_id" type="bigint"/>
             <column name="created_at" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="false"/>

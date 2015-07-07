@@ -47,9 +47,7 @@ public class ParkingLocationService {
     public void save(ParkingLocation parkingLocation) throws ServiceException{
     	User user = userService.getUser();
     	parkingLocation.setUser(user);
-    	parkingLocationRepository.save(parkingLocation);
-    	if(parkingLocation.getParkingLocationContactInfo()!=null)
-    		parkingLocationContactInfoRepository.save(parkingLocation.getParkingLocationContactInfo());
+    	
     	if(parkingLocation.getPaypallAccount()!=null){
     		PaypallAccount payPallAccount = parkingLocation.getPaypallAccount();
 	    	parkingLocation.getPaypallAccount().setUser(user);
@@ -61,6 +59,10 @@ public class ParkingLocationService {
     		}
     		
     	}
+    	parkingLocationRepository.save(parkingLocation);
+    	if(parkingLocation.getParkingLocationContactInfo()!=null)
+    		parkingLocationContactInfoRepository.save(parkingLocation.getParkingLocationContactInfo());
+    	
     	if(!parkingLocation.getParkingLocationFacilitys().isEmpty()){
     		for(ParkingLocationFacility e : parkingLocation.getParkingLocationFacilitys()){
     			e.setParkingLocation(parkingLocation);

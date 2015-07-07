@@ -5,22 +5,31 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
 /**
  * A ParkingSpace.
@@ -51,23 +60,28 @@ public class ParkingSpace implements Serializable {
     @Column(name = "full_reserved")
     @JsonIgnore
     private Boolean fullReserved;
-
+    
+    @NotNull
     @ManyToOne
-    @JoinColumn(name="parkingLocation_id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+    @JsonIdentityReference(alwaysAsId=true)
     private ParkingLocation parkingLocation;
     
     @Valid
-    @OneToMany(mappedBy = "parkingSpace")
+    @NotEmpty
+    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpaceVehicleType> parkingSpaceVehicleTypes = new HashSet<>();
 
     @Valid
-    @OneToMany(mappedBy = "parkingSpace")
+    @NotEmpty
+    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER , cascade=CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
-
-    @OneToMany(mappedBy = "parkingSpace")
-    @JsonIgnore
+    
+    @Valid
+    @NotEmpty
+    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER , cascade=CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AvailableParking> availableParkings = new HashSet<>();
     

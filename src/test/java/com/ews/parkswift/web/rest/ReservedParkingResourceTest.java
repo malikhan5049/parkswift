@@ -1,13 +1,29 @@
 package com.ews.parkswift.web.rest;
 
-import com.ews.parkswift.Application;
-import com.ews.parkswift.domain.ReservedParking;
-import com.ews.parkswift.repository.ReservedParkingRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -19,18 +35,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import org.joda.time.LocalDate;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.ews.parkswift.Application;
+import com.ews.parkswift.domain.ReservedParking;
+import com.ews.parkswift.repository.ReservedParkingRepository;
 
 /**
  * Test class for the ReservedParkingResource REST controller.
@@ -52,12 +59,12 @@ public class ReservedParkingResourceTest {
     private static final LocalDate DEFAULT_END_DATE = new LocalDate(0L);
     private static final LocalDate UPDATED_END_DATE = new LocalDate();
 
-    private static final DateTime DEFAULT_START_TIME = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_START_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final LocalTime DEFAULT_START_TIME = new LocalTime(0L, DateTimeZone.UTC);
+    private static final LocalTime UPDATED_START_TIME = new LocalTime(DateTimeZone.UTC).withMillisOfSecond(0);
     private static final String DEFAULT_START_TIME_STR = dateTimeFormatter.print(DEFAULT_START_TIME);
 
-    private static final DateTime DEFAULT_END_TIME = new DateTime(0L, DateTimeZone.UTC);
-    private static final DateTime UPDATED_END_TIME = new DateTime(DateTimeZone.UTC).withMillisOfSecond(0);
+    private static final LocalTime DEFAULT_END_TIME = new LocalTime(0L, DateTimeZone.UTC);
+    private static final LocalTime UPDATED_END_TIME = new LocalTime(DateTimeZone.UTC).withMillisOfSecond(0);
     private static final String DEFAULT_END_TIME_STR = dateTimeFormatter.print(DEFAULT_END_TIME);
     private static final String DEFAULT_REPEAT_ON = "SAMPLE_TEXT";
     private static final String UPDATED_REPEAT_ON = "UPDATED_TEXT";
@@ -116,8 +123,8 @@ public class ReservedParkingResourceTest {
         ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
         assertThat(testReservedParking.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testReservedParking.getEndDate()).isEqualTo(DEFAULT_END_DATE);
-        assertThat(testReservedParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_START_TIME);
-        assertThat(testReservedParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testReservedParking.getStartTime()).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testReservedParking.getEndTime()).isEqualTo(DEFAULT_END_TIME);
         assertThat(testReservedParking.getRepeatOn()).isEqualTo(DEFAULT_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(DEFAULT_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -278,8 +285,8 @@ public class ReservedParkingResourceTest {
         ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
         assertThat(testReservedParking.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testReservedParking.getEndDate()).isEqualTo(UPDATED_END_DATE);
-        assertThat(testReservedParking.getStartTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_START_TIME);
-        assertThat(testReservedParking.getEndTime().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_END_TIME);
+        assertThat(testReservedParking.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testReservedParking.getEndTime()).isEqualTo(UPDATED_END_TIME);
         assertThat(testReservedParking.getRepeatOn()).isEqualTo(UPDATED_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(UPDATED_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(UPDATED_STATUS);

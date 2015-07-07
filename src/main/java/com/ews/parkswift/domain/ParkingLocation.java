@@ -1,21 +1,33 @@
 package com.ews.parkswift.domain;
 
-import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.validation.InLookupHeader;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A ParkingLocation.
@@ -24,7 +36,7 @@ import java.util.Objects;
 @Table(name = "PARKING_LOCATION")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ParkingLocation implements Serializable {
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -68,7 +80,7 @@ public class ParkingLocation implements Serializable {
     @OneToOne
     private ParkingLocationContactInfo parkingLocationContactInfo;
     
-    @Valid
+    @NotNull
     @ManyToOne
     private PaypallAccount paypallAccount;
 
@@ -81,8 +93,8 @@ public class ParkingLocation implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
     
+    @Valid
     @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationImage> parkingLocationImages = new HashSet<>();
     

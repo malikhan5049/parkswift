@@ -1,10 +1,14 @@
 package com.ews.parkswift.domain;
 
+import com.ews.parkswift.validation.ValidMonthDay;
+import com.ews.parkswift.validation.ValidWeekDay;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,12 +27,15 @@ public class AvailableParkingRepeatOn implements Serializable {
     private Long id;
 
     @Column(name = "day_of_month")
+    @ValidMonthDay
     private Integer dayOfMonth;
-
+    
     @Column(name = "date_of_week")
-    private String dateOfWeek;
+    @ValidWeekDay
+    private String dayOfWeek;
 
     @ManyToOne
+    @JsonIgnore
     private AvailableParking availableParking;
 
     public Long getId() {
@@ -47,12 +54,12 @@ public class AvailableParkingRepeatOn implements Serializable {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public String getDateOfWeek() {
-        return dateOfWeek;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setDateOfWeek(String dateOfWeek) {
-        this.dateOfWeek = dateOfWeek;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public AvailableParking getAvailableParking() {
@@ -74,14 +81,15 @@ public class AvailableParkingRepeatOn implements Serializable {
 
         AvailableParkingRepeatOn availableParkingRepeatOn = (AvailableParkingRepeatOn) o;
 
-        if ( ! Objects.equals(id, availableParkingRepeatOn.id)) return false;
+        if ( (dayOfWeek!=null && ! Objects.equals(dayOfWeek, availableParkingRepeatOn.dayOfWeek)) ||
+        		(dayOfMonth!=null && ! Objects.equals(dayOfMonth, availableParkingRepeatOn.dayOfMonth))) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return dayOfWeek == null?Objects.hashCode(dayOfMonth):Objects.hashCode(dayOfWeek);
     }
 
     @Override
@@ -89,7 +97,7 @@ public class AvailableParkingRepeatOn implements Serializable {
         return "AvailableParkingRepeatOn{" +
                 "id=" + id +
                 ", dayOfMonth='" + dayOfMonth + "'" +
-                ", dateOfWeek='" + dateOfWeek + "'" +
+                ", dateOfWeek='" + dayOfWeek + "'" +
                 '}';
     }
 }

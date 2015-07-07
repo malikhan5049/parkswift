@@ -20,7 +20,9 @@
             <column name="group_record" type="bit"/>
             <column name="group_number" type="integer"/>
             <column name="full_reserved" type="bit"/>
-            <column name="parkinglocation_id" type="bigint"/>
+            <column name="parkinglocation_id" type="bigint">
+            	<constraints nullable="false"/>
+            </column>
             
         	<column name="created_at" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="false"/>
