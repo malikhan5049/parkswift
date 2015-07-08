@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A Favourite.
  */
 @Entity
-@Table(name = "FAVOURITE")
+@Table(name = "FAVOURITE_LOCATION")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Favourite implements Serializable {
 
@@ -29,7 +29,7 @@ public class Favourite implements Serializable {
     private User user;
 
     @ManyToOne
-    private ParkingSpace parkingSpace;
+    private ParkingLocation parkingLocation;
 
     public Long getId() {
         return id;
@@ -47,12 +47,12 @@ public class Favourite implements Serializable {
         this.user = user;
     }
 
-    public ParkingSpace getParkingSpace() {
-        return parkingSpace;
+    public ParkingLocation getParkingSpace() {
+        return parkingLocation;
     }
 
-    public void setParkingSpace(ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public void setParkingSpace(ParkingLocation parkingSpace) {
+        this.parkingLocation = parkingSpace;
     }
 
     @Override

@@ -1,0 +1,70 @@
+
+<div>
+    <h2><span translate="parkswiftApp.feedback.detail.title">Feedback</span> {{feedback.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.rating">Rating</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.rating}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.comments">Comments</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.comments}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.posted_on">Posted_on</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.posted_on}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.feedback_by">Feedback_by</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.feedback_by}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.user">user</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.user.login}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.feedback.parkingLocation">parkingLocation</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{feedback.parkingLocation.addressLine1}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="feedback"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

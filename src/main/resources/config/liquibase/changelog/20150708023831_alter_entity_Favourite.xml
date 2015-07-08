@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity Favourite.
+    -->
+    <changeSet id="20150708023831" author="ali.khan">
+    	<renameTable newTableName="FAVOURITE_LOCATION" oldTableName="FAVOURITE"/>
+    	<renameColumn tableName="FAVOURITE_LOCATION" oldColumnName="parkingspace_id" newColumnName="parkinglocation_id" columnDataType="bigint"/>
+    	<dropForeignKeyConstraint baseTableName = "FAVOURITE_LOCATION" constraintName="fk_favourite_parkingspace_id" />
+    	<addForeignKeyConstraint baseColumnNames="parkinglocation_id"
+                                 baseTableName="FAVOURITE_LOCATION"
+                                 constraintName="fk_favourite_parkinglocation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="PARKING_LOCATION"/>
+    </changeSet>
+</databaseChangeLog>

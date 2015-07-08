@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.boon.validation.annotations.Phone;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -59,6 +60,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(max = 100)
     @Column(length = 100, unique = true)
     private String email;
+    
+    @Phone
+    @Size(max = 20)
+    @Column(length = 20, name="mobile_phone")
+    private String mobilePhone;
+    
+    @Phone
+    @Size(max = 20)
+    @Column(length = 20, name="home_phone")
+    private String homePhone;
+    
+    @Phone
+    @Size(max = 20)
+    @Column(length = 20, name="work_phone")
+    private String workPhone;
 
     @Column(nullable = false)
     private boolean activated = false;
@@ -185,8 +201,34 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
+    
+    
 
-    @Override
+    public String getMobilePhone() {
+		return mobilePhone;
+	}
+
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
+
+	public String getHomePhone() {
+		return homePhone;
+	}
+
+	public void setHomePhone(String homePhone) {
+		this.homePhone = homePhone;
+	}
+
+	public String getWorkPhone() {
+		return workPhone;
+	}
+
+	public void setWorkPhone(String workPhone) {
+		this.workPhone = workPhone;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

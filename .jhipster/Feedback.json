@@ -1,0 +1,82 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "parkingLocation",
+            "relationshipNameCapitalized": "ParkingLocation",
+            "relationshipFieldName": "parkingLocation",
+            "otherEntityName": "parkingLocation",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "ParkingLocation",
+            "otherEntityField": "addressLine1"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "rating",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Rating",
+            "fieldNameUnderscored": "rating",
+            "fieldInJavaBeanMethod": "Rating",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "comments",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Comments",
+            "fieldNameUnderscored": "comments",
+            "fieldInJavaBeanMethod": "Comments",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "500"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "posted_on",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "Posted_on",
+            "fieldNameUnderscored": "posted_on",
+            "fieldInJavaBeanMethod": "Posted_on",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "feedback_by",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "Feedback_by",
+            "fieldNameUnderscored": "feedback_by",
+            "fieldInJavaBeanMethod": "Feedback_by",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150708095050",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

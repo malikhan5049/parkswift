@@ -1,0 +1,171 @@
+<div>
+
+    <h2 translate="parkswiftApp.feedback.home.title">Feedbacks</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveFeedbackModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.feedback.home.createLabel">Create a new Feedback</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="myFeedbackLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myFeedbackLabel" translate="parkswiftApp.feedback.home.createOrEditLabel">Create or edit a Feedback</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="feedback.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.rating">Rating</label>
+                            <input type="number" class="form-control" name="rating"
+                                   ng-model="feedback.rating" required>
+
+                            <div ng-show="editForm.rating.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.rating.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.rating.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.comments">Comments</label>
+                            <input type="text" class="form-control" name="comments"
+                                   ng-model="feedback.comments" required ng-maxlength="500">
+
+                            <div ng-show="editForm.comments.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.comments.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.comments.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="500">
+                                    This field cannot be longer than 500 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.posted_on">Posted_on</label>
+                            <input type="datetime-local" class="form-control" name="posted_on"
+                                   ng-model="feedback.posted_on" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.feedback_by">Feedback_by</label>
+                            <input type="number" class="form-control" name="feedback_by"
+                                   ng-model="feedback.feedback_by">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.user">user</label>
+                            <select class="form-control" name="user" ng-model="feedback.user.id" ng-options="user.id as user.login for user in users">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.feedback.parkingLocation">parkingLocation</label>
+                            <select class="form-control" name="parkingLocation" ng-model="feedback.parkingLocation.id" ng-options="parkingLocation.id as parkingLocation.addressLine1 for parkingLocation in parkinglocations">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteFeedbackConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(feedback.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.feedback.delete.question" translate-values="{id: '{{feedback.id}}'}">Are you sure you want to delete this Feedback?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.feedback.rating">Rating</th>
+                    <th translate="parkswiftApp.feedback.comments">Comments</th>
+                    <th translate="parkswiftApp.feedback.posted_on">Posted_on</th>
+                    <th translate="parkswiftApp.feedback.feedback_by">Feedback_by</th>
+                    <th translate="parkswiftApp.feedback.user">user</th>
+                    <th translate="parkswiftApp.feedback.parkingLocation">parkingLocation</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="feedback in feedbacks">
+                    <td><a ui-sref="feedbackDetail({id:feedback.id})">{{feedback.id}}</a></td>
+                    <td>{{feedback.rating}}</td>
+                    <td>{{feedback.comments}}</td>
+                    <td>{{feedback.posted_on}}</td>
+                    <td>{{feedback.feedback_by}}</td>
+                    <td>{{feedback.user.login}}</td>
+                    <td>{{feedback.parkingLocation.addressLine1}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="feedbackDetail({id:feedback.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(feedback.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(feedback.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

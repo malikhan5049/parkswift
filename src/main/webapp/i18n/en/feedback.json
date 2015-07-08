@@ -1,0 +1,23 @@
+{
+    "parkswiftApp": {
+        "feedback" : {
+            "home": {
+                "title": "Feedbacks",
+                "createLabel": "Create a new Feedback",
+                "createOrEditLabel": "Create or edit a Feedback"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete Feedback {{ id }}?"
+            },
+            "detail": {
+                "title": "Feedback"
+            },
+            "rating": "Rating",
+            "comments": "Comments",
+            "posted_on": "Posted_on",
+            "feedback_by": "Feedback_by",
+            "user": "user",
+            "parkingLocation": "parkingLocation"
+        }
+    }
+}

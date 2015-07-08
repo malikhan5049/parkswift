@@ -25,5 +25,8 @@
     <include file="classpath:config/liquibase/changelog/20150610114301_added_entity_ReservedParkingRepeatOn.xml" relativeToChangelogFile="false"/>
     
     
+    <include file="classpath:config/liquibase/changelog/20150708022107_alter_entity_User.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708023831_alter_entity_Favourite.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708095050_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity Feedback.
+    -->
+    <changeSet id="20150708095050" author="ali.khan">
+        <createTable tableName="FEEDBACK">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rating" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="comments" type="varchar(500)">
+                <constraints nullable="false" />
+            </column>
+            <column name="posted_on" type="timestamp"/>
+            <column name="feedback_by" type="bigint"/>
+            <column name="user_id" type="bigint"/>
+            <column name="parkinglocation_id" type="bigint"/>
+        </createTable>
+        <dropDefaultValue tableName="FEEDBACK" columnName="posted_on" columnDataType="datetime"/>
+
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="FEEDBACK"
+                                 constraintName="fk_feedback_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="USER"/>
+
+        <addForeignKeyConstraint baseColumnNames="parkinglocation_id"
+                                 baseTableName="FEEDBACK"
+                                 constraintName="fk_feedback_parkinglocation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="PARKING_LOCATION"/>
+
+    </changeSet>
+</databaseChangeLog>
