@@ -27,6 +27,16 @@ import com.google.common.base.Joiner;
 public class Application {
 
 
+	byte b=-0; 
+	long a = 0X10a;
+	double d = 13;
+	short kj =45;
+	int x = 10;
+	int y = 20;
+	int z = (x * (y + 2)) - 10-4 * ((2*2) - 6);
+	boolean eJavaResult =true;
+	boolean returnVal = 10 >= 12 && 10 < 4.567 // line 6
+			|| eJavaResult == true;
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Inject

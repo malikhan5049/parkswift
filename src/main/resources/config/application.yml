@@ -39,9 +39,4 @@ swagger:
     licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
     
     
-    // start for login with facebook
-	public static final String FB_APP_ID = "502018279946405";
-	public static final String FB_APP_SECRET = "b2ad575154ef4bde345c2f23d3b1cde5";
-	public static final String REDIRECT_URI = "http://localhost:8080/Facebook_Login/fbhome";
-	static String accessToken = "";
-	// end for login with facebook
+

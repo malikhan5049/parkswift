@@ -48,7 +48,10 @@ import com.google.api.client.auth.oauth2.TokenErrorResponse;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Userinfoplus;
+//import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.plusDomains.PlusDomains;
 import com.google.api.services.plusDomains.model.Person;
 
@@ -84,6 +87,9 @@ public class UserXAuthTokenController {
     private TokenProvider tokenProvider;
 
     @Inject
+    private UserRepository userRepository;
+    
+    @Inject
     private AuthenticationManager authenticationManager;
 
     @Inject
@@ -113,59 +119,53 @@ public class UserXAuthTokenController {
     @Timed
     public Map<String, String> authorizewithfb(@RequestParam String token) throws MalformedURLException, JSONException, IOException {
     	
+    	boolean insertUserActivated = false;
 		FBGraph fbGraph = new FBGraph(token);
 		String graph = fbGraph.getFBGraph();
 		@SuppressWarnings("unchecked")
 		Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+		if(userRepository.findOneByEmail(fbProfileData.get("email")) == null)
+		{
+			User user = userService.createUserInformationfromSocialMediaProfile(fbProfileData.get("email"), fbProfileData.get("first_name"),
+			fbProfileData.get("last_name"), fbProfileData.get("email").toLowerCase(), "en", insertUserActivated);
+		}
 		return fbProfileData;
         }      
     
     // CLIENT_ID = "872550699005-o80it1noveuijc5ar4q9vs23qdldjf2o.apps.googleusercontent.com";
     // CLIENT_SECRET = "MenVMqSS5-OkbgpYv13umPXZ";
     //  API key =    AIzaSyDRBUmklUXhmtzcqg_LLB1nboyiIvJtcnQ
-    @RequestMapping(value = "/authenticategoogleplus",
+    //@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/authenticategoogleplus",
             method = RequestMethod.POST)
     @Timed
-    public Person authorizewithGooglePlus(@RequestParam String token) throws MalformedURLException, JSONException, IOException {
+    public  Map<String, String> authorizewithGooglePlus(@RequestParam String token) throws MalformedURLException, JSONException, IOException {
     	
-    	GoogleCredential credential = new GoogleCredential.Builder()
-        .setTransport(new NetHttpTransport())
-        .setJsonFactory(new JacksonFactory())
-        .setClientSecrets("872550699005-o80it1noveuijc5ar4q9vs23qdldjf2o.apps.googleusercontent.com", "MenVMqSS5-OkbgpYv13umPXZ")
-        .addRefreshListener(new CredentialRefreshListener() {
-
-		@Override
-		public void onTokenErrorResponse(Credential arg0,
-				TokenErrorResponse arg1) throws IOException {
-			// TODO Auto-generated method stub
-			 // Handle success.
-            System.out.println("Credential was refreshed successfully.");
+    	boolean insertUserActivated = false;
+    	GoogleCredential credential = new GoogleCredential().setAccessToken(token);   
+    	 Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), new JacksonFactory(), credential).setApplicationName(
+    	          "Oauth2").build();
+    	 Userinfoplus userinfo = oauth2.userinfo().get().execute();
+    	 @SuppressWarnings("rawtypes")
+		Map<String, String> googleplusProfile = new HashMap<String, String>();
+ 		try {
+ 			JSONObject json = new JSONObject(userinfo);
+ 			googleplusProfile.put("id", json.getString("id"));
+ 			googleplusProfile.put("first_name", json.getString("name"));
+ 			if (json.has("email"))
+ 				googleplusProfile.put("email", json.getString("email"));
+ 			if (json.has("gender"))
+ 				googleplusProfile.put("gender", json.getString("gender"));
+ 		} catch (JSONException e) {
+ 			e.printStackTrace();
+ 			throw new RuntimeException("ERROR in parsing google plus graph data. " + e);
+ 		}
+ 		if(userRepository.findOneByEmail(googleplusProfile.get("email")) == null)
+		{
+			User user = userService.createUserInformationfromSocialMediaProfile(googleplusProfile.get("email"), googleplusProfile.get("first_name"),
+					googleplusProfile.get("last_name"), googleplusProfile.get("email"), "en", insertUserActivated);
 		}
-
-		@Override
-		public void onTokenResponse(Credential arg0, TokenResponse arg1)
-				throws IOException {
-			// TODO Auto-generated method stub
-			 // Handle error.
-            System.err.println("Credential was not refreshed successfully. "
-                + "Redirect to error page or login screen.");
-		}
-        })
-        // You can also add a credential store listener to have credentials
-        // stored automatically.
-        //.addRefreshListener(new CredentialStoreRefreshListener(userId, credentialStore))
-        .build();
-
-    	PlusDomains plusDomains = new PlusDomains.Builder(new NetHttpTransport(), new JacksonFactory(), credential).build();
-    	Person mePerson = plusDomains.people().get("me").execute();
-
-    	System.out.println("ID:\t" + mePerson.getId());
-    	System.out.println("Display Name:\t" + mePerson.getDisplayName());
-    	System.out.println("Image URL:\t" + mePerson.getImage().getUrl());
-    	System.out.println("Profile URL:\t" + mePerson.getUrl());
-    	System.out.println("Profile email address:\t" + mePerson.getVerified());
-
-		return mePerson;
+ 		return googleplusProfile;
         }      
    
    
