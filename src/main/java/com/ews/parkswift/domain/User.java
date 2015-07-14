@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.boon.validation.annotations.Phone;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -42,8 +41,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String login;
 
     @JsonIgnore
-    @NotNull
-    @Size(min = 5, max = 100)
     @Column(length = 100)
     private String password;
 
@@ -61,17 +58,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(length = 100, unique = true)
     private String email;
     
-    @Phone
     @Size(max = 20)
     @Column(length = 20, name="mobile_phone")
     private String mobilePhone;
     
-    @Phone
     @Size(max = 20)
     @Column(length = 20, name="home_phone")
     private String homePhone;
     
-    @Phone
     @Size(max = 20)
     @Column(length = 20, name="work_phone")
     private String workPhone;

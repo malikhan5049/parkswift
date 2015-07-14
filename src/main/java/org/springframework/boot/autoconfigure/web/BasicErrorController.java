@@ -16,7 +16,7 @@
 
 package org.springframework.boot.autoconfigure.web;
 
-import java.util.HashMap; 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +76,7 @@ public class BasicErrorController implements ErrorController {
 			Map<String, Object> bodyWithMessageStatusContent = new HashMap<String,Object>();
 			bodyWithMessageStatusContent.put("status", HttpStatus.valueOf(Integer.valueOf(body.get("status").toString())).is2xxSuccessful()?"success":"failed");
 			bodyWithMessageStatusContent.put("failureMessage", body.get("message").toString().split(":")[0]);
+			bodyWithMessageStatusContent.put("failureContent", "");
 			bodyWithMessageStatusContent.put("content", "");
 			bodyWithMessageStatusContent.put("path",body.get("path")==null?request.getRequestURI():body.get("path"));
 			body = bodyWithMessageStatusContent;

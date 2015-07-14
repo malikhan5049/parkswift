@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.ews.parkswift.startup.ApplicationStartup;
 
-public class InLookupHeaderValidator implements ConstraintValidator<InLookupHeader, String>{
+public class InLookupHeaderValidator implements ConstraintValidator<InLookupHeader, Object>{
 	
 	InLookupHeader InLookupHeader;
 	@Override
@@ -15,8 +15,8 @@ public class InLookupHeaderValidator implements ConstraintValidator<InLookupHead
 	}
 
 	@Override
-	public boolean isValid(String field, ConstraintValidatorContext constraintValidatorContext) {
-		if(ApplicationStartup.map_lookupHeader.get(InLookupHeader.code()).stream().anyMatch(LE->LE.getValue().equalsIgnoreCase(field)))
+	public boolean isValid(Object field, ConstraintValidatorContext constraintValidatorContext) {
+		if(field == null || ApplicationStartup.map_lookupHeader.get(InLookupHeader.code()).stream().anyMatch(LE->LE.getValue().equalsIgnoreCase(field.toString())))
 			return true;
 		return false;
 	}

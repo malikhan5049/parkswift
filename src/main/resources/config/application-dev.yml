@@ -7,8 +7,8 @@ spring:
     datasource:
         dataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
         url: jdbc:mysql://localhost:3306/parkswift
-        databaseName: 
-        serverName: 
+        databaseName: parkswift
+        serverName: localhost
         username: root
         password: rootpark 
         cachePrepStmts: true

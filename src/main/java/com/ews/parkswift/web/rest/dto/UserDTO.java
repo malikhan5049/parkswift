@@ -12,8 +12,8 @@ public class UserDTO {
     @Size(min = 5, max = 100)
     private String login;
 
-    @NotNull
-    @Size(min = 5, max = 100)
+    
+    
     private String password;
 
     @Size(max = 50)

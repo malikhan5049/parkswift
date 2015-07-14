@@ -18,15 +18,29 @@
     <include file="classpath:config/liquibase/changelog/20150610112522_added_entity_ParkingLocationImage.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610112633_added_entity_ParkingSpacePriceEntry.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150610112750_added_entity_ParkingSpaceVehicleType.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150630125625_added_entity_AvailableParking.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150610113355_added_entity_AvailableParkingRepeatOn.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150630124325_added_entity_ReservedParking.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150630125625_added_entity_AvailabilitySchedule.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610113355_added_entity_AvailabilityScheduleRepeatOn.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150630124325_added_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150626132638_added_entity_Payment.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150610114301_added_entity_ReservedParkingRepeatOn.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150610114301_added_entity_BookingScheduleRepeatOn.xml" relativeToChangelogFile="false"/>
     
     
     <include file="classpath:config/liquibase/changelog/20150708022107_alter_entity_User.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150708023831_alter_entity_Favourite.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150708095050_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708041623_alter_entity_ParkingLocation.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708064007_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708075225_alter_entity_AvailabilitySchedule.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708082355_alter_entity_AvailabilityScheduleRepeatOn.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708083825_alter_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150709091856_added_entity_CustomerBooking.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150708153510_added_entity_BookedParkingSpace.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150709013201_alter_entity_BookingScheduleRepeatOn.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150709101940_added_entity_PaymentCharged.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150709075938_drop_entity_Payment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150710042122_alter_entity_ParkingLocationImage.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150712094856_alter_entity_LookupHeader.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150712092406_alter_entity_LookupEntry.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150714075407_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

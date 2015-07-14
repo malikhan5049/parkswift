@@ -1,35 +1,37 @@
 package com.ews.parkswift.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A ReservedParkingRepeatOn.
  */
 @Entity
-@Table(name = "PARKING_SPACE_RESERVATION_REPEAT_ON")
+@Table(name = "BOOKING_SCHEDULE_REPEAT_ON")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ReservedParkingRepeatOn implements Serializable {
+public class BookingScheduleRepeatOn implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "date_of_month")
-    private Integer dateOfMonth;
 
     @Column(name = "day_of_week")
     private String dayOfWeek;
 
     @ManyToOne
-    private ReservedParking reservedParking;
+    private BookingSchedule bookingSchedule;
 
     public Long getId() {
         return id;
@@ -39,13 +41,6 @@ public class ReservedParkingRepeatOn implements Serializable {
         this.id = id;
     }
 
-    public Integer getDateOfMonth() {
-        return dateOfMonth;
-    }
-
-    public void setDateOfMonth(Integer dateOfMonth) {
-        this.dateOfMonth = dateOfMonth;
-    }
 
     public String getDayOfWeek() {
         return dayOfWeek;
@@ -55,12 +50,12 @@ public class ReservedParkingRepeatOn implements Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public ReservedParking getReservedParking() {
-        return reservedParking;
+    public BookingSchedule getBookingSchedule() {
+        return bookingSchedule;
     }
 
-    public void setReservedParking(ReservedParking reservedParking) {
-        this.reservedParking = reservedParking;
+    public void setBookingSchedule(BookingSchedule bookingSchedule) {
+        this.bookingSchedule = bookingSchedule;
     }
 
     @Override
@@ -72,9 +67,9 @@ public class ReservedParkingRepeatOn implements Serializable {
             return false;
         }
 
-        ReservedParkingRepeatOn reservedParkingRepeatOn = (ReservedParkingRepeatOn) o;
+        BookingScheduleRepeatOn bookingScheduleRepeatOn = (BookingScheduleRepeatOn) o;
 
-        if ( ! Objects.equals(id, reservedParkingRepeatOn.id)) return false;
+        if ( ! Objects.equals(id, bookingScheduleRepeatOn.id)) return false;
 
         return true;
     }
@@ -86,9 +81,8 @@ public class ReservedParkingRepeatOn implements Serializable {
 
     @Override
     public String toString() {
-        return "ReservedParkingRepeatOn{" +
+        return "BookingScheduleRepeatOn{" +
                 "id=" + id +
-                ", dateOfMonth='" + dateOfMonth + "'" +
                 ", dayOfWeek='" + dayOfWeek + "'" +
                 '}';
     }

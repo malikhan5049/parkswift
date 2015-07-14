@@ -8,7 +8,7 @@
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <!--
-        Added the entity AvailableParkingRepeatOn.
+        Added the entity availabilityScheduleRepeatOn.
     -->
     <changeSet id="20150610113355" author="ali.khan">
         <createTable tableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON">
@@ -17,12 +17,12 @@
             </column>
             <column name="day_of_month" type="integer"/>
             <column name="date_of_week" type="varchar(255)"/>
-            <column name="availableparking_id" type="bigint"/>
+            <column name="availabilitySchedule_id" type="bigint"/>
         </createTable>
         
-        <addForeignKeyConstraint baseColumnNames="availableparking_id"
+        <addForeignKeyConstraint baseColumnNames="availabilitySchedule_id"
                                  baseTableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON"
-                                 constraintName="fk_availableparkingrepeaton_availableparking_id"
+                                 constraintName="fk_availabilitySchedulerepeaton_availabilitySchedule_id"
                                  referencedColumnNames="id"
                                  referencedTableName="PARKING_SPACE_AVAILABLE_ON"/>
 

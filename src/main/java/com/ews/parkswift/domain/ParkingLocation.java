@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,18 +17,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NotFound;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
 import com.ews.parkswift.validation.InLookupHeader;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A ParkingLocation.
@@ -41,30 +43,30 @@ public class ParkingLocation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "bussiness_type", nullable = false)
     @InLookupHeader(code = LookupHeaderCode.LOC_TYPE)
     private String bussinessType;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "address_line1", nullable = false)
     private String addressLine1;
 
     @Column(name = "address_line2")
     private String addressLine2;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "city", nullable = false)
     private String city;
 
     @Column(name = "state")
     private String state;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "country", nullable = false)
     private String country;
 
-    @NotNull
+    @NotEmpty
     @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
@@ -76,12 +78,16 @@ public class ParkingLocation implements Serializable {
     @Column(name = "lattitude", precision=10, scale=7, nullable = false)
     private BigDecimal lattitude;
     
+    @Column(name = "active")
+    private Boolean active = true;
+    
     @Valid
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
     private ParkingLocationContactInfo parkingLocationContactInfo;
     
+    @Valid
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     private PaypallAccount paypallAccount;
 
     @ManyToOne
@@ -89,19 +95,23 @@ public class ParkingLocation implements Serializable {
     private User user;
     
     @Valid
-    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
     
-    @Valid
     @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Feedback> feedbacks = new HashSet<>();
+    
+    
+    @Valid
+    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationImage> parkingLocationImages = new HashSet<>();
     
-    @OneToMany(mappedBy = "parkingLocation")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ParkingSpace> parkingSpaces = new HashSet<>();
+    @Transient
+    @JsonSerialize
+    private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
     
     
     
@@ -115,6 +125,9 @@ public class ParkingLocation implements Serializable {
 	public void setParkingLocationImages(
 			Set<ParkingLocationImage> parkingLocationImages) {
 		this.parkingLocationImages = parkingLocationImages;
+		this.parkingLocationImages.forEach((e)->{
+			e.setParkingLocation(this);
+		});
 	}
 
 	public Long getId() {
@@ -227,17 +240,42 @@ public class ParkingLocation implements Serializable {
 
     public void setParkingLocationFacilitys(Set<ParkingLocationFacility> parkingLocationFacilitys) {
         this.parkingLocationFacilitys = parkingLocationFacilitys;
+        parkingLocationFacilitys.forEach((e)->{
+        	e.setParkingLocation(this);
+        });
     }
 
-    public Set<ParkingSpace> getParkingSpaces() {
+    public Set<ParkingSpaceDTO> getParkingSpaces() {
         return parkingSpaces;
     }
 
-    public void setParkingSpaces(Set<ParkingSpace> parkingSpaces) {
+    public void setParkingSpaces(Set<ParkingSpaceDTO> parkingSpaces) {
         this.parkingSpaces = parkingSpaces;
     }
+    
+    
 
-    @Override
+    public Set<Feedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<Feedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+	
+	
+	
+	
+
+	public Boolean isActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

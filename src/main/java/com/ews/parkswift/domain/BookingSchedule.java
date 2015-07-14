@@ -10,21 +10,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
 import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
@@ -37,9 +32,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * A ReservedParking.
  */
 @Entity
-@Table(name = "PARKING_SPACE_RESERVED_ON")
+@Table(name = "BOOKING_SCHEDULE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ReservedParking implements Serializable {
+public class BookingSchedule implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -73,8 +68,8 @@ public class ReservedParking implements Serializable {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    @Column(name = "repeat_on")
-    private String repeatOn;
+    @Column(name = "repeat_basis")
+    private String repeatBasis;
 
     @Column(name = "repeat_occurrences")
     private Integer repeatOccurrences;
@@ -82,23 +77,13 @@ public class ReservedParking implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
-    @Column(name = "reserved_on", nullable = false)
-    private DateTime reservedOn;
 
-    @OneToOne(mappedBy = "reservedParking")
-    @JsonIgnore
-    private Payment payment;
 
-    @OneToMany(mappedBy = "reservedParking")
+    @OneToMany(mappedBy = "bookingSchedule")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ReservedParkingRepeatOn> reservedParkingRepeatOns = new HashSet<>();
+    private Set<BookingScheduleRepeatOn> bookingScheduleRepeatOns = new HashSet<>();
 
-    @ManyToOne
-    private ParkingSpace parkingSpace;
 
     public Long getId() {
         return id;
@@ -140,12 +125,12 @@ public class ReservedParking implements Serializable {
         this.endTime = endTime;
     }
 
-    public String getRepeatOn() {
-        return repeatOn;
+    public String getRepeatBasis() {
+        return repeatBasis;
     }
 
-    public void setRepeatOn(String repeatOn) {
-        this.repeatOn = repeatOn;
+    public void setRepeatBasis(String repeatOn) {
+        this.repeatBasis = repeatOn;
     }
 
     public Integer getRepeatOccurrences() {
@@ -164,36 +149,12 @@ public class ReservedParking implements Serializable {
         this.status = status;
     }
 
-    public DateTime getReservedOn() {
-        return reservedOn;
+    public Set<BookingScheduleRepeatOn> getBookingScheduleRepeatOns() {
+        return bookingScheduleRepeatOns;
     }
 
-    public void setReservedOn(DateTime reservedOn) {
-        this.reservedOn = reservedOn;
-    }
-
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
-    public Set<ReservedParkingRepeatOn> getReservedParkingRepeatOns() {
-        return reservedParkingRepeatOns;
-    }
-
-    public void setReservedParkingRepeatOns(Set<ReservedParkingRepeatOn> reservedParkingRepeatOns) {
-        this.reservedParkingRepeatOns = reservedParkingRepeatOns;
-    }
-
-    public ParkingSpace getParkingSpace() {
-        return parkingSpace;
-    }
-
-    public void setParkingSpace(ParkingSpace parkingSpace) {
-        this.parkingSpace = parkingSpace;
+    public void setBookingScheduleRepeatOns(Set<BookingScheduleRepeatOn> bookingScheduleRepeatOns) {
+        this.bookingScheduleRepeatOns = bookingScheduleRepeatOns;
     }
 
     @Override
@@ -205,9 +166,9 @@ public class ReservedParking implements Serializable {
             return false;
         }
 
-        ReservedParking reservedParking = (ReservedParking) o;
+        BookingSchedule bookingSchedule = (BookingSchedule) o;
 
-        if ( ! Objects.equals(id, reservedParking.id)) return false;
+        if ( ! Objects.equals(id, bookingSchedule.id)) return false;
 
         return true;
     }
@@ -219,16 +180,15 @@ public class ReservedParking implements Serializable {
 
     @Override
     public String toString() {
-        return "ReservedParking{" +
+        return "BookingSchedule{" +
                 "id=" + id +
                 ", startDate='" + startDate + "'" +
                 ", endDate='" + endDate + "'" +
                 ", startTime='" + startTime + "'" +
                 ", endTime='" + endTime + "'" +
-                ", repeatOn='" + repeatOn + "'" +
+                ", repeatOn='" + repeatBasis + "'" +
                 ", repeatOccurrences='" + repeatOccurrences + "'" +
                 ", status='" + status + "'" +
-                ", reservedOn='" + reservedOn + "'" +
                 '}';
     }
 }

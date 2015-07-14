@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -20,25 +19,25 @@ import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * A ParkingLocationFacility.
+ * A availabilityScheduleRepeatOn.
  */
 @Entity
-@Table(name = "PARKING_LOCATION_FACILITY")
+@Table(name = "AVAILABILITY_SCHEDULE_REPEAT_ON")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ParkingLocationFacility implements Serializable {
+public class AvailabilityScheduleRepeatOn implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "facility", nullable = false)
-    @InLookupHeader(code=LookupHeaderCode.LOC_FACILITY)
-    private String facility;
+    
+    @Column(name = "date_of_week")
+    @InLookupHeader(code=LookupHeaderCode.WEEKDAYS)
+    private String dayOfWeek;
 
     @ManyToOne
     @JsonIgnore
-    private ParkingLocation parkingLocation;
+    private AvailabilitySchedule availabilitySchedule;
 
     public Long getId() {
         return id;
@@ -48,20 +47,22 @@ public class ParkingLocationFacility implements Serializable {
         this.id = id;
     }
 
-    public String getFacility() {
-        return facility;
+   
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setFacility(String facility) {
-        this.facility = facility;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
-    public ParkingLocation getParkingLocation() {
-        return parkingLocation;
+    public AvailabilitySchedule getAvailabilitySchedule() {
+        return availabilitySchedule;
     }
 
-    public void setParkingLocation(ParkingLocation parkingLocation) {
-        this.parkingLocation = parkingLocation;
+    public void setAvailabilitySchedule(AvailabilitySchedule availabilitySchedule) {
+        this.availabilitySchedule = availabilitySchedule;
     }
 
     @Override
@@ -73,23 +74,23 @@ public class ParkingLocationFacility implements Serializable {
             return false;
         }
 
-        ParkingLocationFacility parkingLocationFacility = (ParkingLocationFacility) o;
+        AvailabilityScheduleRepeatOn availabilityScheduleRepeatOn = (AvailabilityScheduleRepeatOn) o;
 
-        if ( ! Objects.equals(facility, parkingLocationFacility.facility)) return false;
+        if ( (dayOfWeek!=null && ! Objects.equals(dayOfWeek, availabilityScheduleRepeatOn.dayOfWeek))) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(facility);
+        return Objects.hashCode(dayOfWeek);
     }
 
     @Override
     public String toString() {
-        return "ParkingLocationFacility{" +
+        return "AvailabilityScheduleRepeatOn{" +
                 "id=" + id +
-                ", facility='" + facility + "'" +
+                ", dateOfWeek='" + dayOfWeek + "'" +
                 '}';
     }
 }

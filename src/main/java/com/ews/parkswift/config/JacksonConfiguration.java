@@ -26,4 +26,6 @@ public class JacksonConfiguration {
         module.addSerializer(LocalDate.class, new CustomLocalDateSerializer());
         return module;
     }
+    
+    
 }

@@ -1,8 +1,8 @@
 package com.ews.parkswift.web.rest;
 
 import com.ews.parkswift.Application;
-import com.ews.parkswift.domain.ReservedParkingRepeatOn;
-import com.ews.parkswift.repository.ReservedParkingRepeatOnRepository;
+import com.ews.parkswift.domain.BookingScheduleRepeatOn;
+import com.ews.parkswift.repository.BookingScheduleRepeatOnRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +30,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Test class for the ReservedParkingRepeatOnResource REST controller.
  *
- * @see ReservedParkingRepeatOnResource
+ * @see BookingScheduleRepeatOnResource
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
-public class ReservedParkingRepeatOnResourceTest {
+public class BookingScheduleRepeatOnResourceTest {
 
 
     private static final Integer DEFAULT_DATE_OF_MONTH = 0;
@@ -45,24 +45,23 @@ public class ReservedParkingRepeatOnResourceTest {
     private static final String UPDATED_DAY_OF_WEEK = "UPDATED_TEXT";
 
     @Inject
-    private ReservedParkingRepeatOnRepository reservedParkingRepeatOnRepository;
+    private BookingScheduleRepeatOnRepository reservedParkingRepeatOnRepository;
 
     private MockMvc restReservedParkingRepeatOnMockMvc;
 
-    private ReservedParkingRepeatOn reservedParkingRepeatOn;
+    private BookingScheduleRepeatOn reservedParkingRepeatOn;
 
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ReservedParkingRepeatOnResource reservedParkingRepeatOnResource = new ReservedParkingRepeatOnResource();
+        BookingScheduleRepeatOnResource reservedParkingRepeatOnResource = new BookingScheduleRepeatOnResource();
         ReflectionTestUtils.setField(reservedParkingRepeatOnResource, "reservedParkingRepeatOnRepository", reservedParkingRepeatOnRepository);
         this.restReservedParkingRepeatOnMockMvc = MockMvcBuilders.standaloneSetup(reservedParkingRepeatOnResource).build();
     }
 
     @Before
     public void initTest() {
-        reservedParkingRepeatOn = new ReservedParkingRepeatOn();
-        reservedParkingRepeatOn.setDateOfMonth(DEFAULT_DATE_OF_MONTH);
+        reservedParkingRepeatOn = new BookingScheduleRepeatOn();
         reservedParkingRepeatOn.setDayOfWeek(DEFAULT_DAY_OF_WEEK);
     }
 
@@ -78,10 +77,9 @@ public class ReservedParkingRepeatOnResourceTest {
                 .andExpect(status().isCreated());
 
         // Validate the ReservedParkingRepeatOn in the database
-        List<ReservedParkingRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
+        List<BookingScheduleRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
         assertThat(reservedParkingRepeatOns).hasSize(databaseSizeBeforeCreate + 1);
-        ReservedParkingRepeatOn testReservedParkingRepeatOn = reservedParkingRepeatOns.get(reservedParkingRepeatOns.size() - 1);
-        assertThat(testReservedParkingRepeatOn.getDateOfMonth()).isEqualTo(DEFAULT_DATE_OF_MONTH);
+        BookingScheduleRepeatOn testReservedParkingRepeatOn = reservedParkingRepeatOns.get(reservedParkingRepeatOns.size() - 1);
         assertThat(testReservedParkingRepeatOn.getDayOfWeek()).isEqualTo(DEFAULT_DAY_OF_WEEK);
     }
 
@@ -132,7 +130,6 @@ public class ReservedParkingRepeatOnResourceTest {
 		int databaseSizeBeforeUpdate = reservedParkingRepeatOnRepository.findAll().size();
 
         // Update the reservedParkingRepeatOn
-        reservedParkingRepeatOn.setDateOfMonth(UPDATED_DATE_OF_MONTH);
         reservedParkingRepeatOn.setDayOfWeek(UPDATED_DAY_OF_WEEK);
         restReservedParkingRepeatOnMockMvc.perform(put("/api/reservedParkingRepeatOns")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -140,10 +137,9 @@ public class ReservedParkingRepeatOnResourceTest {
                 .andExpect(status().isOk());
 
         // Validate the ReservedParkingRepeatOn in the database
-        List<ReservedParkingRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
+        List<BookingScheduleRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
         assertThat(reservedParkingRepeatOns).hasSize(databaseSizeBeforeUpdate);
-        ReservedParkingRepeatOn testReservedParkingRepeatOn = reservedParkingRepeatOns.get(reservedParkingRepeatOns.size() - 1);
-        assertThat(testReservedParkingRepeatOn.getDateOfMonth()).isEqualTo(UPDATED_DATE_OF_MONTH);
+        BookingScheduleRepeatOn testReservedParkingRepeatOn = reservedParkingRepeatOns.get(reservedParkingRepeatOns.size() - 1);
         assertThat(testReservedParkingRepeatOn.getDayOfWeek()).isEqualTo(UPDATED_DAY_OF_WEEK);
     }
 
@@ -161,7 +157,7 @@ public class ReservedParkingRepeatOnResourceTest {
                 .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<ReservedParkingRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
+        List<BookingScheduleRepeatOn> reservedParkingRepeatOns = reservedParkingRepeatOnRepository.findAll();
         assertThat(reservedParkingRepeatOns).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

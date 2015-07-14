@@ -1,8 +1,8 @@
 package com.ews.parkswift.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.ews.parkswift.domain.ReservedParking;
-import com.ews.parkswift.repository.ReservedParkingRepository;
+import com.ews.parkswift.domain.BookingSchedule;
+import com.ews.parkswift.repository.BookingScheduleRepository;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +25,12 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-public class ReservedParkingResource {
+public class BookingScheduleResource {
 
-    private final Logger log = LoggerFactory.getLogger(ReservedParkingResource.class);
+    private final Logger log = LoggerFactory.getLogger(BookingScheduleResource.class);
 
     @Inject
-    private ReservedParkingRepository reservedParkingRepository;
+    private BookingScheduleRepository reservedParkingRepository;
 
     /**
      * POST  /reservedParkings -> Create a new reservedParking.
@@ -39,7 +39,7 @@ public class ReservedParkingResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody ReservedParking reservedParking) throws URISyntaxException {
+    public ResponseEntity<Void> create(@Valid @RequestBody BookingSchedule reservedParking) throws URISyntaxException {
         log.debug("REST request to save ReservedParking : {}", reservedParking);
         if (reservedParking.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new reservedParking cannot already have an ID").build();
@@ -55,7 +55,7 @@ public class ReservedParkingResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody ReservedParking reservedParking) throws URISyntaxException {
+    public ResponseEntity<Void> update(@Valid @RequestBody BookingSchedule reservedParking) throws URISyntaxException {
         log.debug("REST request to update ReservedParking : {}", reservedParking);
         if (reservedParking.getId() == null) {
             return create(reservedParking);
@@ -71,10 +71,10 @@ public class ReservedParkingResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<ReservedParking>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    public ResponseEntity<List<BookingSchedule>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
-        Page<ReservedParking> page = reservedParkingRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
+        Page<BookingSchedule> page = reservedParkingRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/reservedParkings", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -86,7 +86,7 @@ public class ReservedParkingResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ReservedParking> get(@PathVariable Long id) {
+    public ResponseEntity<BookingSchedule> get(@PathVariable Long id) {
         log.debug("REST request to get ReservedParking : {}", id);
         return Optional.ofNullable(reservedParkingRepository.findOne(id))
             .map(reservedParking -> new ResponseEntity<>(

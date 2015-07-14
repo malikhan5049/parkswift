@@ -1,10 +1,8 @@
 package com.ews.parkswift.config;
 
-import com.codahale.metrics.MetricRegistry;
-import com.ews.parkswift.startup.ApplicationStartup;
-import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.Arrays;
+
+import javax.sql.DataSource;
 
 import liquibase.integration.spring.SpringLiquibase;
 
@@ -24,9 +22,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.StringUtils;
 
-import javax.sql.DataSource;
-
-import java.util.Arrays;
+import com.codahale.metrics.MetricRegistry;
+import com.ews.parkswift.startup.ApplicationStartup;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableJpaRepositories("com.ews.parkswift.repository")

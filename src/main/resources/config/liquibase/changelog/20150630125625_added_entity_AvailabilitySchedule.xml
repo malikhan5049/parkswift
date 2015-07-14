@@ -8,7 +8,7 @@
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
     <!--
-        Added the entity AvailableParking.
+        Added the entity availabilitySchedule.
     -->
     <changeSet id="20150630125625" author="ali.khan">
         <createTable tableName="PARKING_SPACE_AVAILABLE_ON">
@@ -49,7 +49,7 @@
         
         <addForeignKeyConstraint baseColumnNames="parkingspace_id"
                                  baseTableName="PARKING_SPACE_AVAILABLE_ON"
-                                 constraintName="fk_availableparking_parkingspace_id"
+                                 constraintName="fk_availabilitySchedule_parkingspace_id"
                                  referencedColumnNames="id"
                                  referencedTableName="PARKING_SPACE"/>
 

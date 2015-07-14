@@ -1,3 +1,6 @@
+"paymentCharged": "PaymentCharged",
+"customerBooking": "CustomerBooking",
+"bookedParkingSpace": "BookedParkingSpace",
 "feedback": "Feedback",
 {
     "global": {

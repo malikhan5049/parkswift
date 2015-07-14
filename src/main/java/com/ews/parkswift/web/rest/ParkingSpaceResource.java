@@ -6,21 +6,9 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-
-
-
-import java.util.stream.Collectors;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-
-
-
-
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,6 +16,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,17 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
-
-
 import com.codahale.metrics.annotation.Timed;
-import com.ews.parkswift.domain.AvailableParking;
-import com.ews.parkswift.domain.AvailableParkingRepeatOn;
 import com.ews.parkswift.domain.ParkingSpace;
+import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
 import com.ews.parkswift.service.ParkingSpaceService;
+import com.ews.parkswift.validation.ParkingSpaceValidator;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -60,13 +45,21 @@ public class ParkingSpaceResource {
 
     private final Logger log = LoggerFactory.getLogger(ParkingSpaceResource.class);
     final ObjectMapper mapper =  new ObjectMapper();
-
+    
     @Inject
     private ParkingSpaceRepository parkingSpaceRepository;
     
     @Inject
+    private ParkingLocationRepository parkingLocationRepository;
+    
+    @Inject
     private ParkingSpaceService parkingSpaceService;
     
+    
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new ParkingSpaceValidator(parkingLocationRepository));
+    }
     /**
      * POST  /parkingSpaces -> Create a new parkingSpace.
      * @throws IOException 
@@ -83,30 +76,34 @@ public class ParkingSpaceResource {
         if (parkingSpace.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new parkingSpace cannot already have an ID").build();
         }
+        
         parkingSpaceService.save(parkingSpace);
         return ResponseEntity.created(new URI("/api/parkingSpaces/" + parkingSpace.getId())).build();
     }
 
     /**
      * PUT  /parkingSpaces -> Updates an existing parkingSpace.
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
      */
     @RequestMapping(value = "/parkingSpaces",
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException {
+    public ResponseEntity<Void> update(@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
         log.debug("REST request to update ParkingSpace : {}", parkingSpace);
         if (parkingSpace.getId() == null) {
-//            return create(parkingSpace);
+            return create(parkingSpace);
         }
-        parkingSpaceRepository.save(parkingSpace);
+        parkingSpaceService.save(parkingSpace);
         return ResponseEntity.ok().build();
     }
 
     /**
      * GET  /parkingSpaces -> get all the parkingSpaces.
      */
-    @RequestMapping(value = "/parkingSpaces",
+    @RequestMapping(value = "/parkingSpaces/paginated",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -116,6 +113,18 @@ public class ParkingSpaceResource {
 		Page<ParkingSpace> page = parkingSpaceRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/parkingSpaces", offset, limit);
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    
+    /**
+     * GET  /parkingSpaces -> get all the parkingSpaces.
+     */
+    @RequestMapping(value = "/parkingSpaces/parkingLocation{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<ParkingSpace> getAll(@PathVariable Long id)
+		throws URISyntaxException {
+		return parkingSpaceRepository.findAllByParkingLocationId(id);
     }
 
     /**

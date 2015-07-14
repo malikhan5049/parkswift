@@ -49,8 +49,8 @@ public class Payment implements Serializable {
     @ManyToOne
     private User user;
 
-    @OneToOne
-    private ReservedParking reservedParking;
+    @ManyToOne
+    private CustomerBooking customerBooking;
 
     public Long getId() {
         return id;
@@ -100,12 +100,12 @@ public class Payment implements Serializable {
         this.user = user;
     }
 
-    public ReservedParking getReservedParking() {
-        return reservedParking;
+    public CustomerBooking getCustomerBooking() {
+        return customerBooking;
     }
 
-    public void setReservedParking(ReservedParking reservedParking) {
-        this.reservedParking = reservedParking;
+    public void setCustomerBooking(CustomerBooking customerBooking) {
+        this.customerBooking = customerBooking;
     }
 
     @Override

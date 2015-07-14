@@ -36,19 +36,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.Application;
-import com.ews.parkswift.domain.ReservedParking;
-import com.ews.parkswift.repository.ReservedParkingRepository;
+import com.ews.parkswift.domain.BookingSchedule;
+import com.ews.parkswift.repository.BookingScheduleRepository;
 
 /**
  * Test class for the ReservedParkingResource REST controller.
  *
- * @see ReservedParkingResource
+ * @see BookingScheduleResource
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
-public class ReservedParkingResourceTest {
+public class BookingScheduleResourceTest {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -79,31 +79,30 @@ public class ReservedParkingResourceTest {
     private static final String DEFAULT_RESERVED_ON_STR = dateTimeFormatter.print(DEFAULT_RESERVED_ON);
 
     @Inject
-    private ReservedParkingRepository reservedParkingRepository;
+    private BookingScheduleRepository reservedParkingRepository;
 
     private MockMvc restReservedParkingMockMvc;
 
-    private ReservedParking reservedParking;
+    private BookingSchedule reservedParking;
 
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ReservedParkingResource reservedParkingResource = new ReservedParkingResource();
+        BookingScheduleResource reservedParkingResource = new BookingScheduleResource();
         ReflectionTestUtils.setField(reservedParkingResource, "reservedParkingRepository", reservedParkingRepository);
         this.restReservedParkingMockMvc = MockMvcBuilders.standaloneSetup(reservedParkingResource).build();
     }
 
     @Before
     public void initTest() {
-        reservedParking = new ReservedParking();
+        reservedParking = new BookingSchedule();
         reservedParking.setStartDate(DEFAULT_START_DATE);
         reservedParking.setEndDate(DEFAULT_END_DATE);
         reservedParking.setStartTime(DEFAULT_START_TIME);
         reservedParking.setEndTime(DEFAULT_END_TIME);
-        reservedParking.setRepeatOn(DEFAULT_REPEAT_ON);
+        reservedParking.setRepeatBasis(DEFAULT_REPEAT_ON);
         reservedParking.setRepeatOccurrences(DEFAULT_REPEAT_OCCURRENCES);
         reservedParking.setStatus(DEFAULT_STATUS);
-        reservedParking.setReservedOn(DEFAULT_RESERVED_ON);
     }
 
     @Test
@@ -118,17 +117,16 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isCreated());
 
         // Validate the ReservedParking in the database
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(databaseSizeBeforeCreate + 1);
-        ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
+        BookingSchedule testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
         assertThat(testReservedParking.getStartDate()).isEqualTo(DEFAULT_START_DATE);
         assertThat(testReservedParking.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testReservedParking.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testReservedParking.getEndTime()).isEqualTo(DEFAULT_END_TIME);
-        assertThat(testReservedParking.getRepeatOn()).isEqualTo(DEFAULT_REPEAT_ON);
+        assertThat(testReservedParking.getRepeatBasis()).isEqualTo(DEFAULT_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(DEFAULT_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testReservedParking.getReservedOn().toDateTime(DateTimeZone.UTC)).isEqualTo(DEFAULT_RESERVED_ON);
     }
 
     @Test
@@ -146,7 +144,7 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isBadRequest());
 
         // Validate the database is still empty
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(0);
     }
 
@@ -165,7 +163,7 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isBadRequest());
 
         // Validate the database is still empty
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(0);
     }
 
@@ -184,7 +182,7 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isBadRequest());
 
         // Validate the database is still empty
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(0);
     }
 
@@ -203,7 +201,7 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isBadRequest());
 
         // Validate the database is still empty
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(0);
     }
 
@@ -270,27 +268,25 @@ public class ReservedParkingResourceTest {
         reservedParking.setEndDate(UPDATED_END_DATE);
         reservedParking.setStartTime(UPDATED_START_TIME);
         reservedParking.setEndTime(UPDATED_END_TIME);
-        reservedParking.setRepeatOn(UPDATED_REPEAT_ON);
+        reservedParking.setRepeatBasis(UPDATED_REPEAT_ON);
         reservedParking.setRepeatOccurrences(UPDATED_REPEAT_OCCURRENCES);
         reservedParking.setStatus(UPDATED_STATUS);
-        reservedParking.setReservedOn(UPDATED_RESERVED_ON);
         restReservedParkingMockMvc.perform(put("/api/reservedParkings")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(reservedParking)))
                 .andExpect(status().isOk());
 
         // Validate the ReservedParking in the database
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(databaseSizeBeforeUpdate);
-        ReservedParking testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
+        BookingSchedule testReservedParking = reservedParkings.get(reservedParkings.size() - 1);
         assertThat(testReservedParking.getStartDate()).isEqualTo(UPDATED_START_DATE);
         assertThat(testReservedParking.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testReservedParking.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testReservedParking.getEndTime()).isEqualTo(UPDATED_END_TIME);
-        assertThat(testReservedParking.getRepeatOn()).isEqualTo(UPDATED_REPEAT_ON);
+        assertThat(testReservedParking.getRepeatBasis()).isEqualTo(UPDATED_REPEAT_ON);
         assertThat(testReservedParking.getRepeatOccurrences()).isEqualTo(UPDATED_REPEAT_OCCURRENCES);
         assertThat(testReservedParking.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testReservedParking.getReservedOn().toDateTime(DateTimeZone.UTC)).isEqualTo(UPDATED_RESERVED_ON);
     }
 
     @Test
@@ -307,7 +303,7 @@ public class ReservedParkingResourceTest {
                 .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<ReservedParking> reservedParkings = reservedParkingRepository.findAll();
+        List<BookingSchedule> reservedParkings = reservedParkingRepository.findAll();
         assertThat(reservedParkings).hasSize(databaseSizeBeforeDelete - 1);
     }
 }

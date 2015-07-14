@@ -22,14 +22,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
 /**
  * A ParkingSpace.
@@ -45,22 +41,17 @@ public class ParkingSpace implements Serializable {
 
     @Column(name = "description")
     private String description;
-
+    
     @Column(name = "number_of_spaces", nullable = false)
     private Integer numberOfSpaces;
+    
+    @Column(name = "nick")
+    private String nick;
 
     @Column(name = "group_record")
     @JsonIgnore
     private Boolean groupRecord;
 
-    @Column(name = "group_number")
-    @JsonIgnore
-    private Integer groupNumber;
-
-    @Column(name = "full_reserved")
-    @JsonIgnore
-    private Boolean fullReserved;
-    
     @NotNull
     @ManyToOne
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
@@ -69,26 +60,26 @@ public class ParkingSpace implements Serializable {
     
     @Valid
     @NotEmpty
-    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="parkingSpace",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpaceVehicleType> parkingSpaceVehicleTypes = new HashSet<>();
 
     @Valid
     @NotEmpty
-    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER , cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="parkingSpace",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
     
     @Valid
     @NotEmpty
-    @OneToMany(mappedBy = "parkingSpace", fetch=FetchType.EAGER , cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="parkingSpace",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AvailableParking> availableParkings = new HashSet<>();
+    private Set<AvailabilitySchedule> availabilitySchedules = new HashSet<>();
     
     @OneToMany(mappedBy = "parkingSpace")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ReservedParking> reservedParkings = new HashSet<>();
+    private Set<BookedParkingSpace> bookedParkingSpace = new HashSet<>();
 
 
     public Long getId() {
@@ -123,21 +114,7 @@ public class ParkingSpace implements Serializable {
         this.groupRecord = groupRecord;
     }
 
-    public Integer getGroupNumber() {
-        return groupNumber;
-    }
 
-    public void setGroupNumber(Integer groupNumber) {
-        this.groupNumber = groupNumber;
-    }
-
-    public Boolean getFullReserved() {
-        return fullReserved;
-    }
-
-    public void setFullReserved(Boolean fullReserved) {
-        this.fullReserved = fullReserved;
-    }
 
     public ParkingLocation getParkingLocation() {
         return parkingLocation;
@@ -153,6 +130,7 @@ public class ParkingSpace implements Serializable {
 
     public void setParkingSpaceVehicleTypes(Set<ParkingSpaceVehicleType> parkingSpaceVehicleTypes) {
         this.parkingSpaceVehicleTypes = parkingSpaceVehicleTypes;
+        this.parkingSpaceVehicleTypes.forEach((e)->{e.setParkingSpace(this);});
     }
 
     public Set<ParkingSpacePriceEntry> getParkingSpacePriceEntrys() {
@@ -161,26 +139,38 @@ public class ParkingSpace implements Serializable {
 
     public void setParkingSpacePriceEntrys(Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys) {
         this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
+        this.parkingSpacePriceEntrys.forEach((e)->{e.setParkingSpace(this);});
     }
 
-    public Set<AvailableParking> getAvailableParkings() {
-        return availableParkings;
+    public Set<AvailabilitySchedule> getAvailabilitySchedules() {
+        return availabilitySchedules;
     }
 
-    public void setAvailableParkings(Set<AvailableParking> availableParkings) {
-        this.availableParkings = availableParkings;
+    public void setAvailabilitySchedules(Set<AvailabilitySchedule> availabilitySchedules) {
+        this.availabilitySchedules = availabilitySchedules;
+        this.availabilitySchedules.forEach((e)->{e.setParkingSpace(this);});
     }
     
-    public Set<ReservedParking> getReservedParkings() {
-        return reservedParkings;
+    public Set<BookedParkingSpace> getBookedParkingSpace() {
+        return bookedParkingSpace;
     }
 
-    public void setReservedParkings(Set<ReservedParking> reservedParkings) {
-        this.reservedParkings = reservedParkings;
+    public void setBookedParkingSpace(Set<BookedParkingSpace> bookedParkingSpace) {
+        this.bookedParkingSpace = bookedParkingSpace;
     }
+    
+    
 
 
-    @Override
+    public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -208,8 +198,6 @@ public class ParkingSpace implements Serializable {
                 ", description='" + description + "'" +
                 ", numberOfSpaces='" + numberOfSpaces + "'" +
                 ", groupRecord='" + groupRecord + "'" +
-                ", groupNumber='" + groupNumber + "'" +
-                ", fullReserved='" + fullReserved + "'" +
                 '}';
     }
 }

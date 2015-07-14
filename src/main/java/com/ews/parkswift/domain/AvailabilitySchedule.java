@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,17 +30,19 @@ import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
 import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
+import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
- * A AvailableParking.
+ * A availabilitySchedule.
  */
 @Entity
-@Table(name = "PARKING_SPACE_AVAILABLE_ON")
+@Table(name = "AVAILABILITY_SCHEDULE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AvailableParking implements Serializable {
+public class AvailabilitySchedule implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,20 +78,46 @@ public class AvailableParking implements Serializable {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    @Column(name = "repeat_on")
-    private String repeatOn;
+    @Column(name = "repeat_basis")
+    @InLookupHeader(code=LookupHeaderCode.REP_BASIS)
+    private String repeatBasis;
 
-    @Column(name = "repeat_occurrences")
-    private Integer repeatOccurrences;
+    
+    @Column(name = "repeat_after_every")
+    @InLookupHeader(code=LookupHeaderCode.REP_AFTR_EVRY)
+    private Integer repeatAfterEvery;
+    
+    @Size(max=10)
+    @Column(name = "repeat_end_basis", length=10)
+    @InLookupHeader(code=LookupHeaderCode.REP_END_BASIS)
+    private String repeatEndBasis;
+    
+    @Column(name = "repeat_end_occurrences")
+    private Integer repeatEndOccurrences;
+    
+    
+    @Future
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+    @Column(name = "repeat_end_date")
+    private LocalDate repeatEndDate;
+    
+    
+    @Size(max=20)
+    @Column(name = "repeat_by", length=20)
+    @InLookupHeader(code=LookupHeaderCode.REP_BY)
+    private String repeatBy;
+    
 
     @ManyToOne
     @JsonIgnore
     private ParkingSpace parkingSpace;
     
     @Valid
-    @OneToMany(mappedBy = "availableParking", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "availabilitySchedule",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<AvailableParkingRepeatOn> availableParkingRepeatOns = new HashSet<>();
+    private Set<AvailabilityScheduleRepeatOn> availabilityScheduleRepeatOns = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -130,20 +159,15 @@ public class AvailableParking implements Serializable {
         this.endTime = endTime;
     }
 
-    public String getRepeatOn() {
-        return repeatOn;
-    }
 
-    public void setRepeatOn(String repeatOn) {
-        this.repeatOn = repeatOn;
+    public Integer getRepeatEndOccurrences() {
+        return repeatEndOccurrences;
     }
+    
+    
 
-    public Integer getRepeatOccurrences() {
-        return repeatOccurrences;
-    }
-
-    public void setRepeatOccurrences(Integer repeatOccurrences) {
-        this.repeatOccurrences = repeatOccurrences;
+    public void setRepeatEndOccurrences(Integer repeatOccurrences) {
+        this.repeatEndOccurrences = repeatOccurrences;
     }
 
     public ParkingSpace getParkingSpace() {
@@ -154,15 +178,42 @@ public class AvailableParking implements Serializable {
         this.parkingSpace = parkingSpace;
     }
 
-    public Set<AvailableParkingRepeatOn> getAvailableParkingRepeatOns() {
-        return availableParkingRepeatOns;
+    public Set<AvailabilityScheduleRepeatOn> getAvailabilityScheduleRepeatOns() {
+        return availabilityScheduleRepeatOns;
     }
 
-    public void setAvailableParkingRepeatOns(Set<AvailableParkingRepeatOn> availableParkingRepeatOns) {
-        this.availableParkingRepeatOns = availableParkingRepeatOns;
+    public void setAvailabilityScheduleRepeatOns(Set<AvailabilityScheduleRepeatOn> availabilityScheduleRepeatOns) {
+        this.availabilityScheduleRepeatOns = availabilityScheduleRepeatOns;
+        this.availabilityScheduleRepeatOns.forEach((e)->{e.setAvailabilitySchedule(this);});
     }
+    
+    
 
-    @Override
+    public Integer getRepeatAfterEvery() {
+		return repeatAfterEvery;
+	}
+
+	public void setRepeatAfterEvery(Integer repeatAfterEvery) {
+		this.repeatAfterEvery = repeatAfterEvery;
+	}
+
+	public String getRepeatEndBasis() {
+		return repeatEndBasis;
+	}
+
+	public void setRepeatEndBasis(String repeatEndBasis) {
+		this.repeatEndBasis = repeatEndBasis;
+	}
+
+	public String getRepeatBy() {
+		return repeatBy;
+	}
+
+	public void setRepeatBy(String repeatBy) {
+		this.repeatBy = repeatBy;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -171,28 +222,47 @@ public class AvailableParking implements Serializable {
             return false;
         }
 
-        AvailableParking availableParking = (AvailableParking) o;
+        AvailabilitySchedule availabilitySchedule = (AvailabilitySchedule) o;
 
-        if ( ! Objects.equals(id, availableParking.id)) return false;
+        if ( ! Objects.equals(startDate, availabilitySchedule.startDate) && Objects.equals(endDate, availabilitySchedule.endDate) &&
+        		Objects.equals(startTime, availabilitySchedule.startTime) && Objects.equals(endTime, availabilitySchedule.endTime)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(startDate)+Objects.hashCode(endDate)+Objects.hashCode(startTime)+Objects.hashCode(endTime);
     }
+    
+    
 
-    @Override
+    public String getRepeatBasis() {
+		return repeatBasis;
+	}
+
+	public void setRepeatBasis(String repeatBasis) {
+		this.repeatBasis = repeatBasis;
+	}
+
+	public LocalDate getRepeatEndDate() {
+		return repeatEndDate;
+	}
+
+	public void setRepeatEndDate(LocalDate repeatEndDate) {
+		this.repeatEndDate = repeatEndDate;
+	}
+
+	@Override
     public String toString() {
-        return "AvailableParking{" +
+        return "AvailableSchedule{" +
                 "id=" + id +
                 ", startDate='" + startDate + "'" +
                 ", endDate='" + endDate + "'" +
                 ", startTime='" + startTime + "'" +
                 ", endTime='" + endTime + "'" +
-                ", repeatOn='" + repeatOn + "'" +
-                ", repeatOccurrences='" + repeatOccurrences + "'" +
+                ", repeatOn='" + repeatBasis + "'" +
+                ", repeatOccurrences='" + repeatEndOccurrences + "'" +
                 '}';
     }
 }

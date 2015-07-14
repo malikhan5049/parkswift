@@ -96,8 +96,6 @@ public class ParkingSpaceResourceTest {
         parkingSpace.setDescription(DEFAULT_DESCRIPTION);
         parkingSpace.setNumberOfSpaces(DEFAULT_NUMBER_OF_SPACES);
         parkingSpace.setGroupRecord(DEFAULT_GROUP_RECORD);
-        parkingSpace.setGroupNumber(DEFAULT_GROUP_NUMBER);
-        parkingSpace.setFullReserved(DEFAULT_FULL_RESERVED);
         parkingSpace.setParkingLocation(new ParkingLocation(){{setId(1L);}});
         parkingSpace.setParkingSpacePriceEntrys(new HashSet<ParkingSpacePriceEntry>(){{add(new ParkingSpacePriceEntry(){{setType("Day Hour");setPrice(BigDecimal.valueOf(5));}});}});
         parkingSpace.setParkingSpaceVehicleTypes(new HashSet<ParkingSpaceVehicleType>(){{add(new ParkingSpaceVehicleType(){{setType("car");}});}});
@@ -124,8 +122,6 @@ public class ParkingSpaceResourceTest {
         assertThat(testParkingSpace.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testParkingSpace.getNumberOfSpaces()).isEqualTo(DEFAULT_NUMBER_OF_SPACES);
         assertThat(testParkingSpace.getGroupRecord()).isEqualTo(DEFAULT_GROUP_RECORD);
-        assertThat(testParkingSpace.getGroupNumber()).isEqualTo(DEFAULT_GROUP_NUMBER);
-        assertThat(testParkingSpace.getFullReserved()).isEqualTo(DEFAULT_FULL_RESERVED);
     }
 
     @Test
@@ -203,8 +199,6 @@ public class ParkingSpaceResourceTest {
         parkingSpace.setDescription(UPDATED_DESCRIPTION);
         parkingSpace.setNumberOfSpaces(UPDATED_NUMBER_OF_SPACES);
         parkingSpace.setGroupRecord(UPDATED_GROUP_RECORD);
-        parkingSpace.setGroupNumber(UPDATED_GROUP_NUMBER);
-        parkingSpace.setFullReserved(UPDATED_FULL_RESERVED);
         restParkingSpaceMockMvc.perform(put("/api/parkingSpaces")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(parkingSpace)))
@@ -217,8 +211,6 @@ public class ParkingSpaceResourceTest {
         assertThat(testParkingSpace.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testParkingSpace.getNumberOfSpaces()).isEqualTo(UPDATED_NUMBER_OF_SPACES);
         assertThat(testParkingSpace.getGroupRecord()).isEqualTo(UPDATED_GROUP_RECORD);
-        assertThat(testParkingSpace.getGroupNumber()).isEqualTo(UPDATED_GROUP_NUMBER);
-        assertThat(testParkingSpace.getFullReserved()).isEqualTo(UPDATED_FULL_RESERVED);
     }
 
     @Test

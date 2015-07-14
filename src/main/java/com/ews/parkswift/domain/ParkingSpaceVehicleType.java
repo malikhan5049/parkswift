@@ -10,10 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
 import com.ews.parkswift.validation.InLookupHeader;
@@ -31,7 +31,7 @@ public class ParkingSpaceVehicleType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @NotNull
+    @NotEmpty
     @Column(name = "type", nullable = false)
     @InLookupHeader(code=LookupHeaderCode.PS_VT)
     private String type;

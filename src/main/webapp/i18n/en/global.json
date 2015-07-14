@@ -23,6 +23,9 @@
 				"parkingSpacePriceEntry": "ParkingSpacePriceEntry",
 				"parkingSpaceImage": "ParkingSpaceImage",
                 "feedback": "Feedback",
+                "bookedParkingSpace": "BookedParkingSpace",
+                "customerBooking": "CustomerBooking",
+                "paymentCharged": "PaymentCharged",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

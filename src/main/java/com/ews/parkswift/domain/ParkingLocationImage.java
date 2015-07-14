@@ -8,15 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A ParkingSpaceImage.
@@ -31,13 +32,15 @@ public class ParkingLocationImage implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "image", nullable = false)
-    @Lob
+    @Transient
+    @JsonProperty
     private byte[] image;
     
+    @Column(name = "url", nullable=false)
+    private String url;
+    
     @NotNull
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     private String type;
 
     @ManyToOne
@@ -75,9 +78,19 @@ public class ParkingLocationImage implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	
 
 
-    @Override
+    public String getURL() {
+		return url;
+	}
+
+	public void setURL(String url) {
+		this.url = url;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

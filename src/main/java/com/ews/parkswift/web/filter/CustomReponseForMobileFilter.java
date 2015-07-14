@@ -37,13 +37,19 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			String responseContent = new String(responseWrapper.getDataStream());
 			HttpStatus httpStatus = HttpStatus.valueOf(responseWrapper.getStatus());
 			String status = httpStatus.is2xxSuccessful()?"success":"failed";
-			String failureMessage = "";
+			String failureMessage = responseWrapper.getHeader("Failure");
+			Object failureContent = null;
 			
-			if(httpStatus.is4xxClientError() || httpStatus.is5xxServerError()){
-				failureMessage = responseContent;
+			if((httpStatus.is4xxClientError() || httpStatus.is5xxServerError())){
+				try{
+					failureContent = mapper.readTree(responseContent);
+				}catch(Exception e){
+					failureMessage = failureMessage == null?responseContent:failureMessage;
+					if(failureMessage.equals(""))
+						failureMessage = httpStatus.name();
+				}
+				
 				responseContent = "";
-				if(responseWrapper.getHeader("Failure")!=null)
-					failureMessage = responseWrapper.getHeader("Failure");
 			}
 			
 			
@@ -52,7 +58,7 @@ public class CustomReponseForMobileFilter extends GenericFilterBean {
 			
 			
 			String path = ((HttpServletRequest)request).getRequestURI();
-			RestResponse fullResponse = new RestResponse(status, failureMessage,
+			RestResponse fullResponse = new RestResponse(status, failureMessage,failureContent,
 					(httpRequest.getMethod().equals(HttpMethod.GET.name()) || path.contains("/api/authenticatemobile"))?(StringUtils.isEmpty(responseContent)?"":mapper.readTree(responseContent)):responseContent, path);
 			response.setContentLength(-1); // will limit the response to 20 characters if not set to -1
 			response.setContentType("application/json; charset=UTF-8");
