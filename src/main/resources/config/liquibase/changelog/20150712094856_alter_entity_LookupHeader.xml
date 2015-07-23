@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity LookupHeader.
+    -->
+    <changeSet id="20150712094856" author="ali.khan">
+        <sql splitStatements="false"  dbms="mysql, h2">
+		  insert into lookup_header(code, description)
+		  values ('REP_BASIS', 'Repeat daily/weekly/monthly/yearly'),
+		  ('REP_AFTR_EVRY', 'repeat frequency 1 to 30'),
+		  ('REP_BY', 'In case of montly repeat basis can be dayOfMonth/dayOfWeek'),
+		  ('REP_END_BASIS', 'repeat end basis can be Never/After(occurences)/On(date)'),
+		  ('WEEKDAYS', 'weekdays from monday to sunday')
+		</sql>
+		
+    </changeSet>
+</databaseChangeLog>

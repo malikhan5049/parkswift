@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity LookupEntry.
+    -->
+    <changeSet id="20150712092406" author="ali.khan">
+        
+        <sql   dbms="mysql, h2">
+        	delete from lookup_entry where lookupheader_id in (select id from lookup_header where code = 'LOC_FACILITY') and value = 'WiFi';
+        	insert into lookup_entry(value, lookupheader_id)
+        		select 'Movie Theater',id from lookup_header where code = 'LOC_FACILITY' union
+        		select 'Subway Station',id from lookup_header where code = 'LOC_FACILITY' union
+        		select 'Shopping',id from lookup_header where code = 'LOC_FACILITY' union
+        		select 'Restaurant',id from lookup_header where code = 'LOC_FACILITY'union
+        		select 'Daily',id from lookup_header where code = 'REP_BASIS'union
+        		select 'Weekly',id from lookup_header where code = 'REP_BASIS'union
+        		select 'Monthly',id from lookup_header where code = 'REP_BASIS'union
+        		select 'Yearly',id from lookup_header where code = 'REP_BASIS'union
+        		select '1',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '2',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '3',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '4',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '5',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '6',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '7',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '8',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '9',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '10',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '11',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '12',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '13',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '14',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '15',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '16',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '17',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '18',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '19',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '20',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '21',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '22',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '23',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '24',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '25',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '26',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '27',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '28',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '29',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select '30',id from lookup_header where code = 'REP_AFTR_EVRY'union
+        		select 'dayOfMonth',id from lookup_header where code = 'REP_BY'union
+        		select 'dayOfWeek',id from lookup_header where code = 'REP_BY'union
+        		select 'Never',id from lookup_header where code = 'REP_END_BASIS'union
+        		select 'After',id from lookup_header where code = 'REP_END_BASIS'union
+        		select 'On',id from lookup_header where code = 'REP_END_BASIS'union
+        		select 'Sunday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Monday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Tuesday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Wednesday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Thursday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Friday',id from lookup_header where code = 'WEEKDAYS'union
+        		select 'Saturday',id from lookup_header where code = 'WEEKDAYS';
+        		
+		</sql>
+		
+
+    </changeSet>
+</databaseChangeLog>

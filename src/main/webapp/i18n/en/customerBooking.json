@@ -1,0 +1,40 @@
+{
+    "parkswiftApp": {
+        "customerBooking" : {
+            "home": {
+                "title": "CustomerBookings",
+                "createLabel": "Create a new CustomerBooking",
+                "createOrEditLabel": "Create or edit a CustomerBooking"
+            },
+            "delete": {
+                "question": "Are you sure you want to delete CustomerBooking {{ id }}?"
+            },
+            "detail": {
+                "title": "CustomerBooking"
+            },
+            "bookingReferenceNumber": "BookingReferenceNumber",
+            "bookingDateTime": "BookingDateTime",
+            "numberOfSpacesBooked": "NumberOfSpacesBooked",
+            "totalAmount": "TotalAmount",
+            "paymentRecursive": "PaymentRecursive",
+            "paymentFrequency": "PaymentFrequency",
+            "numberOfPayments": "NumberOfPayments",
+            "firstPaymentAmount": "FirstPaymentAmount",
+            "regularPaymentAmount": "RegularPaymentAmount",
+            "lastPaymentAmount": "LastPaymentAmount",
+            "numberOfPaymentsMade": "NumberOfPaymentsMade",
+            "nextPaymentDateTime": "NextPaymentDateTime",
+            "vehicleMake": "VehicleMake",
+            "vehicleModel": "VehicleModel",
+            "modelYear": "ModelYear",
+            "licencePlateNumber": "LicencePlateNumber",
+            "status": "Status",
+            "cancelationDateTime": "CancelationDateTime",
+            "cancelledBy": "CancelledBy",
+            "bookedParkingSpace": "bookedParkingSpace",
+            "payment": "payment",
+            "user": "user",
+            "reservedParking": "reservedParking"
+        }
+    }
+}

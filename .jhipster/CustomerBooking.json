@@ -1,0 +1,263 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "bookedParkingSpace",
+            "relationshipNameCapitalized": "BookedParkingSpace",
+            "relationshipFieldName": "bookedParkingSpace",
+            "otherEntityName": "bookedParkingSpace",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "BookedParkingSpace",
+            "otherEntityRelationshipName": "customerBooking"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "payment",
+            "relationshipNameCapitalized": "Payment",
+            "relationshipFieldName": "payment",
+            "otherEntityName": "payment",
+            "relationshipType": "one-to-many",
+            "otherEntityNameCapitalized": "Payment",
+            "otherEntityRelationshipName": "customerBooking"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipName": "reservedParking",
+            "relationshipNameCapitalized": "ReservedParking",
+            "relationshipFieldName": "reservedParking",
+            "otherEntityName": "reservedParking",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "ReservedParking",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "bookingReferenceNumber",
+            "fieldType": "String",
+            "fieldNameCapitalized": "BookingReferenceNumber",
+            "fieldNameUnderscored": "booking_reference_number",
+            "fieldInJavaBeanMethod": "BookingReferenceNumber",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "45"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "bookingDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "BookingDateTime",
+            "fieldNameUnderscored": "booking_date_time",
+            "fieldInJavaBeanMethod": "BookingDateTime",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "numberOfSpacesBooked",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "NumberOfSpacesBooked",
+            "fieldNameUnderscored": "number_of_spaces_booked",
+            "fieldInJavaBeanMethod": "NumberOfSpacesBooked",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "totalAmount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "TotalAmount",
+            "fieldNameUnderscored": "total_amount",
+            "fieldInJavaBeanMethod": "TotalAmount",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "paymentRecursive",
+            "fieldType": "Boolean",
+            "fieldNameCapitalized": "PaymentRecursive",
+            "fieldNameUnderscored": "payment_recursive",
+            "fieldInJavaBeanMethod": "PaymentRecursive",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "paymentFrequency",
+            "fieldType": "String",
+            "fieldNameCapitalized": "PaymentFrequency",
+            "fieldNameUnderscored": "payment_frequency",
+            "fieldInJavaBeanMethod": "PaymentFrequency",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "45"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "numberOfPayments",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "NumberOfPayments",
+            "fieldNameUnderscored": "number_of_payments",
+            "fieldInJavaBeanMethod": "NumberOfPayments",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "firstPaymentAmount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "FirstPaymentAmount",
+            "fieldNameUnderscored": "first_payment_amount",
+            "fieldInJavaBeanMethod": "FirstPaymentAmount",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "regularPaymentAmount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "RegularPaymentAmount",
+            "fieldNameUnderscored": "regular_payment_amount",
+            "fieldInJavaBeanMethod": "RegularPaymentAmount",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "lastPaymentAmount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "LastPaymentAmount",
+            "fieldNameUnderscored": "last_payment_amount",
+            "fieldInJavaBeanMethod": "LastPaymentAmount",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "numberOfPaymentsMade",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "NumberOfPaymentsMade",
+            "fieldNameUnderscored": "number_of_payments_made",
+            "fieldInJavaBeanMethod": "NumberOfPaymentsMade",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "nextPaymentDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "NextPaymentDateTime",
+            "fieldNameUnderscored": "next_payment_date_time",
+            "fieldInJavaBeanMethod": "NextPaymentDateTime",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "vehicleMake",
+            "fieldType": "String",
+            "fieldNameCapitalized": "VehicleMake",
+            "fieldNameUnderscored": "vehicle_make",
+            "fieldInJavaBeanMethod": "VehicleMake",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "45"
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "vehicleModel",
+            "fieldType": "String",
+            "fieldNameCapitalized": "VehicleModel",
+            "fieldNameUnderscored": "vehicle_model",
+            "fieldInJavaBeanMethod": "VehicleModel",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "45"
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "modelYear",
+            "fieldType": "String",
+            "fieldNameCapitalized": "ModelYear",
+            "fieldNameUnderscored": "model_year",
+            "fieldInJavaBeanMethod": "ModelYear",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "licencePlateNumber",
+            "fieldType": "String",
+            "fieldNameCapitalized": "LicencePlateNumber",
+            "fieldNameUnderscored": "licence_plate_number",
+            "fieldInJavaBeanMethod": "LicencePlateNumber",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "15"
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Status",
+            "fieldNameUnderscored": "status",
+            "fieldInJavaBeanMethod": "Status",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 20
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "cancelationDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "CancelationDateTime",
+            "fieldNameUnderscored": "cancelation_date_time",
+            "fieldInJavaBeanMethod": "CancelationDateTime",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "cancelledBy",
+            "fieldType": "Long",
+            "fieldNameCapitalized": "CancelledBy",
+            "fieldNameUnderscored": "cancelled_by",
+            "fieldInJavaBeanMethod": "CancelledBy",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": true,
+    "fieldsContainOneToMany": true,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150709091856",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

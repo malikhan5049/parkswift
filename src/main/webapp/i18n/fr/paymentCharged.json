@@ -1,0 +1,29 @@
+{
+    "parkswiftApp": {
+        "paymentCharged" : {
+            "home": {
+                "title": "PaymentChargeds",
+                "createLabel": "Créer un nouveau PaymentCharged",
+                "createOrEditLabel": "Créer ou éditer un PaymentCharged"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le PaymentCharged {{ id }} ?"
+            },
+            "detail": {
+                "title": "PaymentCharged"
+            },
+            "amountCharged": "AmountCharged",
+            "transactionDateTime": "TransactionDateTime",
+            "status": "Status",
+            "paypallPaymentResponse": "PaypallPaymentResponse",
+            "paymentReferenceNumber": "PaymentReferenceNumber",
+            "transferToOwnerAccountDateTime": "TransferToOwnerAccountDateTime",
+            "transferToParkSwiftAccountDateTime": "TransferToParkSwiftAccountDateTime",
+            "amountToTransferOwnerAccount": "AmountToTransferOwnerAccount",
+            "amountToTransferParkSwiftAccount": "AmountToTransferParkSwiftAccount",
+            "todel": "Todel",
+            "customerBooking": "customerBooking"
+        }
+    }
+}
+

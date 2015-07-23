@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity CustomerBooking.
+    -->
+    <changeSet id="20150709091856" author="jhipster">
+        <createTable tableName="CUSTOMER_BOOKING">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="booking_reference_number" type="varchar(45)">
+                <constraints nullable="false" />
+            </column>
+            <column name="booking_date_time" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="number_of_spaces_booked" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_amount" type="decimal(10,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="payment_recursive" type="bit"/>
+            <column name="payment_frequency" type="varchar(45)"/>
+            <column name="number_of_payments" type="integer"/>
+            <column name="first_payment_amount" type="decimal(10,2)"/>
+            <column name="regular_payment_amount" type="decimal(10,2)"/>
+            <column name="last_payment_amount" type="decimal(10,2)"/>
+            <column name="number_of_payments_made" type="integer"/>
+            <column name="next_payment_date_time" type="timestamp"/>
+            <column name="vehicle_make" type="varchar(45)"/>
+            <column name="vehicle_model" type="varchar(45)"/>
+            <column name="model_year" type="varchar(255)"/>
+            <column name="licence_plate_number" type="varchar(15)"/>
+            <column name="status" type="varchar(20)"/>
+            <column name="cancelation_date_time" type="timestamp"/>
+            <column name="cancelled_by" type="bigint"/>
+            <column name="user_id" type="bigint"/>
+            <column name="bookingSchedule_id" type="bigint"/>
+        </createTable>
+        <dropDefaultValue tableName="CUSTOMER_BOOKING" columnName="booking_date_time" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="CUSTOMER_BOOKING" columnName="next_payment_date_time" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="CUSTOMER_BOOKING" columnName="cancelation_date_time" columnDataType="datetime"/>
+
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="CUSTOMER_BOOKING"
+                                 constraintName="fk_customerbooking_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="USER"/>
+
+        <addForeignKeyConstraint baseColumnNames="bookingSchedule_id"
+                                 baseTableName="CUSTOMER_BOOKING"
+                                 constraintName="fk_customerbooking_bookingSchedule_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="BOOKING_SCHEDULE"/>
+
+    </changeSet>
+</databaseChangeLog>

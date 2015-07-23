@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity PaymentCharged.
+    -->
+    <changeSet id="20150709101940" author="jhipster">
+        <createTable tableName="PAYMENTCHARGED">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="amount_charged" type="decimal(10,2)"/>
+            <column name="transaction_date_time" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="varchar(255)"/>
+            <column name="paypall_payment_response" type="varchar(255)"/>
+            <column name="payment_reference_number" type="varchar(255)"/>
+            <column name="transfer_to_owner_account_date_time" type="timestamp"/>
+            <column name="transfer_to_park_swift_account_date_time" type="timestamp"/>
+            <column name="amount_to_transfer_owner_account" type="decimal(10,2)"/>
+            <column name="amount_to_transfer_park_swift_account" type="decimal(10,2)"/>
+            <column name="todel" type="varchar(255)"/>
+            <column name="customerbooking_id" type="bigint"/>
+        </createTable>
+        <dropDefaultValue tableName="PAYMENTCHARGED" columnName="transaction_date_time" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="PAYMENTCHARGED" columnName="transfer_to_owner_account_date_time" columnDataType="datetime"/>
+
+        <dropDefaultValue tableName="PAYMENTCHARGED" columnName="transfer_to_park_swift_account_date_time" columnDataType="datetime"/>
+
+        
+        <addForeignKeyConstraint baseColumnNames="customerbooking_id"
+                                 baseTableName="PAYMENTCHARGED"
+                                 constraintName="fk_paymentcharged_customerbooking_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="CUSTOMER_BOOKING"/>
+
+    </changeSet>
+</databaseChangeLog>

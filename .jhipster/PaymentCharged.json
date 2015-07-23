@@ -1,0 +1,125 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "customerBooking",
+            "relationshipNameCapitalized": "CustomerBooking",
+            "relationshipFieldName": "customerBooking",
+            "otherEntityName": "customerBooking",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "CustomerBooking",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "amountCharged",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "AmountCharged",
+            "fieldNameUnderscored": "amount_charged",
+            "fieldInJavaBeanMethod": "AmountCharged",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "max"
+            ],
+            "fieldValidateRulesMax": "5"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "transactionDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TransactionDateTime",
+            "fieldNameUnderscored": "transaction_date_time",
+            "fieldInJavaBeanMethod": "TransactionDateTime",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "status",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Status",
+            "fieldNameUnderscored": "status",
+            "fieldInJavaBeanMethod": "Status",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "paypallPaymentResponse",
+            "fieldType": "String",
+            "fieldNameCapitalized": "PaypallPaymentResponse",
+            "fieldNameUnderscored": "paypall_payment_response",
+            "fieldInJavaBeanMethod": "PaypallPaymentResponse",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "paymentReferenceNumber",
+            "fieldType": "String",
+            "fieldNameCapitalized": "PaymentReferenceNumber",
+            "fieldNameUnderscored": "payment_reference_number",
+            "fieldInJavaBeanMethod": "PaymentReferenceNumber",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "transferToOwnerAccountDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TransferToOwnerAccountDateTime",
+            "fieldNameUnderscored": "transfer_to_owner_account_date_time",
+            "fieldInJavaBeanMethod": "TransferToOwnerAccountDateTime",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "transferToParkSwiftAccountDateTime",
+            "fieldType": "DateTime",
+            "fieldNameCapitalized": "TransferToParkSwiftAccountDateTime",
+            "fieldNameUnderscored": "transfer_to_park_swift_account_date_time",
+            "fieldInJavaBeanMethod": "TransferToParkSwiftAccountDateTime",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "amountToTransferOwnerAccount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "AmountToTransferOwnerAccount",
+            "fieldNameUnderscored": "amount_to_transfer_owner_account",
+            "fieldInJavaBeanMethod": "AmountToTransferOwnerAccount",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "amountToTransferParkSwiftAccount",
+            "fieldType": "BigDecimal",
+            "fieldNameCapitalized": "AmountToTransferParkSwiftAccount",
+            "fieldNameUnderscored": "amount_to_transfer_park_swift_account",
+            "fieldInJavaBeanMethod": "AmountToTransferParkSwiftAccount",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "todel",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Todel",
+            "fieldNameUnderscored": "todel",
+            "fieldInJavaBeanMethod": "Todel",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": true,
+    "fieldsContainDateTime": true,
+    "fieldsContainDate": false,
+    "changelogDate": "20150709101940",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

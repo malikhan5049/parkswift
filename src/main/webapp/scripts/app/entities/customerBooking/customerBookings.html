@@ -1,0 +1,334 @@
+<div>
+
+    <h2 translate="parkswiftApp.customerBooking.home.title">CustomerBookings</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#saveCustomerBookingModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.customerBooking.home.createLabel">Create a new CustomerBooking</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="saveCustomerBookingModal" tabindex="-1" role="dialog" aria-labelledby="myCustomerBookingLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myCustomerBookingLabel" translate="parkswiftApp.customerBooking.home.createOrEditLabel">Create or edit a CustomerBooking</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="customerBooking.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.bookingReferenceNumber">BookingReferenceNumber</label>
+                            <input type="text" class="form-control" name="bookingReferenceNumber"
+                                   ng-model="customerBooking.bookingReferenceNumber" required ng-maxlength="45">
+
+                            <div ng-show="editForm.bookingReferenceNumber.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.bookingReferenceNumber.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.bookingReferenceNumber.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="45">
+                                    This field cannot be longer than 45 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.bookingDateTime">BookingDateTime</label>
+                            <input type="datetime-local" class="form-control" name="bookingDateTime"
+                                   ng-model="customerBooking.bookingDateTime" ng-model-options="{timezone: 'UTC'}" required>
+
+                            <div ng-show="editForm.bookingDateTime.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.bookingDateTime.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.bookingDateTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                    This field should be a date and time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.numberOfSpacesBooked">NumberOfSpacesBooked</label>
+                            <input type="number" class="form-control" name="numberOfSpacesBooked"
+                                   ng-model="customerBooking.numberOfSpacesBooked" required>
+
+                            <div ng-show="editForm.numberOfSpacesBooked.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.numberOfSpacesBooked.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.numberOfSpacesBooked.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.totalAmount">TotalAmount</label>
+                            <input type="number" class="form-control" name="totalAmount"
+                                   ng-model="customerBooking.totalAmount" required>
+
+                            <div ng-show="editForm.totalAmount.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.totalAmount.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.totalAmount.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.paymentRecursive">PaymentRecursive</label>
+                            <input type="checkbox" class="form-control" name="paymentRecursive"
+                                   ng-model="customerBooking.paymentRecursive">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.paymentFrequency">PaymentFrequency</label>
+                            <input type="text" class="form-control" name="paymentFrequency"
+                                   ng-model="customerBooking.paymentFrequency" ng-maxlength="45">
+
+                            <div ng-show="editForm.paymentFrequency.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.paymentFrequency.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="45">
+                                    This field cannot be longer than 45 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.numberOfPayments">NumberOfPayments</label>
+                            <input type="number" class="form-control" name="numberOfPayments"
+                                   ng-model="customerBooking.numberOfPayments">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.firstPaymentAmount">FirstPaymentAmount</label>
+                            <input type="number" class="form-control" name="firstPaymentAmount"
+                                   ng-model="customerBooking.firstPaymentAmount">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.regularPaymentAmount">RegularPaymentAmount</label>
+                            <input type="number" class="form-control" name="regularPaymentAmount"
+                                   ng-model="customerBooking.regularPaymentAmount">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.lastPaymentAmount">LastPaymentAmount</label>
+                            <input type="number" class="form-control" name="lastPaymentAmount"
+                                   ng-model="customerBooking.lastPaymentAmount">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.numberOfPaymentsMade">NumberOfPaymentsMade</label>
+                            <input type="number" class="form-control" name="numberOfPaymentsMade"
+                                   ng-model="customerBooking.numberOfPaymentsMade">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.nextPaymentDateTime">NextPaymentDateTime</label>
+                            <input type="datetime-local" class="form-control" name="nextPaymentDateTime"
+                                   ng-model="customerBooking.nextPaymentDateTime" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.vehicleMake">VehicleMake</label>
+                            <input type="text" class="form-control" name="vehicleMake"
+                                   ng-model="customerBooking.vehicleMake" ng-maxlength="45">
+
+                            <div ng-show="editForm.vehicleMake.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.vehicleMake.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="45">
+                                    This field cannot be longer than 45 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.vehicleModel">VehicleModel</label>
+                            <input type="text" class="form-control" name="vehicleModel"
+                                   ng-model="customerBooking.vehicleModel" ng-maxlength="45">
+
+                            <div ng-show="editForm.vehicleModel.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.vehicleModel.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="45">
+                                    This field cannot be longer than 45 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.modelYear">ModelYear</label>
+                            <input type="text" class="form-control" name="modelYear"
+                                   ng-model="customerBooking.modelYear">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.licencePlateNumber">LicencePlateNumber</label>
+                            <input type="text" class="form-control" name="licencePlateNumber"
+                                   ng-model="customerBooking.licencePlateNumber" ng-maxlength="15">
+
+                            <div ng-show="editForm.licencePlateNumber.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.licencePlateNumber.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="15">
+                                    This field cannot be longer than 15 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.status">Status</label>
+                            <input type="text" class="form-control" name="status"
+                                   ng-model="customerBooking.status" ng-maxlength="20">
+
+                            <div ng-show="editForm.status.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.status.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="20">
+                                    This field cannot be longer than 20 characters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.cancelationDateTime">CancelationDateTime</label>
+                            <input type="datetime-local" class="form-control" name="cancelationDateTime"
+                                   ng-model="customerBooking.cancelationDateTime" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.cancelledBy">CancelledBy</label>
+                            <input type="number" class="form-control" name="cancelledBy"
+                                   ng-model="customerBooking.cancelledBy">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.customerBooking.user">user</label>
+                            <select class="form-control" name="user" ng-model="customerBooking.user.id" ng-options="user.id as user.login for user in users">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteCustomerBookingConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(customerBooking.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.customerBooking.delete.question" translate-values="{id: '{{customerBooking.id}}'}">Are you sure you want to delete this CustomerBooking?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.customerBooking.bookingReferenceNumber">BookingReferenceNumber</th>
+                    <th translate="parkswiftApp.customerBooking.bookingDateTime">BookingDateTime</th>
+                    <th translate="parkswiftApp.customerBooking.numberOfSpacesBooked">NumberOfSpacesBooked</th>
+                    <th translate="parkswiftApp.customerBooking.totalAmount">TotalAmount</th>
+                    <th translate="parkswiftApp.customerBooking.paymentRecursive">PaymentRecursive</th>
+                    <th translate="parkswiftApp.customerBooking.paymentFrequency">PaymentFrequency</th>
+                    <th translate="parkswiftApp.customerBooking.numberOfPayments">NumberOfPayments</th>
+                    <th translate="parkswiftApp.customerBooking.firstPaymentAmount">FirstPaymentAmount</th>
+                    <th translate="parkswiftApp.customerBooking.regularPaymentAmount">RegularPaymentAmount</th>
+                    <th translate="parkswiftApp.customerBooking.lastPaymentAmount">LastPaymentAmount</th>
+                    <th translate="parkswiftApp.customerBooking.numberOfPaymentsMade">NumberOfPaymentsMade</th>
+                    <th translate="parkswiftApp.customerBooking.nextPaymentDateTime">NextPaymentDateTime</th>
+                    <th translate="parkswiftApp.customerBooking.vehicleMake">VehicleMake</th>
+                    <th translate="parkswiftApp.customerBooking.vehicleModel">VehicleModel</th>
+                    <th translate="parkswiftApp.customerBooking.modelYear">ModelYear</th>
+                    <th translate="parkswiftApp.customerBooking.licencePlateNumber">LicencePlateNumber</th>
+                    <th translate="parkswiftApp.customerBooking.status">Status</th>
+                    <th translate="parkswiftApp.customerBooking.cancelationDateTime">CancelationDateTime</th>
+                    <th translate="parkswiftApp.customerBooking.cancelledBy">CancelledBy</th>
+                    <th translate="parkswiftApp.customerBooking.user">user</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="customerBooking in customerBookings">
+                    <td><a ui-sref="customerBookingDetail({id:customerBooking.id})">{{customerBooking.id}}</a></td>
+                    <td>{{customerBooking.bookingReferenceNumber}}</td>
+                    <td>{{customerBooking.bookingDateTime}}</td>
+                    <td>{{customerBooking.numberOfSpacesBooked}}</td>
+                    <td>{{customerBooking.totalAmount}}</td>
+                    <td>{{customerBooking.paymentRecursive}}</td>
+                    <td>{{customerBooking.paymentFrequency}}</td>
+                    <td>{{customerBooking.numberOfPayments}}</td>
+                    <td>{{customerBooking.firstPaymentAmount}}</td>
+                    <td>{{customerBooking.regularPaymentAmount}}</td>
+                    <td>{{customerBooking.lastPaymentAmount}}</td>
+                    <td>{{customerBooking.numberOfPaymentsMade}}</td>
+                    <td>{{customerBooking.nextPaymentDateTime}}</td>
+                    <td>{{customerBooking.vehicleMake}}</td>
+                    <td>{{customerBooking.vehicleModel}}</td>
+                    <td>{{customerBooking.modelYear}}</td>
+                    <td>{{customerBooking.licencePlateNumber}}</td>
+                    <td>{{customerBooking.status}}</td>
+                    <td>{{customerBooking.cancelationDateTime}}</td>
+                    <td>{{customerBooking.cancelledBy}}</td>
+                    <td>{{customerBooking.user.login}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="customerBookingDetail({id:customerBooking.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(customerBooking.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(customerBooking.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

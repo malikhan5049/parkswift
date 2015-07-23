@@ -70,7 +70,7 @@ public class ParkingSpaceResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody ParkingSpace parkingSpace)throws URISyntaxException, JsonParseException, JsonMappingException, IOException {//@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException {
+    public ResponseEntity<?> create(@Valid @RequestBody ParkingSpace parkingSpace)throws URISyntaxException, JsonParseException, JsonMappingException, IOException {//@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException {
     	
         log.debug("REST request to save ParkingSpace : {}", parkingSpace);
         if (parkingSpace.getId() != null) {
@@ -78,7 +78,7 @@ public class ParkingSpaceResource {
         }
         
         parkingSpaceService.save(parkingSpace);
-        return ResponseEntity.created(new URI("/api/parkingSpaces/" + parkingSpace.getId())).build();
+        return ResponseEntity.created(new URI("/api/parkingSpaces/" + parkingSpace.getId())).body(parkingSpace);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ParkingSpaceResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
+    public ResponseEntity<?> update(@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
         log.debug("REST request to update ParkingSpace : {}", parkingSpace);
         if (parkingSpace.getId() == null) {
             return create(parkingSpace);

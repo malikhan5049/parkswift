@@ -1,0 +1,110 @@
+
+<div>
+    <h2><span translate="parkswiftApp.paymentCharged.detail.title">PaymentCharged</span> {{paymentCharged.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.amountCharged">AmountCharged</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.amountCharged}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.transactionDateTime">TransactionDateTime</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.transactionDateTime}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.status">Status</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.status}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.paypallPaymentResponse">PaypallPaymentResponse</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.paypallPaymentResponse}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.paymentReferenceNumber">PaymentReferenceNumber</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.paymentReferenceNumber}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.transferToOwnerAccountDateTime">TransferToOwnerAccountDateTime</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.transferToOwnerAccountDateTime}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.transferToParkSwiftAccountDateTime">TransferToParkSwiftAccountDateTime</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.transferToParkSwiftAccountDateTime}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.amountToTransferOwnerAccount">AmountToTransferOwnerAccount</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.amountToTransferOwnerAccount}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.amountToTransferParkSwiftAccount">AmountToTransferParkSwiftAccount</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.amountToTransferParkSwiftAccount}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.todel">Todel</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.todel}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="parkswiftApp.paymentCharged.customerBooking">customerBooking</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{paymentCharged.customerBooking.id}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="paymentCharged"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

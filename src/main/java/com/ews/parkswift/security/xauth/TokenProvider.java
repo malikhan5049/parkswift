@@ -1,10 +1,10 @@
 package com.ews.parkswift.security.xauth;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.codec.Hex;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.codec.Hex;
 
 public class TokenProvider {
 
@@ -80,7 +80,7 @@ public class TokenProvider {
     
     public boolean validateTokenMobile(String authToken, UserDetails userDetails) {
         String[] parts = authToken.split(":");
-        String signature = parts[1];
+        String signature = parts[1];	
         String signatureToMatch = computeSignature(userDetails);
         return signature.equals(signatureToMatch);
     }

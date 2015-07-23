@@ -37,12 +37,14 @@ public class ApplicationStartup implements InitializingBean,EnvironmentAware{
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		populateLookupHeader();
+		String applicationContextName = environment.acceptsProfiles(Constants.SPRING_PROFILE_PRODUCTION)?"/parkswift":"";
 		Constants.LOCATION_IMAGES_PARENT_FOLDER_PATH = environment.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT) || 
 				environment.acceptsProfiles(Constants.SPRING_PROFILE_FAST)?System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"assets":
-					System.getProperty("user.dir")+File.separator+Constants.LOCATION_IMAGES_PARENT_FOLDER_NAME;
+					System.getProperty("catalina.base")+File.separator+"webapps"+
+				File.separator+applicationContextName+File.separator+Constants.LOCATION_IMAGES_PARENT_FOLDER_NAME;
 		Constants.LOCATION_IMAGES_FOLDER_PATH = Constants.LOCATION_IMAGES_PARENT_FOLDER_PATH+File.separator+Constants.LOCATION_IMAGES_FOLDER_NAME;
 		FileUtils.forceMkdir(new File(Constants.LOCATION_IMAGES_FOLDER_PATH));
-		String applicationContextName = environment.acceptsProfiles(Constants.SPRING_PROFILE_PRODUCTION)?"/parkswift":"";
+		
 		Constants.LOCATION_IMAGES_FOLDER_URL = Inet4Address.getLocalHost().getHostAddress()+":"+serverPropertyResolver.getProperty("port")+
 				applicationContextName+"/"+Constants.LOCATION_IMAGES_PARENT_FOLDER_NAME+"/"+Constants.LOCATION_IMAGES_FOLDER_NAME;
 	}

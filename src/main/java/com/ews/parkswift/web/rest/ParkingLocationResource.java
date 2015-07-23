@@ -108,14 +108,15 @@ public class ParkingLocationResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody ParkingLocation parkingLocation) throws Exception {
+    public ResponseEntity<?> create(@Valid @RequestBody ParkingLocation parkingLocation) throws Exception {
         
         if (parkingLocation.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new parkingLocation cannot already have an ID").build();
         }
         
         parkingLocationService.save(parkingLocation);
-        return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).build();
+        return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).
+        		body(parkingLocation);
     }
 
     /**
@@ -126,7 +127,7 @@ public class ParkingLocationResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody ParkingLocation parkingLocation) throws Exception {
+    public ResponseEntity<?> update(@Valid @RequestBody ParkingLocation parkingLocation) throws Exception {
         log.debug("REST request to update ParkingLocation : {}", parkingLocation);
         if (parkingLocation.getId() == null) {
             return create(parkingLocation);

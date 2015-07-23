@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity availabilitySchedule.
+    -->
+    <changeSet id="20150708075225" author="ali.khan">
+    	<renameTable newTableName="AVAILABILITY_SCHEDULE" oldTableName="PARKING_SPACE_AVAILABLE_ON"/>
+    	<renameColumn tableName="AVAILABILITY_SCHEDULE" oldColumnName="repeat_on" newColumnName="repeat_basis" columnDataType="varchar(255)"/>
+    	<renameColumn tableName="AVAILABILITY_SCHEDULE" oldColumnName="repeat_occurrences" newColumnName="repeat_end_occurrences" columnDataType="integer"/>
+    	<addColumn tableName="AVAILABILITY_SCHEDULE">
+    		<column name="repeat_after_every" type="INT" beforeColumn="created_at" ></column>
+    		<column name="repeat_end_basis" type="varchar(10)" beforeColumn="created_at"></column>
+    		<column name="repeat_end_date" type="date" beforeColumn="created_at"></column>
+    		<column name="repeat_by" type="varchar(20)" beforeColumn="created_at" ></column>
+    	</addColumn>
+    </changeSet>
+</databaseChangeLog>

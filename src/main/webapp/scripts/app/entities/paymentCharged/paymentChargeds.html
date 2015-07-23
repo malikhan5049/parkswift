@@ -1,0 +1,212 @@
+<div>
+
+    <h2 translate="parkswiftApp.paymentCharged.home.title">PaymentChargeds</h2>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#savePaymentChargedModal" ng-click="clear()">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="parkswiftApp.paymentCharged.home.createLabel">Create a new PaymentCharged</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="savePaymentChargedModal" tabindex="-1" role="dialog" aria-labelledby="myPaymentChargedLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myPaymentChargedLabel" translate="parkswiftApp.paymentCharged.home.createOrEditLabel">Create or edit a PaymentCharged</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="paymentCharged.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.amountCharged">AmountCharged</label>
+                            <input type="number" class="form-control" name="amountCharged"
+                                   ng-model="paymentCharged.amountCharged" max="5">
+
+                            <div ng-show="editForm.amountCharged.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.amountCharged.$error.max" translate="entity.validation.max" translate-value-max="5">
+                                    This field cannot be more than 5.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.amountCharged.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.transactionDateTime">TransactionDateTime</label>
+                            <input type="datetime-local" class="form-control" name="transactionDateTime"
+                                   ng-model="paymentCharged.transactionDateTime" ng-model-options="{timezone: 'UTC'}" required>
+
+                            <div ng-show="editForm.transactionDateTime.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.transactionDateTime.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.transactionDateTime.$error.datetimelocal" translate="entity.validation.datetimelocal">
+                                    This field should be a date and time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.status">Status</label>
+                            <input type="text" class="form-control" name="status"
+                                   ng-model="paymentCharged.status">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.paypallPaymentResponse">PaypallPaymentResponse</label>
+                            <input type="text" class="form-control" name="paypallPaymentResponse"
+                                   ng-model="paymentCharged.paypallPaymentResponse">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.paymentReferenceNumber">PaymentReferenceNumber</label>
+                            <input type="text" class="form-control" name="paymentReferenceNumber"
+                                   ng-model="paymentCharged.paymentReferenceNumber">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.transferToOwnerAccountDateTime">TransferToOwnerAccountDateTime</label>
+                            <input type="datetime-local" class="form-control" name="transferToOwnerAccountDateTime"
+                                   ng-model="paymentCharged.transferToOwnerAccountDateTime" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.transferToParkSwiftAccountDateTime">TransferToParkSwiftAccountDateTime</label>
+                            <input type="datetime-local" class="form-control" name="transferToParkSwiftAccountDateTime"
+                                   ng-model="paymentCharged.transferToParkSwiftAccountDateTime" ng-model-options="{timezone: 'UTC'}">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.amountToTransferOwnerAccount">AmountToTransferOwnerAccount</label>
+                            <input type="number" class="form-control" name="amountToTransferOwnerAccount"
+                                   ng-model="paymentCharged.amountToTransferOwnerAccount">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.amountToTransferParkSwiftAccount">AmountToTransferParkSwiftAccount</label>
+                            <input type="number" class="form-control" name="amountToTransferParkSwiftAccount"
+                                   ng-model="paymentCharged.amountToTransferParkSwiftAccount">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.todel">Todel</label>
+                            <input type="text" class="form-control" name="todel"
+                                   ng-model="paymentCharged.todel">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.paymentCharged.customerBooking">customerBooking</label>
+                            <select class="form-control" name="customerBooking" ng-model="paymentCharged.customerBooking.id" ng-options="customerBooking.id as customerBooking.id for customerBooking in customerbookings">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deletePaymentChargedConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(paymentCharged.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="parkswiftApp.paymentCharged.delete.question" translate-values="{id: '{{paymentCharged.id}}'}">Are you sure you want to delete this PaymentCharged?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th translate="parkswiftApp.paymentCharged.amountCharged">AmountCharged</th>
+                    <th translate="parkswiftApp.paymentCharged.transactionDateTime">TransactionDateTime</th>
+                    <th translate="parkswiftApp.paymentCharged.status">Status</th>
+                    <th translate="parkswiftApp.paymentCharged.paypallPaymentResponse">PaypallPaymentResponse</th>
+                    <th translate="parkswiftApp.paymentCharged.paymentReferenceNumber">PaymentReferenceNumber</th>
+                    <th translate="parkswiftApp.paymentCharged.transferToOwnerAccountDateTime">TransferToOwnerAccountDateTime</th>
+                    <th translate="parkswiftApp.paymentCharged.transferToParkSwiftAccountDateTime">TransferToParkSwiftAccountDateTime</th>
+                    <th translate="parkswiftApp.paymentCharged.amountToTransferOwnerAccount">AmountToTransferOwnerAccount</th>
+                    <th translate="parkswiftApp.paymentCharged.amountToTransferParkSwiftAccount">AmountToTransferParkSwiftAccount</th>
+                    <th translate="parkswiftApp.paymentCharged.todel">Todel</th>
+                    <th translate="parkswiftApp.paymentCharged.customerBooking">customerBooking</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="paymentCharged in paymentChargeds">
+                    <td><a ui-sref="paymentChargedDetail({id:paymentCharged.id})">{{paymentCharged.id}}</a></td>
+                    <td>{{paymentCharged.amountCharged}}</td>
+                    <td>{{paymentCharged.transactionDateTime}}</td>
+                    <td>{{paymentCharged.status}}</td>
+                    <td>{{paymentCharged.paypallPaymentResponse}}</td>
+                    <td>{{paymentCharged.paymentReferenceNumber}}</td>
+                    <td>{{paymentCharged.transferToOwnerAccountDateTime}}</td>
+                    <td>{{paymentCharged.transferToParkSwiftAccountDateTime}}</td>
+                    <td>{{paymentCharged.amountToTransferOwnerAccount}}</td>
+                    <td>{{paymentCharged.amountToTransferParkSwiftAccount}}</td>
+                    <td>{{paymentCharged.todel}}</td>
+                    <td>{{paymentCharged.customerBooking.id}}</td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="paymentChargedDetail({id:paymentCharged.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="showUpdate(paymentCharged.id)"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(paymentCharged.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

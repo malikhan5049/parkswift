@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <!--
+        Added the entity availabilityScheduleRepeatOn.
+    -->
+    <changeSet id="20150610113355" author="ali.khan">
+    	<renameTable newTableName="AVAILABILITY_SCHEDULE_REPEAT_ON" oldTableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON"/>
+    	<dropColumn tableName="AVAILABILITY_SCHEDULE_REPEAT_ON" columnName="day_of_month"/>
+    </changeSet>
+</databaseChangeLog>

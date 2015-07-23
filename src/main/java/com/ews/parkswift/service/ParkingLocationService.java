@@ -115,6 +115,7 @@ public class ParkingLocationService {
 					String imagePath = imageFolder+File.separator+e.getId()+"."+e.getType();
 					os = new FileOutputStream(imagePath);
 					os.write(e.getImage());
+					e.setImage(null);
 					e.setURL(Constants.LOCATION_IMAGES_FOLDER_URL+"/"+parkingLocation.getId()+"/"+e.getId()+"."+e.getType());
 				}
 				
