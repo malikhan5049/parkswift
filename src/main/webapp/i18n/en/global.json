@@ -22,10 +22,6 @@
 				"parkingSpaceVehicleType": "ParkingSpaceVehicleType",
 				"parkingSpacePriceEntry": "ParkingSpacePriceEntry",
 				"parkingSpaceImage": "ParkingSpaceImage",
-                "feedback": "Feedback",
-                "bookedParkingSpace": "BookedParkingSpace",
-                "customerBooking": "CustomerBooking",
-                "paymentCharged": "PaymentCharged",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -63,6 +59,12 @@
             "firstName.placeholder": "Your First Name",
             "lastName" : "Last Name",
             "lastName.placeholder": "Your Last Name"
+            "mobilephone": "Mobile Phone",
+            "mobilephone.placeholder": "Your mobile phone number"
+            "homephone": "Home Phone",
+            "homephone.placeholder": "Your Home phone number"
+            "workphone": "Work Phone",
+            "workphone.placeholder": "Your work phone number"
         },
         "messages": {
             "info": {
@@ -96,6 +98,21 @@
                 "lastName": {
                     "required": "Your Last Name is required.",
                     "maxlength": "Your Last Name cannot be longer than 50 characters."
+                },
+                "mobilePhone": {
+                "required": "Your mobile phone number is required.",
+                "maxlength": "Your mobile phone Number cannot be longer than 50 digits.",
+                "minlength": "Your mobile phone Number is required to be at least 5 digits."
+                },
+                "homePhone": {
+                "required": "Your home phone number is required.",
+                "maxlength": "Your home phone Number cannot be longer than 50 digits.",
+                "minlength": "Your home phone Number is required to be at least 5 digits."
+                },
+                "workPhone": {
+                "required": "Your work phone number is required.",
+                "maxlength": "Your work phone Number cannot be longer than 50 digits.",
+                "minlength": "Your  work phone number is required to be at least 5 digits."
                 }
             }
         }

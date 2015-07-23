@@ -39,7 +39,6 @@ public class ParkingSpaceValidator implements Validator{
 				if(e.getRepeatAfterEvery() == null){
 					errors.rejectValue("availabilitySchedules["+index+"].repeatAfterEvery", null,"may not be null when repeatBasis is not null");
 				}
-				
 				if(e.getRepeatBasis().equalsIgnoreCase(Constants.REPEAT_BASIS_WEEKLY)){
 					if(e.getAvailabilityScheduleRepeatOns().isEmpty())
 						errors.rejectValue("availabilitySchedules["+index+"].availabilityScheduleRepeatOns", null,"may not be empty when repeatBasis is 'Weekly'");

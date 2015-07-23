@@ -79,6 +79,60 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label translate="global.form.mobilephone">Mobile Phone</label>
+                    <input type="tel" class="form-control" name="mobilePhone" placeholder="{{'global.form.mobilephone.placeholder' | translate}}"
+                           ng-model="mobilePhone" ng-minlength=5 ng-maxlength=50 required>
+                    <div ng-show="form.mobilePhone.$dirty && form.mobilePhone.$invalid">
+                        <p class="help-block"
+                               ng-show="form.mobilePhone.$error.required" translate="global.messages.validate.mobilephone.required">
+                            Your mobile phone number is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.mobilePhone.$error.minlength" translate="global.messages.validate.mobilePhone.minlength">
+                            Your mobile phone number is required to be at least 5 characters
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.mobilePhone.$error.maxlength" translate="global.messages.validate.mobilePhone.maxlength">
+                            Your mobile phone  number cannot be longer than 50 characters
+                        </p>
+                    </div>
+                    <div class="form-group">
+                    <label translate="global.form.homephone">Home Phone</label>
+                    <input type="tel" class="form-control" name="homePhone" placeholder="{{'global.form.homephone.placeholder' | translate}}"
+                           ng-model="homePhone" ng-minlength=5 ng-maxlength=50 required>
+                    <div ng-show="form.homePhone.$dirty && form.homePhone.$invalid">
+                        <p class="help-block"
+                               ng-show="form.homePhone.$error.required" translate="global.messages.validate.homephone.required">
+                            Your home phone number is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.homePhone.$error.minlength" translate="global.messages.validate.homephone.minlength">
+                            Your home phone number is required to be at least 5 characters
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.homePhone.$error.maxlength" translate="global.messages.validate.homePhone.maxlength">
+                            Your home phone number cannot be longer than 50 characters
+                        </p>
+                    </div>
+                    <div class="form-group">
+                    <label translate="global.form.workphone">Work Phone</label>
+                    <input type="tel" class="form-control" name="workPhone" placeholder="{{'global.form.workphone.placeholder' | translate}}"
+                           ng-model="workPhone" ng-minlength=5 ng-maxlength=50 required>
+                    <div ng-show="form.workPhone.$dirty && form.workPhone.$invalid">
+                        <p class="help-block"
+                               ng-show="form.workPhone.$error.required" translate="global.messages.validate.workphone.required">
+                            Your work phone number is required.
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.workPhone.$error.minlength" translate="global.messages.validate.workPhone.minlength">
+                            Your work phone number is required to be at least 5 characters
+                        </p>
+                        <p class="help-block"
+                               ng-show="form.workPhone.$error.maxlength" translate="global.messages.validate.workPhone.maxlength">
+                            Your work phone number cannot be longer than 50 characters
+                        </p>
+                    </div>
+                <div class="form-group">
                     <label translate="global.form.newpassword">New password</label>
                     <input type="password" class="form-control" name="password" placeholder="{{'global.form.newpassword.placeholder' | translate}}"
                            ng-model="registerAccount.password" ng-minlength=5 ng-maxlength=50 required>
