@@ -2,20 +2,17 @@ package com.ews.parkswift.domain.util;
 
 import java.io.IOException;
 
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
+import com.ews.parkswift.config.Constants;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class CustomLocalTimeSerializer extends JsonSerializer<LocalTime> {
 
-    private static DateTimeFormatter formatter = DateTimeFormat
-            .forPattern("hh:mm:ss a");
+    private static DateTimeFormatter formatter =Constants.LOCALTIMEFORMATTER;
 
     @Override
     public void serialize(LocalTime value, JsonGenerator jgen, SerializerProvider provider) throws IOException {

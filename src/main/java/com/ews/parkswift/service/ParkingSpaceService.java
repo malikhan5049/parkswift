@@ -26,6 +26,6 @@ public class ParkingSpaceService {
 		}
 		parkingSpaceRepository.save(parkingSpace);
 	}
-	
+
 
 }

@@ -1,17 +1,15 @@
 package com.ews.parkswift.domain.util;
 
+import java.io.IOException;
+
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormatter;
+
+import com.ews.parkswift.config.Constants;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
-
-import java.io.IOException;
 
 /**
  * ISO 8601 date format
@@ -19,8 +17,7 @@ import java.io.IOException;
  */
 public class CustomLocalTimeDeserializer extends JsonDeserializer<LocalTime> {
 	
-	private static DateTimeFormatter formatter = DateTimeFormat
-            .forPattern("hh:mm:ss a");
+	private static DateTimeFormatter formatter = Constants.LOCALTIMEFORMATTER;
     @Override
     public LocalTime deserialize(JsonParser jp, DeserializationContext ctxt)
             throws IOException {

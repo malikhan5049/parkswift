@@ -31,6 +31,8 @@ import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
 import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
+import com.ews.parkswift.validation.DateInEra;
+import com.ews.parkswift.validation.Era;
 import com.ews.parkswift.validation.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -49,7 +51,7 @@ public class AvailabilitySchedule implements Serializable {
     private Long id;
 
     @NotNull
-    @Future
+    @DateInEra(era={Era.PRESENT, Era.FUTURE}, message="must be either today's or future date")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
@@ -57,7 +59,7 @@ public class AvailabilitySchedule implements Serializable {
     private LocalDate startDate;
 
     @NotNull
-    @Future
+    @DateInEra(era={Era.PRESENT, Era.FUTURE},message="must be either today's or future date")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)

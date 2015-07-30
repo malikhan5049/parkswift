@@ -25,6 +25,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -118,6 +119,12 @@ public class ParkingSpace implements Serializable {
 
     public ParkingLocation getParkingLocation() {
         return parkingLocation;
+    }
+    
+    @SuppressWarnings("serial")
+	@JsonSetter("parkingLocation")
+    public void setParkingLocation(Long parkingLocationId) {
+        this.parkingLocation = new ParkingLocation(){{setId(parkingLocationId);}};
     }
 
     public void setParkingLocation(ParkingLocation parkingLocation) {

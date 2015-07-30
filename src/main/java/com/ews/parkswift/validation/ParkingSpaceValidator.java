@@ -35,6 +35,15 @@ public class ParkingSpaceValidator implements Validator{
 		
 		int index = 0;
 		for(AvailabilitySchedule e: parkingSpace.getAvailabilitySchedules()){
+			if(e.getEndDate().compareTo(e.getStartDate()) < 0)
+				errors.rejectValue("availabilitySchedules["+index+"].endDate", null,"should not be earlier than startDate");
+				
+				
+			if(e.getEndTime().compareTo(e.getStartTime()) < 0)
+				errors.rejectValue("availabilitySchedules["+index+"].endTime", null,"should not be earlier than startTime");
+			
+			
+			
 			if(e.getRepeatBasis()!=null){
 				if(e.getRepeatAfterEvery() == null){
 					errors.rejectValue("availabilitySchedules["+index+"].repeatAfterEvery", null,"may not be null when repeatBasis is not null");

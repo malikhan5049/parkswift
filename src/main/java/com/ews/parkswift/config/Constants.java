@@ -1,5 +1,7 @@
 package com.ews.parkswift.config;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +37,14 @@ public final class Constants {
 	public static final String REPEAT_END_BASIS_ON = "On";
 	public static final String REPEAT_BASIS_WEEKLY = "Weekly";
 	public static final String REPEAT_BASIS_MONTHLY = "Monthly";
+	public static final Double DEFAULT_SEARCH_DISTANCE = 25d;
+	public enum SearchDistanceUnit{MILE,KILOMETER}
     public static String LOCATION_IMAGES_PARENT_FOLDER_PATH;
     public static String LOCATION_IMAGES_FOLDER_URL;
 	public static String LOCATION_IMAGES_FOLDER_PATH;
+	public static final DateTimeFormatter DATETIMEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	public static final DateTimeFormatter LOCALDATEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+	public static final DateTimeFormatter LOCALTIMEFORMATTER = DateTimeFormat.forPattern("hh:mm a");
     
     // -end for Constants used for PayPal service to get User Profile
     

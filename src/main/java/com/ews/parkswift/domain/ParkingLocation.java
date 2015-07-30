@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
@@ -71,10 +72,12 @@ public class ParkingLocation implements Serializable {
     private String zipCode;
 
     @NotNull
+    @Digits(integer=10, fraction = 7)
     @Column(name = "longitude", precision=10, scale=7, nullable = false)
     private BigDecimal longitude;
 
     @NotNull
+    @Digits(integer=10, fraction = 7)
     @Column(name = "lattitude", precision=10, scale=7, nullable = false)
     private BigDecimal lattitude;
     
@@ -112,6 +115,10 @@ public class ParkingLocation implements Serializable {
     @Transient
     @JsonSerialize
     private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.LAZY)
+    private Set<ParkingSpace>  parkingSpaceEntitys = new HashSet<>(); // in case you need full entity somewhere in code
     
     
     
@@ -254,8 +261,19 @@ public class ParkingLocation implements Serializable {
     }
     
     
+    
+    
+    
 
-    public Set<Feedback> getFeedbacks() {
+    public Set<ParkingSpace> getParkingSpaceEntitys() {
+		return parkingSpaceEntitys;
+	}
+
+	public void setParkingSpaceEntitys(Set<ParkingSpace> parkingSpaceEntitys) {
+		this.parkingSpaceEntitys = parkingSpaceEntitys;
+	}
+
+	public Set<Feedback> getFeedbacks() {
 		return feedbacks;
 	}
 

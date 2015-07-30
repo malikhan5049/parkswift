@@ -50,14 +50,17 @@
         <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <swagger-springmvc.version>0.9.5</swagger-springmvc.version>
         <usertype-core.version>3.2.0.GA</usertype-core.version>
+        <querydsl.version>3.6.5</querydsl.version>
     </properties>
 
    	<dependencies>
-<dependency>
-	<groupId>com.google.apis</groupId>
-	<artifactId>google-api-services-oauth2</artifactId>
-	<version>v2-rev65-1.17.0-rc</version>
-</dependency>
+	
+   	
+	<dependency>
+		<groupId>com.google.apis</groupId>
+		<artifactId>google-api-services-oauth2</artifactId>
+		<version>v2-rev65-1.17.0-rc</version>
+	</dependency>
 	<dependency>
 		<groupId>com.paypal.sdk</groupId>
 		<artifactId>rest-api-sdk</artifactId>

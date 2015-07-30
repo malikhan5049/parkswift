@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +34,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.Application;
+import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
 import com.ews.parkswift.repository.AvailabilityScheduleRepository;
 
@@ -49,7 +49,7 @@ import com.ews.parkswift.repository.AvailabilityScheduleRepository;
 @IntegrationTest
 public class AvailabilityScheduleResourceTest {
 
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private static final DateTimeFormatter dateTimeFormatter = Constants.DATETIMEFORMATTER;
 
 
     private static final LocalDate DEFAULT_START_DATE = new LocalDate(0L);

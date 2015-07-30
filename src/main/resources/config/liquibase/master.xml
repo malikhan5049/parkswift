@@ -42,5 +42,6 @@
     <include file="classpath:config/liquibase/changelog/20150712094856_alter_entity_LookupHeader.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150712092406_alter_entity_LookupEntry.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150714075407_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150727042507_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

@@ -98,6 +98,8 @@ public class ParkingLocationResource {
         return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).build();
     }
     
+    
+    
     /**
      * POST  /parkingLocations -> Create a new parkingLocation.
      * @throws IOException 

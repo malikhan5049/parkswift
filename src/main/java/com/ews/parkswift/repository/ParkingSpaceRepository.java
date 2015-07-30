@@ -10,7 +10,8 @@ import com.ews.parkswift.domain.ParkingSpace;
  * Spring Data JPA repository for the ParkingSpace entity.
  */
 public interface ParkingSpaceRepository extends JpaRepository<ParkingSpace,Long> {
+	
 
 	List<ParkingSpace> findAllByParkingLocationId(Long id);
-
+	
 }

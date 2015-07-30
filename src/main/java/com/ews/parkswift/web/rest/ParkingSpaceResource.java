@@ -44,7 +44,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ParkingSpaceResource {
 
     private final Logger log = LoggerFactory.getLogger(ParkingSpaceResource.class);
-    final ObjectMapper mapper =  new ObjectMapper();
+    private final  static ObjectMapper mapper =  new ObjectMapper();
     
     @Inject
     private ParkingSpaceRepository parkingSpaceRepository;
@@ -60,6 +60,11 @@ public class ParkingSpaceResource {
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new ParkingSpaceValidator(parkingLocationRepository));
     }
+    
+    
+    
+	
+	
     /**
      * POST  /parkingSpaces -> Create a new parkingSpace.
      * @throws IOException 

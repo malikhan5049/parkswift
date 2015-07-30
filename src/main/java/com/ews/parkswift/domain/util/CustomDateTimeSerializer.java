@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.ews.parkswift.config.Constants;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -16,8 +16,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
  */
 public class CustomDateTimeSerializer extends JsonSerializer<DateTime> {
 
-    private static DateTimeFormatter formatter = DateTimeFormat
-            .forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private static DateTimeFormatter formatter = Constants.DATETIMEFORMATTER;
 
     @Override
     public void serialize(DateTime value, JsonGenerator generator,
