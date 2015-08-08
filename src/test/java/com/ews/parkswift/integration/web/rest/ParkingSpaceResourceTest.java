@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -46,6 +46,7 @@ import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
 import com.ews.parkswift.service.ParkingSpaceService;
+import com.ews.parkswift.web.rest.ParkingSpaceResource;
 
 /**
  * Test class for the ParkingSpaceResource REST controller.

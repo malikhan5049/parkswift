@@ -1,4 +1,4 @@
-package com.ews.parkswift.security;
+package com.ews.parkswift.integration.security;
 
 import org.junit.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -6,6 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.ews.parkswift.security.AuthoritiesConstants;
+import com.ews.parkswift.security.SecurityUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;

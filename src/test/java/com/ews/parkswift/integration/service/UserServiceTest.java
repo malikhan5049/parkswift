@@ -1,10 +1,14 @@
-package com.ews.parkswift.service;
+package com.ews.parkswift.integration.service;
 
 import com.ews.parkswift.Application;
 import com.ews.parkswift.domain.User;
 import com.ews.parkswift.repository.UserRepository;
+
 import org.joda.time.DateTime;
+
+import com.ews.parkswift.service.UserService;
 import com.ews.parkswift.service.util.RandomUtil;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
+
 import java.util.Optional;
 import java.util.List;
 

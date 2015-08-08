@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.joda.time.Interval;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -75,7 +73,7 @@ public class FindParkingSpaceService {
 	}
 	
 	public static void main(String[] args) {
-		FindParkingsDTO findAvailableParkingsDTO = new FindParkingsDTO(){{setAvailabilitySchedule(new AvailabilitySchedule(){{
+		/*FindParkingsDTO findAvailableParkingsDTO = new FindParkingsDTO(){{setAvailabilitySchedule(new AvailabilitySchedule(){{
 			setStartDate(LocalDate.parse("2015-07-29", Constants.LOCALDATEFORMATTER));
 			setEndDate(LocalDate.parse("2015-07-30", Constants.LOCALDATEFORMATTER));
 			setStartTime(LocalTime.parse("04:42 PM", Constants.LOCALTIMEFORMATTER));
@@ -89,7 +87,15 @@ public class FindParkingSpaceService {
 		System.out.println(period.getYears());
 		System.out.println(period.getMonths());
 		System.out.println(period.getDays());
-		System.out.println(period.getHours());
+		System.out.println(period.getHours());*/
+		
+		/*int divident = 59;
+		int divider = 30;
+		System.out.println(divident/divider);*/
+		
+		Interval interval = new Interval(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday(), LocalTime.parse("7:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday().plusDays(1));
+		System.out.println(interval);
+		System.out.println(interval.contains(LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER).toDateTimeToday()));
 	}
 	
 

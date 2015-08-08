@@ -1,13 +1,16 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import com.ews.parkswift.Application;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.repository.ParkingSpacePriceEntryRepository;
+import com.ews.parkswift.web.rest.ParkingSpacePriceEntryResource;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static org.hamcrest.Matchers.hasItem;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
 import java.math.BigDecimal;
 import java.util.List;
 

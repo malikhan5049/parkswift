@@ -1,7 +1,9 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import com.ews.parkswift.Application;
 import com.ews.parkswift.repository.UserRepository;
+import com.ews.parkswift.web.rest.UserResource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -26,7 +26,7 @@ public enum TimeInterval {
 		@Override
 		public boolean contains(LocalTime time) {
 			if(getInterval() == null)
-				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday()));
+				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday().plusDays(1)));
 			return getInterval().contains(time.toDateTimeToday());
 		}
 	};

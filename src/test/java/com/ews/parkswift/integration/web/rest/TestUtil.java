@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

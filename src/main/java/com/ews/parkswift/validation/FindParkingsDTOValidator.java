@@ -5,6 +5,7 @@ import org.joda.time.LocalTime;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
 
@@ -35,8 +36,14 @@ public class FindParkingsDTOValidator implements Validator{
 			if(availabilitySchedule.getEndTime()!=null && availabilitySchedule.getStartTime()!=null &&
 					availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0)
 				errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
+			if(availabilitySchedule.getStartTime().getMinuteOfHour() % 30 !=0);
+			
 		}
 		
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(LocalTime.parse("3:49 AM", Constants.LOCALTIMEFORMATTER).getMinuteOfHour() % 30 == 0);
 	}
 	
 }

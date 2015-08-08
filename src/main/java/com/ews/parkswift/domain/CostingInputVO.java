@@ -20,26 +20,26 @@ public class CostingInputVO {
 	private LocalDate endDate;
 	private LocalTime  startTime;
 	private LocalTime endTime;
-	private Map<String, BigDecimal> parkingSpacePriceEntrys = new HashMap<>();
+	private Map<String, BigDecimal> ratesMap = new HashMap<>();
 	
 	
 	
 	public CostingInputVO(LocalDate startDate, LocalDate endDate,
 			LocalTime startTime, LocalTime endTime,
-			Map<String, BigDecimal> parkingSpacePriceEntrys) {
+			Map<String, BigDecimal> ratesMap) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
+		this.ratesMap = ratesMap;
 	}
-	public Map<String, BigDecimal> getParkingSpacePriceEntrys() {
-		return parkingSpacePriceEntrys;
+	public Map<String, BigDecimal> getRatesMap() {
+		return ratesMap;
 	}
-	public void setParkingSpacePriceEntrys(
+	public void setRatesMap(
 			Map<String, BigDecimal> parkingSpacePriceEntrys) {
-		this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
+		this.ratesMap = parkingSpacePriceEntrys;
 	}
 	public LocalDate getStartDate() {
 		return startDate;

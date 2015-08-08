@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -41,6 +41,7 @@ import com.ews.parkswift.repository.UserRepository;
 import com.ews.parkswift.security.AuthoritiesConstants;
 import com.ews.parkswift.service.MailService;
 import com.ews.parkswift.service.UserService;
+import com.ews.parkswift.web.rest.AccountResource;
 import com.ews.parkswift.web.rest.dto.UserDTO;
 
 /**

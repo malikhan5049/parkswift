@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -36,6 +36,7 @@ import com.ews.parkswift.Application;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.Feedback;
 import com.ews.parkswift.repository.FeedbackRepository;
+import com.ews.parkswift.web.rest.FeedbackResource;
 
 /**
  * Test class for the FeedbackResource REST controller.

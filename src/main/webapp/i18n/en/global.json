@@ -58,11 +58,11 @@
             "firstName" : "First Name",
             "firstName.placeholder": "Your First Name",
             "lastName" : "Last Name",
-            "lastName.placeholder": "Your Last Name"
+            "lastName.placeholder": "Your Last Name",
             "mobilephone": "Mobile Phone",
-            "mobilephone.placeholder": "Your mobile phone number"
+            "mobilephone.placeholder": "Your mobile phone number",
             "homephone": "Home Phone",
-            "homephone.placeholder": "Your Home phone number"
+            "homephone.placeholder": "Your Home phone number",
             "workphone": "Work Phone",
             "workphone.placeholder": "Your work phone number"
         },

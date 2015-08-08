@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest;
+package com.ews.parkswift.integration.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -38,6 +38,7 @@ import com.ews.parkswift.Application;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.BookingSchedule;
 import com.ews.parkswift.repository.BookingScheduleRepository;
+import com.ews.parkswift.web.rest.BookingScheduleResource;
 
 /**
  * Test class for the ReservedParkingResource REST controller.
