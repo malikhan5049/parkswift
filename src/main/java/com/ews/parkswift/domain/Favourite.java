@@ -47,11 +47,11 @@ public class Favourite implements Serializable {
         this.user = user;
     }
 
-    public ParkingLocation getParkingSpace() {
+    public ParkingLocation getParkingLocation() {
         return parkingLocation;
     }
 
-    public void setParkingSpace(ParkingLocation parkingSpace) {
+    public void setParkingLocation(ParkingLocation parkingSpace) {
         this.parkingLocation = parkingSpace;
     }
 

@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -96,6 +97,24 @@ public class ParkingLocationResource {
         
         parkingLocationService.save(parkingLocation);
         return ResponseEntity.created(new URI("/api/parkingLocations/" + parkingLocation.getId())).build();
+    }
+    
+    
+    /**
+     * POST  /parkingLocations -> Create a new parkingLocation.
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
+     */
+    @RequestMapping(value = "/parkingLocations/images",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> createSingleImage(@Valid @RequestBody ParkingLocationImage image) throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
+        log.debug("REST request to save independent image : {}");
+        image.setId(new Random().nextLong());
+        parkingLocationService.createSingleImageInDirectory(image);
+        return ResponseEntity.created(new URI("/api/parkingLocations/images")).body(image);
     }
     
     

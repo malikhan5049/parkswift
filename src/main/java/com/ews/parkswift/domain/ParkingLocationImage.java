@@ -37,13 +37,15 @@ public class ParkingLocationImage implements Serializable {
     private byte[] image;
     
     @Column(name = "url", nullable=false)
+    @JsonProperty
     private String url;
     
     @NotNull
     @Column(name = "type")
     private String type;
 
-    @ManyToOne
+
+	@ManyToOne
     @JsonIgnore
     private ParkingLocation parkingLocation;
 
@@ -79,9 +81,6 @@ public class ParkingLocationImage implements Serializable {
 		this.type = type;
 	}
 	
-	
-
-
     public String getURL() {
 		return url;
 	}
@@ -99,26 +98,27 @@ public class ParkingLocationImage implements Serializable {
             return false;
         }
 
-        ParkingLocationImage parkingSpaceImage = (ParkingLocationImage) o;
+        ParkingLocationImage parkingLocationImage = (ParkingLocationImage) o;
 
-        if ( ! Objects.equals(image, parkingSpaceImage.image)) return false;
+        if ( ! Objects.equals(image, parkingLocationImage.image)) return false;
+        else if ( ! Objects.equals(url, parkingLocationImage.url)) return false;
+        else if ( ! Objects.equals(type, parkingLocationImage.type)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(image);
+    	return url==null? Objects.hashCode(image):Objects.hashCode(url);
     }
-    
-    
-
     
 	@Override
     public String toString() {
-        return "ParkingSpaceImage{" +
+        return "parkingLocationImage{" +
                 "id=" + id +
                 ", image='" + image + "'" +
+                ", url='" + url + "'" +
+                ", type='" + type + "'" +
                 '}';
     }
 }

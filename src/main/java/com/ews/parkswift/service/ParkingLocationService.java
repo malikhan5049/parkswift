@@ -48,8 +48,6 @@ public class ParkingLocationService {
     @Inject
     private UserService userService;
     
-    
-    
     public void save(ParkingLocation parkingLocation) throws ServiceException, IOException{
     	User user = userService.getUser();
     	parkingLocation.setUser(user);
@@ -62,13 +60,6 @@ public class ParkingLocationService {
     	}
     	
     	parkingLocationRepository.save(parkingLocation);
-    	
-    	
-    	if(!parkingLocation.getParkingLocationImages().isEmpty()){
-    		File imageFolder = new File(Constants.LOCATION_IMAGES_FOLDER_PATH+File.separator+parkingLocation.getId());
-    		FileUtils.forceMkdir(imageFolder);
-    		createImagesInDirectory(parkingLocation, imageFolder);
-    	}
     }
     
     @SuppressWarnings("serial")
@@ -104,19 +95,20 @@ public class ParkingLocationService {
     	});
     }
 
-
-
-	private void createImagesInDirectory(ParkingLocation parkingLocation,
-			File imageFolder) {
-		parkingLocation.getParkingLocationImages().forEach((ParkingLocationImage e)->{
+    public String  createSingleImageInDirectory(ParkingLocationImage e) {
+		String url="";;	
+		File imageFolder = new File(Constants.LOCATION_IMAGES_FOLDER_PATH);
 			OutputStream os = null;
 			try {
+				FileUtils.forceMkdir(imageFolder);
 				if(e.getImage()!=null){
 					String imagePath = imageFolder+File.separator+e.getId()+"."+e.getType();
 					os = new FileOutputStream(imagePath);
 					os.write(e.getImage());
 					e.setImage(null);
-					e.setURL(Constants.LOCATION_IMAGES_FOLDER_URL+"/"+parkingLocation.getId()+"/"+e.getId()+"."+e.getType());
+					url = "http://"+Constants.LOCATION_IMAGES_FOLDER_URL+"/"+e.getId()+"."+e.getType();
+					e.setURL(url);
+					return url;
 				}
 				
 				
@@ -130,10 +122,10 @@ public class ParkingLocationService {
 					log.error("",exception);
 				}
 			}
-			
-		});
+		return url;	
 	}
-
+	
+	
 
 
 	private void updateDefaultPaypallAccount(

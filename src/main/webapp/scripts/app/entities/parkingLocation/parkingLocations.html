@@ -1,4 +1,247 @@
-<div>
+
+<div class="container">
+
+<div class="page-header">
+    <h1>Add Location</h1>
+</div>
+
+<!-- Collapsible Panels - START -->
+ <form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+
+    <div class="row">
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Panel 1</h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+                   
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myParkingLocationLabel" translate="parkswiftApp.parkingLocation.home.createOrEditLabel">Create or edit a ParkingLocation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="parkingLocation.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.bussinessType">BussinessType</label>
+                            <input type="text" class="form-control" name="bussinessType"
+                                   ng-model="parkingLocation.bussinessType" required>
+
+                            <div ng-show="editForm.bussinessType.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.bussinessType.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.addressLine1">AddressLine1</label>
+                            <input type="text" class="form-control" name="addressLine1"
+                                   ng-model="parkingLocation.addressLine1" required>
+
+                            <div ng-show="editForm.addressLine1.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.addressLine1.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.addressLine2">AddressLine2</label>
+                            <input type="text" class="form-control" name="addressLine2"
+                                   ng-model="parkingLocation.addressLine2">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.city">City</label>
+                            <input type="text" class="form-control" name="city"
+                                   ng-model="parkingLocation.city" required>
+
+                            <div ng-show="editForm.city.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.city.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.state">State</label>
+                            <input type="text" class="form-control" name="state"
+                                   ng-model="parkingLocation.state">
+
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.country">Country</label>
+                            <input type="text" class="form-control" name="country"
+                                   ng-model="parkingLocation.country" required>
+
+                            <div ng-show="editForm.country.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.country.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.zipCode">ZipCode</label>
+                            <input type="text" class="form-control" name="zipCode"
+                                   ng-model="parkingLocation.zipCode" required>
+
+                            <div ng-show="editForm.zipCode.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.zipCode.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.longitude">Longitude</label>
+                            <input type="number" class="form-control" name="longitude"
+                                   ng-model="parkingLocation.longitude" required>
+
+                            <div ng-show="editForm.longitude.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.longitude.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.longitude.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.lattitude">Lattitude</label>
+                            <input type="number" class="form-control" name="lattitude"
+                                   ng-model="parkingLocation.lattitude" required>
+
+                            <div ng-show="editForm.lattitude.$invalid">
+                                <p class="help-block"
+                                   ng-show="editForm.lattitude.$error.required" translate="entity.validation.required">
+                                    This field is required.
+                                </p>
+                                <p class="help-block"
+                                   ng-show="editForm.lattitude.$error.number" translate="entity.validation.number">
+                                    This field should be a number.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.paypallAccount">paypallAccount</label>
+                            <select class="form-control" name="paypallAccount" ng-model="parkingLocation.paypallAccount.id" ng-options="paypallAccount.id as paypallAccount.email for paypallAccount in paypallaccounts">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label translate="parkswiftApp.parkingLocation.user">user</label>
+                            <select class="form-control" name="user" ng-model="parkingLocation.user.id" ng-options="user.id as user.login for user in users">
+                            </select>
+                        </div>
+                    </div>
+                  
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Contact Info</h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+                    LexisNexis Corporate Affiliations<br />
+                    121 Chanlon Road,<br /> 
+                    South Building – First Floor,<br />
+                    New Providence, NJ 07974<br />
+                    phone: 800.340.3244
+				</div>
+		    </div>
+	    </div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Services/Amenities</h3>
+					<span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+				</div>
+				<div class="panel-body">
+                    LexisNexis Corporate Affiliations<br />
+                    121 Chanlon Road,<br /> 
+                    South Building – First Floor,<br />
+                    New Providence, NJ 07974<br />
+                    phone: 800.340.3244
+				</div>
+		    </div>
+	    </div>
+	</div>
+	<div class="row">
+	  <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                    </div>
+                </form>
+</div>
+
+<style>
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+.row {
+    margin-top: 1px;
+    padding: 0 10px;
+}
+.clickable {
+    cursor: pointer;
+}    
+</style>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.panel-heading span.clickable').on("click", function (e) {
+            if ($(this).hasClass('panel-collapsed')) {
+                // expand the panel
+                $(this).parents('.panel').find('.panel-body').slideDown();
+                $(this).removeClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+            else {
+                // collapse the panel
+                $(this).parents('.panel').find('.panel-body').slideUp();
+                $(this).addClass('panel-collapsed');
+                $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            }
+        });
+    });
+</script>
+
+<!-- Collapsible Panels - END -->
+
+</div>
+
+
+
+
+
+<!-- <div>
 
     <h2 translate="parkswiftApp.parkingLocation.home.title">ParkingLocations</h2>
 
@@ -239,3 +482,4 @@
         </table>
     </div>
 </div>
+ -->

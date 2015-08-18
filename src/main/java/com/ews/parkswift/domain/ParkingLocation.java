@@ -72,13 +72,13 @@ public class ParkingLocation implements Serializable {
     private String zipCode;
 
     @NotNull
-    @Digits(integer=10, fraction = 7)
-    @Column(name = "longitude", precision=10, scale=7, nullable = false)
+    @Digits(integer=18, fraction = 15)
+    @Column(name = "longitude", precision=18, scale=15, nullable = false)
     private BigDecimal longitude;
 
     @NotNull
-    @Digits(integer=10, fraction = 7)
-    @Column(name = "lattitude", precision=10, scale=7, nullable = false)
+    @Digits(integer=18, fraction = 15)
+    @Column(name = "lattitude", precision=18, scale=15, nullable = false)
     private BigDecimal lattitude;
     
     @Column(name = "active")
@@ -119,10 +119,6 @@ public class ParkingLocation implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.LAZY)
     private Set<ParkingSpace>  parkingSpaceEntitys = new HashSet<>(); // in case you need full entity somewhere in code
-    
-    
-    
-    
     
 
     public Set<ParkingLocationImage> getParkingLocationImages() {
@@ -260,11 +256,6 @@ public class ParkingLocation implements Serializable {
         this.parkingSpaces = parkingSpaces;
     }
     
-    
-    
-    
-    
-
     public Set<ParkingSpace> getParkingSpaceEntitys() {
 		return parkingSpaceEntitys;
 	}
