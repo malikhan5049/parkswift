@@ -26,6 +26,13 @@ public class CostingService {
 		
 		Integer noOfDaysToCost = dayPeriod.getDays() + 1; // +1 for endDate inclus
 		Integer noOfHoursToCost = getNoOfHoursBwStartTimeNEndTime(costingInputVO.getStartTime(), costingInputVO.getEndTime());
+		
+		//TODO - citation needed
+		if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.FULLDAY.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
+			noOfDaysToCost--; // In case of FULLDAY, it becomes 3 days so need to subtract 1
+			noOfHoursToCost = 24;
+		}
+		
 		performCostingRecursively(costingInputVO, costingInputVO.getStartTime(),costingInputVO.getEndTime(),noOfHoursToCost, noOfDaysToCost, priceHits);
 		
 			
@@ -39,8 +46,6 @@ public class CostingService {
 		if(isFrom12PMTo11_59AM(startTime)  && 
 				isFrom12AMto11_59PM(endTime))
 			dt_endTime  = endTime.toDateTimeToday().plusDays(1);
-		
-		
 		return new Period(startTime.toDateTimeToday(),dt_endTime).getHours();
 	}
 	
@@ -70,6 +75,8 @@ public class CostingService {
 	private void performCostingRecursively(CostingInputVO costingInputVO,
 			LocalTime startTime, LocalTime endTime, Integer noOfHoursToCost,
 			Integer noOfDaysToCost, List<PriceHit> priceHits) {
+		
+		try {
 		if(noOfHoursToCost == PricePlan.FULLMONTH.getTimePeriod() && 
 				costingInputVO.getStartDate().equals(getMonthStartDate(costingInputVO.getStartDate())) && costingInputVO.getEndDate().equals(getMonthEndDate(costingInputVO.getEndDate())) &&
 				startTime.equals(TimeInterval.FULLDAY.getStartTime()) && endTime.equals(TimeInterval.FULLDAY.getEndTime())){
@@ -97,16 +104,16 @@ public class CostingService {
 			
 			if(startTime.getMinuteOfHour() == 30 && endTime.getMinuteOfHour() != 30){
 				priceHits.add(new PriceHit(dayHourRate, dayHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.DAYHOUR, startTime, startTime.plusMinutes(29)));
+						PricePlan.DAYHOUR, startTime, startTime.plusMinutes(30)));
 				startTime = startTime.plusMinutes(30);
 			}
 			if(endTime.getMinuteOfHour() == 30 && startTime.getMinuteOfHour() != 30){
 				priceHits.add(new PriceHit(dayHourRate, dayHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.DAYHOUR, endTime.minusMinutes(29), endTime));
+						PricePlan.DAYHOUR, endTime.minusMinutes(30), endTime));
 				endTime = endTime.minusMinutes(30);
 			}
 			
-			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 || getNoOfMinutesBwStartTimeNEndTime(startTime, endTime) == 59)
+			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 )
 				priceHits.add(new PriceHit(dayHourRate, dayHourRate.multiply(BigDecimal.valueOf(noOfHoursToCost * noOfDaysToCost)),
 						PricePlan.DAYHOUR, startTime, endTime));
 			
@@ -116,16 +123,16 @@ public class CostingService {
 			
 			if(startTime.getMinuteOfHour() == 30 && endTime.getMinuteOfHour() != 30){
 				priceHits.add(new PriceHit(nightHourRate, nightHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.NIGHTHOUR, startTime, startTime.plusMinutes(29)));
+						PricePlan.NIGHTHOUR, startTime, startTime.plusMinutes(30)));
 				startTime = startTime.plusMinutes(30);
 			}
 			if(endTime.getMinuteOfHour() == 30 && startTime.getMinuteOfHour() != 30){
 				priceHits.add(new PriceHit(nightHourRate, nightHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.NIGHTHOUR, endTime.minusMinutes(29), endTime));
+						PricePlan.NIGHTHOUR, endTime.minusMinutes(30), endTime));
 				endTime = endTime.minusMinutes(30);
 			}
 			
-			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 || getNoOfMinutesBwStartTimeNEndTime(startTime, endTime) == 59)
+			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 )
 				priceHits.add(new PriceHit(nightHourRate, nightHourRate.multiply(BigDecimal.valueOf(noOfHoursToCost * noOfDaysToCost)),
 						PricePlan.NIGHTHOUR, startTime, endTime));
 			
@@ -133,20 +140,22 @@ public class CostingService {
 			LocalTime nextStartTime = null;
 			if(TimeInterval.DAY.contains(startTime)){
 				Integer noOfHoursBwStartTimeNDayEndTime = new Period(startTime, TimeInterval.DAY.getEndTime()).getHours();
-				performCostingRecursively(costingInputVO, startTime, TimeInterval.DAY.getEndTime().minusMinutes(1), 
+				performCostingRecursively(costingInputVO, startTime, TimeInterval.DAY.getEndTime(), 
 						noOfHoursBwStartTimeNDayEndTime, noOfDaysToCost, priceHits);
 				noOfHoursToCost -= noOfHoursBwStartTimeNDayEndTime;
 				nextStartTime = TimeInterval.NIGHT.getStartTime();
 			}else if(TimeInterval.NIGHT.contains(startTime)){
 				Integer noOfHoursBwStartTimeNNightEndTime = new Period(startTime, TimeInterval.NIGHT.getEndTime()).getHours();
-				performCostingRecursively(costingInputVO, startTime, TimeInterval.NIGHT.getEndTime().minusMinutes(1), 
+				performCostingRecursively(costingInputVO, startTime, TimeInterval.NIGHT.getEndTime(), 
 						noOfHoursBwStartTimeNNightEndTime, noOfDaysToCost, priceHits);
 				noOfHoursToCost -= noOfHoursBwStartTimeNNightEndTime;
 				nextStartTime = TimeInterval.DAY.getStartTime();
 			}
 			performCostingRecursively(costingInputVO, nextStartTime, endTime, noOfHoursToCost, noOfDaysToCost, priceHits);
 		}
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void costMinutesPart(LocalTime startTime, LocalTime endTime,

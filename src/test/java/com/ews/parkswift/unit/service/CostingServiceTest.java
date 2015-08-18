@@ -64,7 +64,7 @@ public class CostingServiceTest {
 				LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:30 AM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).divide(BigDecimal.valueOf(2)), 
-							PricePlan.DAYHOUR, LocalTime.parse("10:01 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:30 AM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:30 AM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(2)), 
 							PricePlan.DAYHOUR, LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -72,7 +72,7 @@ public class CostingServiceTest {
 				LocalTime.parse("08:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).divide(BigDecimal.valueOf(2)), 
-							PricePlan.DAYHOUR, LocalTime.parse("08:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:59 AM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("08:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("09:00 AM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(1)), 
 							PricePlan.DAYHOUR, LocalTime.parse("09:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -92,7 +92,7 @@ public class CostingServiceTest {
 				LocalTime.parse("07:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 PM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(1)), 
-							PricePlan.DAYHOUR, LocalTime.parse("07:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 PM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("07:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(2)), 
 							PricePlan.NIGHTHOUR, LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 PM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -100,7 +100,7 @@ public class CostingServiceTest {
 				LocalTime.parse("07:30 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 PM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).divide(BigDecimal.valueOf(2)), 
-							PricePlan.DAYHOUR, LocalTime.parse("07:30 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 PM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("07:30 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(2)), 
 							PricePlan.NIGHTHOUR, LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 PM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -108,7 +108,7 @@ public class CostingServiceTest {
 				LocalTime.parse("07:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).divide(BigDecimal.valueOf(2)), 
-							PricePlan.NIGHTHOUR, LocalTime.parse("07:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 AM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.NIGHTHOUR, LocalTime.parse("07:30 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(2)), 
 							PricePlan.DAYHOUR, LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("10:00 AM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -122,7 +122,7 @@ public class CostingServiceTest {
 				LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(8)), 
-							PricePlan.NIGHTHOUR, LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 AM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.NIGHTHOUR, LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(4)), 
 							PricePlan.DAYHOUR, LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -130,7 +130,7 @@ public class CostingServiceTest {
 				LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(8*3)), 
-							PricePlan.NIGHTHOUR, LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 AM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.NIGHTHOUR, LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(4*3)), 
 							PricePlan.DAYHOUR, LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -144,7 +144,7 @@ public class CostingServiceTest {
 				LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(8)), 
-							PricePlan.DAYHOUR, LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 PM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(4)), 
 							PricePlan.NIGHTHOUR, LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER)));
 				}}),
@@ -152,7 +152,7 @@ public class CostingServiceTest {
 				LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), ratesMap),
 				new ArrayList<PriceHit>(){{
 					add(new PriceHit(ratesMap.get(PricePlan.DAYHOUR.name()), ratesMap.get(PricePlan.DAYHOUR.name()).multiply(BigDecimal.valueOf(8*3)), 
-							PricePlan.DAYHOUR, LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("07:59 PM", Constants.LOCALTIMEFORMATTER)));
+							PricePlan.DAYHOUR, LocalTime.parse("12:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
 					add(new PriceHit(ratesMap.get(PricePlan.NIGHTHOUR.name()), ratesMap.get(PricePlan.NIGHTHOUR.name()).multiply(BigDecimal.valueOf(4*3)), 
 							PricePlan.NIGHTHOUR, LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER)));
 				}}),

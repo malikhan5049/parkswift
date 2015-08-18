@@ -28,10 +28,9 @@ public class FindParkingsDTOValidator implements Validator{
 		AvailabilitySchedule availabilitySchedule = findAvailableParkingsDTO.getAvailabilitySchedule();
 		if(availabilitySchedule!=null){
 			if(availabilitySchedule.getEndDate()!=null && availabilitySchedule.getStartDate()!=null ){
-				if(availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate())<0)
+				if(availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate()) < 0)
 					errors.rejectValue("availabilitySchedule.endDate", null,"should not be earlier than startDate");
-//				if(availabilitySchedule.getStartDate().equals(LocalDate.now()) && availabilitySchedule.getStartTime().compareTo(LocalTime.now()) <=0 )
-				if(availabilitySchedule.getStartTime().compareTo(LocalTime.now()) < 0 )
+				if(availabilitySchedule.getStartDate().equals(LocalDate.now()) && availabilitySchedule.getStartTime().compareTo(LocalTime.now()) <= 0 )
 					errors.rejectValue("availabilitySchedule.startTime", null,"should not be earlier than currentTime");
 				if(availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0)
 					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
