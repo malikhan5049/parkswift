@@ -1,11 +1,14 @@
 package com.ews.parkswift.web.rest.dto.parking;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
+import com.ews.parkswift.domain.PriceHit;
 
 public class AvailableParkingDTO {
 	
@@ -36,12 +39,50 @@ public class AvailableParkingDTO {
 	    private BigDecimal cost;
 	    
 	    private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
+	    	
+	    private List<String> parkingLocationFacilitys = new ArrayList<String>();
+	    
+		private List<String> parkingLocationImages = new ArrayList<String>();
+		
+		private List<String> parkingSpaceVehicleTypes = new ArrayList<String>();
+
+		public List<String> getParkingSpaceVehicleTypes() {
+			return parkingSpaceVehicleTypes;
+		}
+
+		public void setParkingSpaceVehicleTypes(List<String> parkingSpaceVehicleTypes) {
+			this.parkingSpaceVehicleTypes = parkingSpaceVehicleTypes;
+		}
+
+		public List<String> getParkingLocationFacilitys() {
+			return parkingLocationFacilitys;
+		}
+
+		public void setParkingLocationFacilitys(List<String> parkingLocationFacilitys) {
+			this.parkingLocationFacilitys = parkingLocationFacilitys;
+		}
+
+		public List<String> getParkingLocationImages() {
+			return parkingLocationImages;
+		}
+
+		public void setParkingLocationImages(List<String> parkingLocationImages) {
+			this.parkingLocationImages = parkingLocationImages;
+		}
 
 		private String distanceUnit;
 
 		private String nick;
 	    
-	    
+		private Set<PriceHit> priceHits = new HashSet<PriceHit>();
+
+		public Set<PriceHit> getPriceHits() {
+			return priceHits;
+		}
+
+		public void setPriceHits(Set<PriceHit> priceHits) {
+			this.priceHits = priceHits;
+		}
 
 		public Long getParkingSpaceId() {
 			return parkingSpaceId;

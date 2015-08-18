@@ -1,7 +1,11 @@
 package com.ews.parkswift.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,12 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
+import com.ews.parkswift.domain.CostingInputVO;
 import com.ews.parkswift.domain.ParkingLocation;
+import com.ews.parkswift.domain.ParkingLocationFacility;
+import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.domain.ParkingSpace;
+import com.ews.parkswift.domain.ParkingSpacePriceEntry;
+import com.ews.parkswift.domain.ParkingSpaceVehicleType;
+import com.ews.parkswift.domain.PriceHit;
+import com.ews.parkswift.domain.PricePlan;
 import com.ews.parkswift.domain.TimeInterval;
 import com.ews.parkswift.repository.FindParkingSpaceRepository;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
+
 
 @Service
 @Transactional
@@ -29,7 +41,8 @@ public class FindParkingSpaceService {
 
     @Inject
     private FindParkingSpaceRepository findParkingSpaceRepository;
-
+    
+    private CostingService costingService = new CostingService();
 
 	public List<AvailableParkingDTO> findParkingSpaces(
 			FindParkingsDTO findAvailableParkingsDTO) {
@@ -40,6 +53,43 @@ public class FindParkingSpaceService {
 		return availableParkingsDTO;
 	}
 
+	private String mapPricePlanTypeToName(String type) {
+		if ("Hourly (Day)".equals(type))
+			return PricePlan.DAYHOUR.name();
+		else if ("Hourly (Night)".equals(type))
+			return PricePlan.NIGHTHOUR.name();
+		else if ("12 Hour (Day)".equals(type))
+			return PricePlan._12HOURSDAY.name();
+		else if ("12 Hour (Night)".equals(type))
+			return PricePlan._12HOURSNIGHT.name();
+		else if ("Daily".equals(type))
+			return PricePlan.FULLDAY.name();
+		else if ("Monthly".equals(type))
+			return PricePlan.FULLMONTH.name();
+		else if ("Weekly".equals(type))
+			return PricePlan.FULLWEEK.name();
+		else
+			return null;
+	}
+	
+	private String mapNameToPricePlanType(String name) {
+		if (PricePlan.DAYHOUR.name().equals(name))
+			return "Hourly (Day)";
+		else if (PricePlan.NIGHTHOUR.name().equals(name))
+			return "Hourly (Night)";
+		else if (PricePlan._12HOURSDAY.name().equals(name))
+			return "12 Hour (Day)";
+		else if (PricePlan._12HOURSNIGHT.name().equals(name))
+			return "12 Hour (Night)";
+		else if (PricePlan.FULLDAY.name().equals(name))
+			return "Daily";
+		else if (PricePlan.FULLMONTH.name().equals(name))
+			return "Monthly";
+		else if (PricePlan.FULLWEEK.name().equals(name))
+			return "Weekly";
+		else
+			return null;
+	}
 
 	private List<AvailableParkingDTO> populateAvailableParkingDTOWithResult(
 			FindParkingsDTO findAvailableParkingsDTO,
@@ -48,6 +98,22 @@ public class FindParkingSpaceService {
 		availableParkings.forEach((Object[] objectArray)->{
 			ParkingLocation parkingLocation = (ParkingLocation) objectArray[0];
 			ParkingSpace parkingSpace = (ParkingSpace) objectArray[1];
+			
+			ParkingSpacePriceEntry parkingSpacePriceEntry;
+			Map<String, BigDecimal> ratesMap = new HashMap<String, BigDecimal>();
+			Iterator<ParkingSpacePriceEntry> parkingSpacePriceEntrys = parkingSpace.getParkingSpacePriceEntrys().iterator();
+			while (parkingSpacePriceEntrys.hasNext()) {
+				parkingSpacePriceEntry = parkingSpacePriceEntrys.next();
+				ratesMap.put(mapPricePlanTypeToName(parkingSpacePriceEntry.getType()), parkingSpacePriceEntry.getPrice());
+			}
+			
+			CostingInputVO costingInputVO = new CostingInputVO(findAvailableParkingsDTO.getAvailabilitySchedule().getStartDate(), 
+					findAvailableParkingsDTO.getAvailabilitySchedule().getEndDate(), 
+					findAvailableParkingsDTO.getAvailabilitySchedule().getStartTime(), 
+					findAvailableParkingsDTO.getAvailabilitySchedule().getEndTime(), ratesMap);
+			
+			List<PriceHit> priceHits = costingService.performCosting(costingInputVO);
+			
 			AvailabilitySchedule availabilitySchedule = (AvailabilitySchedule) objectArray[2];
 			Double distance = (Double) objectArray[3];
 			
@@ -67,6 +133,23 @@ public class FindParkingSpaceService {
         	availableParkingDTO.setNick(parkingSpace.getNick());
         	availableParkingDTO.setAvailabilityScheduleId(availabilitySchedule.getId());
         	availableParkingDTO.setParkingSpacePriceEntrys(parkingSpace.getParkingSpacePriceEntrys());
+        	
+        	double totalCost = 0;
+        	for (PriceHit priceHit : priceHits) {
+        		totalCost += priceHit.getCost().doubleValue();
+        		availableParkingDTO.getPriceHits().add(priceHit);
+        	}
+        	availableParkingDTO.setCost(new BigDecimal(totalCost));
+        	
+        	for (ParkingLocationImage plImage : parkingLocation.getParkingLocationImages())
+        		availableParkingDTO.getParkingLocationImages().add(plImage.getURL());
+        	
+        	for (ParkingLocationFacility plFacility : parkingLocation.getParkingLocationFacilitys())
+        		availableParkingDTO.getParkingLocationFacilitys().add(plFacility.getFacility());
+        	
+        	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
+        		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
+        	
         	availableParkingsDTO.add(availableParkingDTO);
 		});
 		return availableParkingsDTO;
