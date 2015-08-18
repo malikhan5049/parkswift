@@ -50,7 +50,7 @@ public class FindParkingSpaceResource {
      * @throws JsonMappingException 
      * @throws JsonParseException 
      */
-	@RequestMapping(value = "/availableParkings",
+	@RequestMapping(value = "/findAvailableParkings",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed

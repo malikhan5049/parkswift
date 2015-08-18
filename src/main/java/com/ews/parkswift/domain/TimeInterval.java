@@ -6,15 +6,15 @@ import org.joda.time.LocalTime;
 import com.ews.parkswift.config.Constants;
 
 public enum TimeInterval {
-	FULLDAY(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("7:00 AM", Constants.LOCALTIMEFORMATTER)) {
+	FULLDAY(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER)) {
 		@Override
 		public boolean contains(LocalTime time) {
 			if(getInterval() == null)
 				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday().plusDays(1)));
-			return getInterval().contains(time.toDateTimeToday());
+			return getInterval().contains(time.getHourOfDay()<12?time.toDateTimeToday().plusDays(1):time.toDateTimeToday());
 		}
 	},
-	DAY(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("7:00 PM", Constants.LOCALTIMEFORMATTER)) {
+	DAY(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER)) {
 		@Override
 		public boolean contains(LocalTime time) {
 			if(getInterval() == null)
@@ -22,12 +22,12 @@ public enum TimeInterval {
 			return getInterval().contains(time.toDateTimeToday());
 		}
 	},
-	NIGHT(LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("7:00 AM", Constants.LOCALTIMEFORMATTER)) {
+	NIGHT(LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER)) {
 		@Override
 		public boolean contains(LocalTime time) {
 			if(getInterval() == null)
 				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday().plusDays(1)));
-			return getInterval().contains(time.toDateTimeToday());
+			return getInterval().contains(time.getHourOfDay()<12?time.toDateTimeToday().plusDays(1):time.toDateTimeToday());
 		}
 	};
 	

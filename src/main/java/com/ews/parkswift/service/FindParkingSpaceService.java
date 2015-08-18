@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.joda.time.Interval;
 import org.joda.time.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.domain.ParkingSpace;
+import com.ews.parkswift.domain.TimeInterval;
 import com.ews.parkswift.repository.FindParkingSpaceRepository;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
@@ -93,9 +93,19 @@ public class FindParkingSpaceService {
 		int divider = 30;
 		System.out.println(divident/divider);*/
 		
-		Interval interval = new Interval(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday(), LocalTime.parse("7:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday().plusDays(1));
+		/*Interval interval = new Interval(LocalTime.parse("8:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday(), LocalTime.parse("7:00 AM", Constants.LOCALTIMEFORMATTER).toDateTimeToday().plusDays(1));
 		System.out.println(interval);
-		System.out.println(interval.contains(LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER).toDateTimeToday()));
+		System.out.println(interval.contains(LocalTime.parse("8:00 PM", Constants.LOCALTIMEFORMATTER).toDateTimeToday()));*/
+		
+		/*Period timePeriod = new Period(LocalTime.parse("01:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("03:00 AM", Constants.LOCALTIMEFORMATTER));
+		System.out.println(timePeriod.getHours());*/
+		System.out.println(TimeInterval.DAY.contains(LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER)));
+		System.out.println(TimeInterval.DAY.contains(LocalTime.parse("07:00 PM", Constants.LOCALTIMEFORMATTER)));
+		System.out.println(TimeInterval.DAY.contains(LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
+		
+		System.out.println(TimeInterval.NIGHT.contains(LocalTime.parse("08:00 PM", Constants.LOCALTIMEFORMATTER)));
+		System.out.println(TimeInterval.NIGHT.contains(LocalTime.parse("07:00 AM", Constants.LOCALTIMEFORMATTER)));
+		System.out.println(TimeInterval.NIGHT.contains(LocalTime.parse("08:00 AM", Constants.LOCALTIMEFORMATTER)));
 	}
 	
 

@@ -27,16 +27,19 @@ public class FindParkingsDTOValidator implements Validator{
 		FindParkingsDTO findAvailableParkingsDTO = (FindParkingsDTO) target;
 		AvailabilitySchedule availabilitySchedule = findAvailableParkingsDTO.getAvailabilitySchedule();
 		if(availabilitySchedule!=null){
-			if(availabilitySchedule.getEndDate()!=null && availabilitySchedule.getStartDate()!=null && 
-					availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate())<0)
-				errors.rejectValue("availabilitySchedule.endDate", null,"should not be earlier than startDate");
-			if(availabilitySchedule.getStartDate()!=null && availabilitySchedule.getStartTime()!=null &&
-					availabilitySchedule.getStartDate().equals(LocalDate.now()) && availabilitySchedule.getStartTime().compareTo(LocalTime.now()) <=0 )
-				errors.rejectValue("availabilitySchedule.startTime", null,"should not be equal/earlier than currentTime");
-			if(availabilitySchedule.getEndTime()!=null && availabilitySchedule.getStartTime()!=null &&
-					availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0)
-				errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
-			if(availabilitySchedule.getStartTime().getMinuteOfHour() % 30 !=0);
+			if(availabilitySchedule.getEndDate()!=null && availabilitySchedule.getStartDate()!=null ){
+				if(availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate())<0)
+					errors.rejectValue("availabilitySchedule.endDate", null,"should not be earlier than startDate");
+				if(availabilitySchedule.getStartDate().equals(LocalDate.now()) && availabilitySchedule.getStartTime().compareTo(LocalTime.now()) <=0 )
+					errors.rejectValue("availabilitySchedule.startTime", null,"should not be equal/earlier than currentTime");
+				if(availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0)
+					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
+				if(availabilitySchedule.getStartTime().getMinuteOfHour() % 30 !=0)
+					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 30");
+				if(availabilitySchedule.getEndTime().getMinuteOfHour() % 30 !=0)
+					errors.rejectValue("availabilitySchedule.endTime", null,"minutes part can only be 30");
+			}
+			
 			
 		}
 		
