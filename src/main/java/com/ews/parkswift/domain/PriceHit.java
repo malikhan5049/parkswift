@@ -4,12 +4,23 @@ import java.math.BigDecimal;
 
 import org.joda.time.LocalTime;
 
+import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class PriceHit {
 	
 	private BigDecimal rate;
 	private BigDecimal cost;
 	private PricePlan pricePlan;
+	
+	@JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
 	private LocalTime startTime;
+	
+	@JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
 	private LocalTime endTime;
 	
 	
