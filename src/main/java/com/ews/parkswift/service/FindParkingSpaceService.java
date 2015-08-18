@@ -19,14 +19,18 @@ import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
 import com.ews.parkswift.domain.CostingInputVO;
 import com.ews.parkswift.domain.ParkingLocation;
+import com.ews.parkswift.domain.ParkingLocationFacility;
+import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.domain.ParkingSpace;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
+import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.PricePlan;
 import com.ews.parkswift.domain.TimeInterval;
 import com.ews.parkswift.repository.FindParkingSpaceRepository;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
+
 
 @Service
 @Transactional
@@ -64,6 +68,25 @@ public class FindParkingSpaceService {
 			return PricePlan.FULLMONTH.name();
 		else if ("Weekly".equals(type))
 			return PricePlan.FULLWEEK.name();
+		else
+			return null;
+	}
+	
+	private String mapNameToPricePlanType(String name) {
+		if (PricePlan.DAYHOUR.name().equals(name))
+			return "Hourly (Day)";
+		else if (PricePlan.NIGHTHOUR.name().equals(name))
+			return "Hourly (Night)";
+		else if (PricePlan._12HOURSDAY.name().equals(name))
+			return "12 Hour (Day)";
+		else if (PricePlan._12HOURSNIGHT.name().equals(name))
+			return "12 Hour (Night)";
+		else if (PricePlan.FULLDAY.name().equals(name))
+			return "Daily";
+		else if (PricePlan.FULLMONTH.name().equals(name))
+			return "Monthly";
+		else if (PricePlan.FULLWEEK.name().equals(name))
+			return "Weekly";
 		else
 			return null;
 	}
@@ -116,8 +139,17 @@ public class FindParkingSpaceService {
         		totalCost += priceHit.getCost().doubleValue();
         		availableParkingDTO.getPriceHits().add(priceHit);
         	}
-        	
         	availableParkingDTO.setCost(new BigDecimal(totalCost));
+        	
+        	for (ParkingLocationImage plImage : parkingLocation.getParkingLocationImages())
+        		availableParkingDTO.getParkingLocationImages().add(plImage.getURL());
+        	
+        	for (ParkingLocationFacility plFacility : parkingLocation.getParkingLocationFacilitys())
+        		availableParkingDTO.getParkingLocationFacilitys().add(plFacility.getFacility());
+        	
+        	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
+        		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
+        	
         	availableParkingsDTO.add(availableParkingDTO);
 		});
 		return availableParkingsDTO;
