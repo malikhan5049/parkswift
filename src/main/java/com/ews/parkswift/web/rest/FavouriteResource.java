@@ -114,12 +114,12 @@ public class FavouriteResource {
     
     
     @RequestMapping(value = "/favouriteLocations",
-            method = RequestMethod.POST,
+            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<FavouriteLocationsDTO> findFavouriteLocations(@Valid @RequestBody FavouriteLocationsDTO favouriteLocationsDTO)throws URISyntaxException, JsonParseException, JsonMappingException, IOException {//@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException {
     	
-        log.debug("REST request to find ParkingSpace : {}", favouriteLocationsDTO);
+        log.debug("REST request to find User's favourite location: {}", favouriteLocationsDTO);
         
         List<Favourite> listFavouriteLocations = favouriteRepository.findAllForCurrentUser();
         List<FavouriteLocationsDTO> listReturning = new ArrayList<>();
