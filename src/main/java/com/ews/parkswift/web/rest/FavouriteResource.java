@@ -139,6 +139,7 @@ public class FavouriteResource {
     		favouriteLocationsDTO.setLocId(favourite.getParkingLocation().getId());
     		favouriteLocationsDTO.setLocation(favourite.getParkingLocation().getAddressLine1());
     		favouriteLocationsDTO.setBusinessType(favourite.getParkingLocation().getBussinessType());
+    		favouriteLocationsDTO.setUserId(favourite.getUser().getId());
     		return favouriteLocationsDTO;
     }
     
