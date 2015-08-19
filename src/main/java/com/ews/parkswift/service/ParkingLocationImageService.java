@@ -29,5 +29,12 @@ public class ParkingLocationImageService {
 				stream().map((ParkingLocationImage parkingLocationImage)->{return parkingLocationImage.getImage();}).collect(Collectors.toList());
 	}
     
+	public ParkingLocationImage findImageURLByLocation(Long parkingLocationId) {
+		List<ParkingLocationImage> listImages = parkingLocationImageRepository.findAllByParkingLocation(parkingLocationRepository.findOne(parkingLocationId));
+		ParkingLocationImage coverImage = new ParkingLocationImage();
+		if(null!=listImages && listImages.size()>0)
+			coverImage=listImages.get(0);
+		return coverImage;
+	}
 
 }

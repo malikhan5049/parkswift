@@ -1,13 +1,13 @@
 package com.ews.parkswift.repository;
 
-import com.ews.parkswift.domain.User;
+import java.util.List;
+import java.util.Optional;
 
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-import java.util.Optional;
+import com.ews.parkswift.domain.User;
 
 /**
  * Spring Data JPA repository for the User entity.
@@ -24,6 +24,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByLogin(String login);
 
+    @Query("select user from User user where user.login = ?#{principal.username}")
+    User findUserByLoginName();
+    
     @Override
     void delete(User t);
 

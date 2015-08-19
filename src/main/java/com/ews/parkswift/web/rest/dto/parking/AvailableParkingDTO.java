@@ -11,213 +11,220 @@ import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.PriceHit;
 
 public class AvailableParkingDTO {
-	
-		private Long parkingSpaceId;
-		
-		private Long availabilityScheduleId;
-		
-	    private String bussinessType;
 
-	    private String addressLine1;
+	private Long locId;
 
-	    private String addressLine2;
+	private Long parkingSpaceId;
 
-	    private String city;
+	private Long availabilityScheduleId;
 
-	    private String state;
+	private String bussinessType;
 
-	    private String country;
+	private String addressLine1;
 
-	    private String zipCode;
+	private String addressLine2;
 
-	    private BigDecimal longitude;
+	private String city;
 
-	    private BigDecimal lattitude;
-	    
-	    private Double distance =Constants.DEFAULT_SEARCH_DISTANCE;
-	    
-	    private BigDecimal cost;
-	    
-	    private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
-	    	
-	    private List<String> parkingLocationFacilitys = new ArrayList<String>();
-	    
-		private List<String> parkingLocationImages = new ArrayList<String>();
-		
-		private List<String> parkingSpaceVehicleTypes = new ArrayList<String>();
+	private String state;
 
-		public List<String> getParkingSpaceVehicleTypes() {
-			return parkingSpaceVehicleTypes;
-		}
+	private String country;
 
-		public void setParkingSpaceVehicleTypes(List<String> parkingSpaceVehicleTypes) {
-			this.parkingSpaceVehicleTypes = parkingSpaceVehicleTypes;
-		}
+	private String zipCode;
 
-		public List<String> getParkingLocationFacilitys() {
-			return parkingLocationFacilitys;
-		}
+	private BigDecimal longitude;
 
-		public void setParkingLocationFacilitys(List<String> parkingLocationFacilitys) {
-			this.parkingLocationFacilitys = parkingLocationFacilitys;
-		}
+	private BigDecimal lattitude;
 
-		public List<String> getParkingLocationImages() {
-			return parkingLocationImages;
-		}
+	private Double distance = Constants.DEFAULT_SEARCH_DISTANCE;
 
-		public void setParkingLocationImages(List<String> parkingLocationImages) {
-			this.parkingLocationImages = parkingLocationImages;
-		}
+	private BigDecimal cost;
 
-		private String distanceUnit;
+	private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
 
-		private String nick;
-	    
-		private Set<PriceHit> priceHits = new HashSet<PriceHit>();
+	private List<String> parkingLocationFacilitys = new ArrayList<String>();
 
-		public Set<PriceHit> getPriceHits() {
-			return priceHits;
-		}
+	private List<String> parkingLocationImages = new ArrayList<String>();
 
-		public void setPriceHits(Set<PriceHit> priceHits) {
-			this.priceHits = priceHits;
-		}
+	private List<String> parkingSpaceVehicleTypes = new ArrayList<String>();
 
-		public Long getParkingSpaceId() {
-			return parkingSpaceId;
-		}
+	public List<String> getParkingSpaceVehicleTypes() {
+		return parkingSpaceVehicleTypes;
+	}
 
-		public void setParkingSpaceId(Long parkingSpaceId) {
-			this.parkingSpaceId = parkingSpaceId;
-		}
+	public void setParkingSpaceVehicleTypes(
+			List<String> parkingSpaceVehicleTypes) {
+		this.parkingSpaceVehicleTypes = parkingSpaceVehicleTypes;
+	}
 
-		public Long getAvailabilityScheduleId() {
-			return availabilityScheduleId;
-		}
+	public List<String> getParkingLocationFacilitys() {
+		return parkingLocationFacilitys;
+	}
 
-		public void setAvailabilityScheduleId(Long availabilityScheduleId) {
-			this.availabilityScheduleId = availabilityScheduleId;
-		}
+	public void setParkingLocationFacilitys(
+			List<String> parkingLocationFacilitys) {
+		this.parkingLocationFacilitys = parkingLocationFacilitys;
+	}
 
-		public String getBussinessType() {
-			return bussinessType;
-		}
+	public List<String> getParkingLocationImages() {
+		return parkingLocationImages;
+	}
 
-		public void setBussinessType(String bussinessType) {
-			this.bussinessType = bussinessType;
-		}
+	public void setParkingLocationImages(List<String> parkingLocationImages) {
+		this.parkingLocationImages = parkingLocationImages;
+	}
 
-		public String getAddressLine1() {
-			return addressLine1;
-		}
+	private String distanceUnit;
 
-		public void setAddressLine1(String addressLine1) {
-			this.addressLine1 = addressLine1;
-		}
+	private String nick;
 
-		public String getAddressLine2() {
-			return addressLine2;
-		}
+	private Set<PriceHit> priceHits = new HashSet<PriceHit>();
 
-		public void setAddressLine2(String addressLine2) {
-			this.addressLine2 = addressLine2;
-		}
+	public Set<PriceHit> getPriceHits() {
+		return priceHits;
+	}
 
-		public String getCity() {
-			return city;
-		}
+	public void setPriceHits(Set<PriceHit> priceHits) {
+		this.priceHits = priceHits;
+	}
 
-		public void setCity(String city) {
-			this.city = city;
-		}
+	public Long getParkingSpaceId() {
+		return parkingSpaceId;
+	}
 
-		public String getState() {
-			return state;
-		}
+	public void setParkingSpaceId(Long parkingSpaceId) {
+		this.parkingSpaceId = parkingSpaceId;
+	}
 
-		public void setState(String state) {
-			this.state = state;
-		}
+	public Long getAvailabilityScheduleId() {
+		return availabilityScheduleId;
+	}
 
-		public String getCountry() {
-			return country;
-		}
+	public void setAvailabilityScheduleId(Long availabilityScheduleId) {
+		this.availabilityScheduleId = availabilityScheduleId;
+	}
 
-		public void setCountry(String country) {
-			this.country = country;
-		}
+	public String getBussinessType() {
+		return bussinessType;
+	}
 
-		public String getZipCode() {
-			return zipCode;
-		}
+	public void setBussinessType(String bussinessType) {
+		this.bussinessType = bussinessType;
+	}
 
-		public void setZipCode(String zipCode) {
-			this.zipCode = zipCode;
-		}
+	public String getAddressLine1() {
+		return addressLine1;
+	}
 
-		public BigDecimal getLongitude() {
-			return longitude;
-		}
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
 
-		public void setLongitude(BigDecimal longitude) {
-			this.longitude = longitude;
-		}
+	public String getAddressLine2() {
+		return addressLine2;
+	}
 
-		public BigDecimal getLattitude() {
-			return lattitude;
-		}
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
 
-		public void setLattitude(BigDecimal lattitude) {
-			this.lattitude = lattitude;
-		}
+	public String getCity() {
+		return city;
+	}
 
-		public Double getDistance() {
-			return distance;
-		}
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-		public void setDistance(Double distance) {
-			this.distance = distance;
-		}
+	public String getState() {
+		return state;
+	}
 
-		public BigDecimal getCost() {
-			return cost;
-		}
+	public void setState(String state) {
+		this.state = state;
+	}
 
-		public void setCost(BigDecimal cost) {
-			this.cost = cost;
-		}
+	public String getCountry() {
+		return country;
+	}
 
-		public Set<ParkingSpacePriceEntry> getParkingSpacePriceEntrys() {
-			return parkingSpacePriceEntrys;
-		}
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-		public void setParkingSpacePriceEntrys(
-				Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys) {
-			this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
-		}
+	public String getZipCode() {
+		return zipCode;
+	}
 
-		public void setDistanceUnit(String distanceUnit) {
-			this.distanceUnit = distanceUnit;
-			
-		}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
 
-		public String getDistanceUnit() {
-			return distanceUnit;
-		}
+	public BigDecimal getLongitude() {
+		return longitude;
+	}
 
-		public void setNick(String nick) {
-			this.nick = nick;
-			
-		}
+	public void setLongitude(BigDecimal longitude) {
+		this.longitude = longitude;
+	}
 
-		public String getNick() {
-			return nick;
-		}
-		
-		
-		
-		
-	    
-	    
+	public BigDecimal getLattitude() {
+		return lattitude;
+	}
+
+	public void setLattitude(BigDecimal lattitude) {
+		this.lattitude = lattitude;
+	}
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
+	}
+
+	public BigDecimal getCost() {
+		return cost;
+	}
+
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+
+	public Set<ParkingSpacePriceEntry> getParkingSpacePriceEntrys() {
+		return parkingSpacePriceEntrys;
+	}
+
+	public void setParkingSpacePriceEntrys(
+			Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys) {
+		this.parkingSpacePriceEntrys = parkingSpacePriceEntrys;
+	}
+
+	public void setDistanceUnit(String distanceUnit) {
+		this.distanceUnit = distanceUnit;
+
+	}
+
+	public String getDistanceUnit() {
+		return distanceUnit;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public Long getLocId() {
+		return locId;
+	}
+
+	public void setLocId(Long locId) {
+		this.locId = locId;
+	}
+
 }

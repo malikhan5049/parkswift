@@ -1,14 +1,11 @@
 package com.ews.parkswift.web.rest;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.domain.Favourite;
 import com.ews.parkswift.repository.FavouriteRepository;
+import com.ews.parkswift.service.FavouriteLocationsService;
 import com.ews.parkswift.web.rest.dto.parking.FavouriteLocationsDTO;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 /**
  * REST controller for managing Favourite.
@@ -40,6 +36,9 @@ public class FavouriteResource {
     @Inject
     private FavouriteRepository favouriteRepository;
 
+    @Inject
+    private FavouriteLocationsService favouriteLocationsService;
+
     /**
      * POST  /favourites -> Create a new favourite.
      */
@@ -49,10 +48,8 @@ public class FavouriteResource {
     @Timed
     public ResponseEntity<Void> create(@RequestBody Favourite favourite) throws URISyntaxException {
         log.debug("REST request to save Favourite : {}", favourite);
-        if (favourite.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new favourite cannot already have an ID").build();
-        }
-        favouriteRepository.save(favourite);
+       
+        favouriteLocationsService.save(favourite);
         return ResponseEntity.created(new URI("/api/favourites/" + favourite.getId())).build();
     }
 
@@ -68,7 +65,7 @@ public class FavouriteResource {
         if (favourite.getId() == null) {
             return create(favourite);
         }
-        favouriteRepository.save(favourite);
+        favouriteLocationsService.save(favourite);
         return ResponseEntity.ok().build();
     }
 
@@ -79,9 +76,9 @@ public class FavouriteResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Favourite> getAll() {
+    public List<FavouriteLocationsDTO> getAll() {
         log.debug("REST request to get all Favourites");
-        return favouriteRepository.findAll();
+        return favouriteLocationsService.getAllByUser();
     }
 
     /**
@@ -108,40 +105,8 @@ public class FavouriteResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public void delete(@PathVariable Long id) {
-        log.debug("REST request to delete Favourite : {}", id);
-        favouriteRepository.delete(id);
+        log.debug("REST request to delete Favourite : {locId}", id);
+        favouriteLocationsService.deleteByUserIdAndLocId(id);
     }
-    
-    
-    @RequestMapping(value = "/favouriteLocations",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<FavouriteLocationsDTO> findFavouriteLocations(@Valid @RequestBody FavouriteLocationsDTO favouriteLocationsDTO)throws URISyntaxException, JsonParseException, JsonMappingException, IOException {//@Valid @RequestBody ParkingSpace parkingSpace) throws URISyntaxException {
-    	
-        log.debug("REST request to find User's favourite location: {}", favouriteLocationsDTO);
-        
-        List<Favourite> listFavouriteLocations = favouriteRepository.findAllForCurrentUser();
-        List<FavouriteLocationsDTO> listReturning = new ArrayList<>();
-        FavouriteLocationsDTO _favouriteLocationsDTO = null;
-
-        for(Favourite favourite: listFavouriteLocations){
-        	_favouriteLocationsDTO = new FavouriteLocationsDTO(); 
-        	listReturning.add(populateFavouriteLocationsDTO(favourite,_favouriteLocationsDTO));
-        }
-        
-        
-        return listReturning;
-    }
-    
-    private FavouriteLocationsDTO populateFavouriteLocationsDTO(Favourite favourite, FavouriteLocationsDTO favouriteLocationsDTO){
-    		favouriteLocationsDTO.setFavLocId(favourite.getId());
-    		favouriteLocationsDTO.setLocId(favourite.getParkingLocation().getId());
-    		favouriteLocationsDTO.setLocation(favourite.getParkingLocation().getAddressLine1());
-    		favouriteLocationsDTO.setBusinessType(favourite.getParkingLocation().getBussinessType());
-    		favouriteLocationsDTO.setUserId(favourite.getUser().getId());
-    		return favouriteLocationsDTO;
-    }
-    
     
 }

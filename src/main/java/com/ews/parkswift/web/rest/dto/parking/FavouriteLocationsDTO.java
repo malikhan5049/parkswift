@@ -13,6 +13,17 @@ public class FavouriteLocationsDTO {
 	    
 	    private Long userId;
 	    
+	    private String url;
+	    
+
+		public String getUrl() {
+			return url;
+		}
+
+		public void setUrl(String url) {
+			this.url = url;
+		}
+
 		public Long getUserId() {
 			return userId;
 		}

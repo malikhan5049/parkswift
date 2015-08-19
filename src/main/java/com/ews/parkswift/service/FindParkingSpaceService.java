@@ -118,6 +118,7 @@ public class FindParkingSpaceService {
 			Double distance = (Double) objectArray[3];
 			
 			AvailableParkingDTO availableParkingDTO = new AvailableParkingDTO();
+			availableParkingDTO.setLocId(parkingLocation.getId());
         	availableParkingDTO.setBussinessType(parkingLocation.getBussinessType());
         	availableParkingDTO.setAddressLine1(parkingLocation.getAddressLine1());
         	availableParkingDTO.setAddressLine2(parkingLocation.getAddressLine2());
