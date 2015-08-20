@@ -32,7 +32,7 @@ public class FindParkingsDTOValidator implements Validator{
 					errors.rejectValue("availabilitySchedule.endDate", null,"should not be earlier than startDate");
 				if(availabilitySchedule.getStartDate().equals(LocalDate.now()) && availabilitySchedule.getStartTime().compareTo(LocalTime.now()) <= 0 )
 					errors.rejectValue("availabilitySchedule.startTime", null,"should not be earlier than currentTime");
-				if(availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0)
+				if(availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate()) == 0 && availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0 )
 					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
 				if(availabilitySchedule.getStartTime().getMinuteOfHour() % 30 !=0)
 					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 30");

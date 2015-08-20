@@ -2,6 +2,8 @@ package com.ews.parkswift.validation;
 
 import java.util.Optional;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -35,14 +37,24 @@ public class ParkingSpaceValidator implements Validator{
 		
 		int index = 0;
 		for(AvailabilitySchedule e: parkingSpace.getAvailabilitySchedules()){
-			if(e.getEndDate().compareTo(e.getStartDate()) < 0)
-				errors.rejectValue("availabilitySchedules["+index+"].endDate", null,"should not be earlier than startDate");
-				
-				
-			if(e.getEndTime().compareTo(e.getStartTime()) < 0)
-				errors.rejectValue("availabilitySchedules["+index+"].endTime", null,"should not be earlier than startTime");
-			
-			
+//			if(e.getEndDate().compareTo(e.getStartDate()) < 0)
+//				errors.rejectValue("availabilitySchedules["+index+"].endDate", null,"should not be earlier than startDate");
+//				
+//			if(e.getEndTime().compareTo(e.getStartTime()) < 0)
+//				errors.rejectValue("availabilitySchedules["+index+"].endTime", null,"should not be earlier than startTime");
+//			
+			if(e.getEndDate()!=null && e.getStartDate()!=null ){
+				if(e.getEndDate().compareTo(e.getStartDate()) < 0)
+					errors.rejectValue("availabilitySchedule.endDate", null,"should not be earlier than startDate");
+				if(e.getStartDate().equals(LocalDate.now()) && e.getStartTime().compareTo(LocalTime.now()) <= 0 )
+					errors.rejectValue("availabilitySchedule.startTime", null,"should not be earlier than currentTime");
+				if(e.getEndDate().compareTo(e.getStartDate()) == 0 && e.getEndTime().compareTo(e.getStartTime())<0)
+					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
+				if(e.getStartTime().getMinuteOfHour() % 30 !=0)
+					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 30");
+				if(e.getEndTime().getMinuteOfHour() % 30 !=0)
+					errors.rejectValue("availabilitySchedule.endTime", null,"minutes part can only be 30");
+			}
 			
 			if(e.getRepeatBasis()!=null){
 				if(e.getRepeatAfterEvery() == null){

@@ -39,6 +39,7 @@ import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.service.ParkingLocationService;
 import com.ews.parkswift.validation.ParkingLocationValidator;
+import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -192,13 +193,9 @@ public class ParkingLocationResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ParkingLocation> get(@PathVariable Long id) {
+    public AvailableParkingDTO get(@PathVariable Long id) {
         log.debug("REST request to get ParkingLocation : {}", id);
-        return Optional.ofNullable(parkingLocationService.findOne(id))
-            .map(parkingLocation -> new ResponseEntity<>(
-                parkingLocation,
-                HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return parkingLocationService.findLocationById(id);
     }
 
     /**

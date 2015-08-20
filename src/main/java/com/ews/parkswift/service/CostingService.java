@@ -28,17 +28,18 @@ public class CostingService {
 		Integer noOfHoursToCost = getNoOfHoursBwStartTimeNEndTime(costingInputVO.getStartTime(), costingInputVO.getEndTime());
 		
 		//TODO - citation needed
-		if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.FULLDAY.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
+		if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.NIGHT.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
+			noOfDaysToCost--; // In case of FULLDAY, it becomes 3 days so need to subtract 1
+		}
+		else if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.FULLDAY.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
 			noOfDaysToCost--; // In case of FULLDAY, it becomes 3 days so need to subtract 1
 			noOfHoursToCost = 24;
 		}
-		
 		performCostingRecursively(costingInputVO, costingInputVO.getStartTime(),costingInputVO.getEndTime(),noOfHoursToCost, noOfDaysToCost, priceHits);
 		
 			
 		return priceHits;
 	}
-
 
 
 	private int getNoOfHoursBwStartTimeNEndTime(LocalTime startTime, LocalTime endTime) {
@@ -73,7 +74,7 @@ public class CostingService {
 			LocalTime startTime, LocalTime endTime, Integer noOfHoursToCost,
 			Integer noOfDaysToCost, List<PriceHit> priceHits) {
 		
-		try {
+		try { 
 		if(noOfHoursToCost == PricePlan.FULLMONTH.getTimePeriod() && 
 				costingInputVO.getStartDate().equals(getMonthStartDate(costingInputVO.getStartDate())) && costingInputVO.getEndDate().equals(getMonthEndDate(costingInputVO.getEndDate())) &&
 				startTime.equals(TimeInterval.FULLDAY.getStartTime()) && endTime.equals(TimeInterval.FULLDAY.getEndTime())){
@@ -147,7 +148,7 @@ public class CostingService {
 						noOfHoursBwStartTimeNNightEndTime, noOfDaysToCost, priceHits);
 				noOfHoursToCost -= noOfHoursBwStartTimeNNightEndTime;
 				nextStartTime = TimeInterval.DAY.getStartTime();
-			}
+			} 
 			performCostingRecursively(costingInputVO, nextStartTime, endTime, noOfHoursToCost, noOfDaysToCost, priceHits);
 		}
 		} catch (Exception e) {

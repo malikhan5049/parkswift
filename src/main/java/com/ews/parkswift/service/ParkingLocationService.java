@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,15 +24,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.config.Constants;
+import com.ews.parkswift.domain.CostingInputVO;
 import com.ews.parkswift.domain.ParkingLocation;
+import com.ews.parkswift.domain.ParkingLocationFacility;
 import com.ews.parkswift.domain.ParkingLocationImage;
+import com.ews.parkswift.domain.ParkingSpace;
+import com.ews.parkswift.domain.ParkingSpacePriceEntry;
+import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.domain.PaypallAccount;
+import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.User;
 import com.ews.parkswift.repository.ParkingLocationImageRepository;
 import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
 import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
+import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 
 @Service
 @Transactional
@@ -170,6 +181,43 @@ public class ParkingLocationService {
 		ParkingLocation parkingLocation = parkingLocationRepository.findOne(id);
 		setParkingSpaces(parkingLocation);
 		return parkingLocation;
+	}
+	
+	public AvailableParkingDTO findLocationById(Long id){
+		AvailableParkingDTO availableParkingDTO = new AvailableParkingDTO();
+		ParkingLocation parkingLocation = parkingLocationRepository.findOne(id);
+		if(parkingLocation!=null){
+			populateAvailableLocationDTO(availableParkingDTO, parkingLocation);
+		}
+		return availableParkingDTO;
+	}
+	
+	
+	private void populateAvailableLocationDTO(AvailableParkingDTO availableParkingDTO, ParkingLocation parkingLocation){
+		availableParkingDTO.setLocId(parkingLocation.getId());
+    	availableParkingDTO.setBussinessType(parkingLocation.getBussinessType());
+    	availableParkingDTO.setAddressLine1(parkingLocation.getAddressLine1());
+    	availableParkingDTO.setAddressLine2(parkingLocation.getAddressLine2());
+    	availableParkingDTO.setCity(parkingLocation.getCity());
+    	availableParkingDTO.setState(parkingLocation.getState());
+    	availableParkingDTO.setZipCode(parkingLocation.getZipCode());
+    	availableParkingDTO.setCountry(parkingLocation.getCountry());
+    	availableParkingDTO.setLongitude(parkingLocation.getLongitude());
+    	availableParkingDTO.setLattitude(parkingLocation.getLattitude());
+    	
+    	for (ParkingLocationImage plImage : parkingLocation.getParkingLocationImages())
+    		availableParkingDTO.getParkingLocationImages().add(plImage.getURL());
+    	
+    	for (ParkingLocationFacility plFacility : parkingLocation.getParkingLocationFacilitys())
+    		availableParkingDTO.getParkingLocationFacilitys().add(plFacility.getFacility());
+    	
+		List<ParkingSpace> listParkingSpace = parkingSpaceRepository.findAllByParkingLocationId(parkingLocation.getId());
+		for(ParkingSpace parkingSpace: listParkingSpace){
+			for(ParkingSpaceVehicleType parkingSpaceVehicleType: parkingSpace.getParkingSpaceVehicleTypes()){
+				availableParkingDTO.getParkingSpaceVehicleTypes().add(parkingSpaceVehicleType.getType());
+				availableParkingDTO.setParkingSpacePriceEntrys(parkingSpace.getParkingSpacePriceEntrys());
+			}
+		}
 	}
 
 }

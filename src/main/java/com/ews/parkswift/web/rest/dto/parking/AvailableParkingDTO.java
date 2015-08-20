@@ -9,6 +9,7 @@ import java.util.Set;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.PriceHit;
+import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
 
 public class AvailableParkingDTO {
 
@@ -35,6 +36,8 @@ public class AvailableParkingDTO {
 	private BigDecimal longitude;
 
 	private BigDecimal lattitude;
+	
+	private boolean isFavourite=false;
 
 	private Double distance = Constants.DEFAULT_SEARCH_DISTANCE;
 
@@ -42,27 +45,37 @@ public class AvailableParkingDTO {
 
 	private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
 
-	private List<String> parkingLocationFacilitys = new ArrayList<String>();
+	private Set<String> parkingLocationFacilitys = new HashSet<String>();
 
 	private List<String> parkingLocationImages = new ArrayList<String>();
 
-	private List<String> parkingSpaceVehicleTypes = new ArrayList<String>();
+	private Set<String> parkingSpaceVehicleTypes = new HashSet<String>();
 
-	public List<String> getParkingSpaceVehicleTypes() {
+    private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
+    
+	public Set<ParkingSpaceDTO> getParkingSpaces() {
+		return parkingSpaces;
+	}
+
+	public void setParkingSpaces(Set<ParkingSpaceDTO> parkingSpaces) {
+		this.parkingSpaces = parkingSpaces;
+	}
+
+	public Set<String> getParkingSpaceVehicleTypes() {
 		return parkingSpaceVehicleTypes;
 	}
 
 	public void setParkingSpaceVehicleTypes(
-			List<String> parkingSpaceVehicleTypes) {
+			Set<String> parkingSpaceVehicleTypes) {
 		this.parkingSpaceVehicleTypes = parkingSpaceVehicleTypes;
 	}
 
-	public List<String> getParkingLocationFacilitys() {
+	public Set<String> getParkingLocationFacilitys() {
 		return parkingLocationFacilitys;
 	}
 
 	public void setParkingLocationFacilitys(
-			List<String> parkingLocationFacilitys) {
+			Set<String> parkingLocationFacilitys) {
 		this.parkingLocationFacilitys = parkingLocationFacilitys;
 	}
 
@@ -226,5 +239,14 @@ public class AvailableParkingDTO {
 	public void setLocId(Long locId) {
 		this.locId = locId;
 	}
+	
+	public boolean isFavourite() {
+		return isFavourite;
+	}
+
+	public void setFavourite(boolean isFavourite) {
+		this.isFavourite = isFavourite;
+	}
+
 
 }

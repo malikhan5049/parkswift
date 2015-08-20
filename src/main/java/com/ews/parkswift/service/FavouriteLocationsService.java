@@ -82,5 +82,15 @@ public class FavouriteLocationsService {
 		
 		return favouriteLocationsDTO;
 }
+    
+    boolean checkIfLocationIsFavourite(Long locId) throws Exception{
+    	User user = userRepository.findUserByLoginName();
+		String qry = "from Favourite fav where fav.user.id=? and fav.parkingLocation.id=?";
+		Query query = this.entityManager.createQuery(qry);
+		query.setParameter(1, user.getId());
+		query.setParameter(2, locId);
+		return query.getResultList().size()>0?true:false;
+    }
+    
 
 }

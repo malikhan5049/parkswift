@@ -41,6 +41,9 @@ public class FindParkingSpaceService {
 
     @Inject
     private FindParkingSpaceRepository findParkingSpaceRepository;
+   
+    @Inject
+    private FavouriteLocationsService favouriteLocationService;
     
     private CostingService costingService = new CostingService();
 
@@ -150,7 +153,13 @@ public class FindParkingSpaceService {
         	
         	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
         		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
-        	
+        	try{
+	        	if(favouriteLocationService.checkIfLocationIsFavourite(parkingLocation.getId())){
+	        		availableParkingDTO.setFavourite(true);
+	        	}
+        	}catch(Exception e){
+        		
+        	}
         	availableParkingsDTO.add(availableParkingDTO);
 		});
 		return availableParkingsDTO;
