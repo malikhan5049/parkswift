@@ -4,7 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.PaypallAccount;
 import com.ews.parkswift.repository.PaypallAccountRepository;
-import com.ews.parkswift.web.rest.dto.parking.PaypallAccountDTO;
+import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
 import com.paypal.api.openidconnect.CreateFromAuthorizationCodeParameters;
 import com.paypal.api.openidconnect.Session;
 import com.paypal.api.openidconnect.Tokeninfo;

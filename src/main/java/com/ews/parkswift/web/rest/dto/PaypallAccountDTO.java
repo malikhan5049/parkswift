@@ -1,4 +1,4 @@
-package com.ews.parkswift.web.rest.dto.parking;
+package com.ews.parkswift.web.rest.dto;
 
 
 public class PaypallAccountDTO {
