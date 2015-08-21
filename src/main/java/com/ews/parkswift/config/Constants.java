@@ -46,6 +46,11 @@ public final class Constants {
 	public static final DateTimeFormatter LOCALDATEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 	public static final DateTimeFormatter LOCALTIMEFORMATTER = DateTimeFormat.forPattern("hh:mm a");
     
+	public static final String PAYPALL_CLIENT_ID = "AVABqtTXMd3JWa219nb0NTFrmwpSNn2SdGHUPMHZGRcykjSAga_-q35rZs3t_4ueY0z8d0fnw-B8Wox7";
+	public static final String PAYPALL_CLIENT_SECRET = "EBcCief4MzwNZnM0mWp-mRMXiH6qIQsE_EbNJ5CSE8xbxBLh8TtBwfHnA9laQ_qiUPKpIHV9NJmyL7GB";
+	public static final String PAYPALL_REDIRECT_URI = "http://www.parkswift.com/";
+	
+	
     // -end for Constants used for PayPal service to get User Profile
     
     
