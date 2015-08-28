@@ -46,8 +46,12 @@ public final class Constants {
 	public static final DateTimeFormatter LOCALDATEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 	public static final DateTimeFormatter LOCALTIMEFORMATTER = DateTimeFormat.forPattern("hh:mm a");
     
-	public static final String PAYPALL_CLIENT_ID = "AVABqtTXMd3JWa219nb0NTFrmwpSNn2SdGHUPMHZGRcykjSAga_-q35rZs3t_4ueY0z8d0fnw-B8Wox7";
-	public static final String PAYPALL_CLIENT_SECRET = "EBcCief4MzwNZnM0mWp-mRMXiH6qIQsE_EbNJ5CSE8xbxBLh8TtBwfHnA9laQ_qiUPKpIHV9NJmyL7GB";
+	
+	public static final String PAYPALL_CLIENT_ID = "AX6jOoqINjUAUHhslHZcjM0_3TlMIrPBF3sqVzLrDAeQV4B5fygos2429qYK0pEjUs_xuZJpZMxIheD4";
+	public static final String PAYPALL_CLIENT_SECRET = "ED7r_WCA_jlY7T7HQcJF7DjHfB6GgAZUBnb9Uku9UUMKN8LGi4D-bersMAIdGizFohXcURomIpFbEXqb";
+	
+//	public static final String PAYPALL_CLIENT_ID = "AVABqtTXMd3JWa219nb0NTFrmwpSNn2SdGHUPMHZGRcykjSAga_-q35rZs3t_4ueY0z8d0fnw-B8Wox7";
+//	public static final String PAYPALL_CLIENT_SECRET = "EBcCief4MzwNZnM0mWp-mRMXiH6qIQsE_EbNJ5CSE8xbxBLh8TtBwfHnA9laQ_qiUPKpIHV9NJmyL7GB";
 	public static final String PAYPALL_REDIRECT_URI = "http://www.parkswift.com/";
 	
     // -end for Constants used for PayPal service to get User Profile
