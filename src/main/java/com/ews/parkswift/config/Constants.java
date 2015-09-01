@@ -55,4 +55,11 @@ public final class Constants {
 	public static final String PAYPALL_REDIRECT_URI = "http://www.parkswift.com/";
 	
     // -end for Constants used for PayPal service to get User Profile
+	
+	public static final String BOOKING_REFERENCE_NUMBER_RANDOM = "BOOKING-38400000-8cf0-11bd-b23e-10b96e4ef00d";
+	public static final String PAYMENT_REFERENCE_NUMBER_RANDOM = "PAYMENT-38400000-8cf0-11bd-b23e-10b96e4ef00d";
+	public static final String MODE = "mode";
+	public static final String MODE_SANDBOX = "sandbox";
+	public static final String EMAIL = "email";
+	public static final String OPENID = "openid";
 }

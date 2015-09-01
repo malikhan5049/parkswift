@@ -125,14 +125,14 @@ public class PaypallAccountResource {
 	    PaypallAccountDTO paypallAccountDTO = new PaypallAccountDTO();
 		
 		Map<String, String> configurationMap = new HashMap<String, String>();
-		configurationMap.put("mode", "sandbox");
+		configurationMap.put(Constants.MODE, Constants.MODE_SANDBOX);
 	
 		APIContext apiContext = new APIContext();
 		apiContext.setConfigurationMap(configurationMap);
 	
 		List<String> scopelist = new ArrayList<String>();
-		scopelist.add("openid");
-		scopelist.add("email");
+		scopelist.add(Constants.OPENID);
+		scopelist.add(Constants.EMAIL);
 		String redirectURI = Constants.PAYPALL_REDIRECT_URI;
 	
 		ClientCredentials clientCredentials = new ClientCredentials();

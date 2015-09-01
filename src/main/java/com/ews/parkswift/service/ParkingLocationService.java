@@ -4,13 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,15 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.config.Constants;
-import com.ews.parkswift.domain.CostingInputVO;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.domain.ParkingLocationFacility;
 import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.domain.ParkingSpace;
-import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.domain.PaypallAccount;
-import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.User;
 import com.ews.parkswift.repository.ParkingLocationImageRepository;
 import com.ews.parkswift.repository.ParkingLocationRepository;
@@ -66,8 +59,9 @@ public class ParkingLocationService {
     	if(parkingLocation.getPaypallAccount()!=null){
     		PaypallAccount payPallAccount = parkingLocation.getPaypallAccount();
     		payPallAccount.setUser(user);
-    		paypallAccountRepository.save(payPallAccount);
     		updateDefaultPaypallAccount(payPallAccount);
+    		paypallAccountRepository.save(payPallAccount);
+    		
     	}
     	
     	parkingLocationRepository.save(parkingLocation);

@@ -1,5 +1,7 @@
 package com.ews.parkswift.service.util;
 
+import java.security.SecureRandom;
+
 import org.apache.commons.lang.RandomStringUtils;
 
 /**
@@ -9,6 +11,18 @@ public final class RandomUtil {
 
     private static final int DEF_COUNT = 20;
 
+    private static volatile SecureRandom numberGenerator = null;
+    private static final long MSB = 0x8000000000000000L;
+
+    public static String genRandom32Hex() {
+        SecureRandom ng = numberGenerator;
+        if (ng == null) {
+            numberGenerator = ng = new SecureRandom();
+        }
+
+        return Long.toHexString(MSB | ng.nextLong()) + Long.toHexString(MSB | ng.nextLong());
+    }
+    
     private RandomUtil() {
     }
 

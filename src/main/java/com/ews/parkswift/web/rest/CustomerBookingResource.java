@@ -3,7 +3,10 @@ package com.ews.parkswift.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.domain.CustomerBooking;
 import com.ews.parkswift.repository.CustomerBookingRepository;
+import com.ews.parkswift.service.BookingService;
+import com.ews.parkswift.web.rest.dto.parking.BookingDTO;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -31,6 +35,8 @@ public class CustomerBookingResource {
 
     @Inject
     private CustomerBookingRepository customerBookingRepository;
+    @Inject
+    private BookingService bookingService; 
 
     /**
      * POST  /customerBookings -> Create a new customerBooking.
@@ -39,13 +45,15 @@ public class CustomerBookingResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody CustomerBooking customerBooking) throws URISyntaxException {
-        log.debug("REST request to save CustomerBooking : {}", customerBooking);
-        if (customerBooking.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new customerBooking cannot already have an ID").build();
-        }
-        customerBookingRepository.save(customerBooking);
-        return ResponseEntity.created(new URI("/api/customerBookings/" + customerBooking.getId())).build();
+    public ResponseEntity<Void> create(@Valid @RequestBody BookingDTO bookingDTO) throws URISyntaxException {
+        log.debug("REST request to save CustomerBooking : {}", bookingDTO);
+//        if (b.getId() != null) {
+//            return ResponseEntity.badRequest().header("Failure", "A new customerBooking cannot already have an ID").build();
+//        }
+        
+        bookingService.save(bookingDTO);
+//        customerBookingRepository.save(customerBooking);
+        return ResponseEntity.created(new URI("/api/customerBookings/" + bookingDTO.getBookingId())).build();
     }
 
     /**
@@ -55,12 +63,13 @@ public class CustomerBookingResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody CustomerBooking customerBooking) throws URISyntaxException {
-        log.debug("REST request to update CustomerBooking : {}", customerBooking);
-        if (customerBooking.getId() == null) {
-            return create(customerBooking);
+    public ResponseEntity<Void> update(@Valid @RequestBody BookingDTO bookingDTO) throws URISyntaxException {
+        log.debug("REST request to update CustomerBooking : {}", bookingDTO);
+        if (bookingDTO.getBookingId() == null) {
+            return create(bookingDTO);
         }
-        customerBookingRepository.save(customerBooking);
+        bookingService.save(bookingDTO);
+//        customerBookingRepository.save(customerBooking);
         return ResponseEntity.ok().build();
     }
 
