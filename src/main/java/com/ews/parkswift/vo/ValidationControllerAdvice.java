@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 import java.util.ArrayList;
 import java.util.List;

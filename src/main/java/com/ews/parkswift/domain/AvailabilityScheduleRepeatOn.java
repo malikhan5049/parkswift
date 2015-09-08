@@ -15,7 +15,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.validation.InLookupHeader;
+import com.ews.parkswift.vo.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.service.FindParkingSpaceService;
-import com.ews.parkswift.validation.FindParkingsDTOValidator;
+import com.ews.parkswift.vo.FindParkingsDTOValidator;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
 import com.fasterxml.jackson.core.JsonParseException;

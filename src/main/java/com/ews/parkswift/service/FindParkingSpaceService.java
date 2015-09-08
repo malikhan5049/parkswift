@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.AvailabilitySchedule;
-import com.ews.parkswift.domain.CostingInputVO;
+import com.ews.parkswift.domain.AvailabilityScheduleRepeatOn;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.domain.ParkingLocationFacility;
 import com.ews.parkswift.domain.ParkingLocationImage;
@@ -28,6 +28,8 @@ import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.PricePlan;
 import com.ews.parkswift.domain.TimeInterval;
 import com.ews.parkswift.repository.FindParkingSpaceRepository;
+import com.ews.parkswift.vo.CostingInputVO;
+import com.ews.parkswift.vo.ParkingRateVO;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
 
@@ -98,72 +100,100 @@ public class FindParkingSpaceService {
 			FindParkingsDTO findAvailableParkingsDTO,
 			List<Object[]> availableParkings) {
 		final List<AvailableParkingDTO> availableParkingsDTO = new ArrayList<>();
-		availableParkings.forEach((Object[] objectArray)->{
+		for(int arr=0; arr<availableParkings.size(); arr++){
+			Object[] objectArray= availableParkings.get(arr);
 			ParkingLocation parkingLocation = (ParkingLocation) objectArray[0];
 			ParkingSpace parkingSpace = (ParkingSpace) objectArray[1];
-			
-			ParkingSpacePriceEntry parkingSpacePriceEntry;
-			Map<String, BigDecimal> ratesMap = new HashMap<String, BigDecimal>();
-			Iterator<ParkingSpacePriceEntry> parkingSpacePriceEntrys = parkingSpace.getParkingSpacePriceEntrys().iterator();
-			while (parkingSpacePriceEntrys.hasNext()) {
-				parkingSpacePriceEntry = parkingSpacePriceEntrys.next();
-				ratesMap.put(mapPricePlanTypeToName(parkingSpacePriceEntry.getType()), parkingSpacePriceEntry.getPrice());
+			if(!findAvailableParkingsDTO.getRepeatOnWeekDays().isEmpty()){
+				final int totalRepeatOnsToMatch = findAvailableParkingsDTO.getRepeatOnWeekDays().size();
+				int totalRepeatOnsMatched = 0;
+				if(parkingSpace!=null){
+					for(AvailabilitySchedule avs: parkingSpace.getAvailabilitySchedules()){
+						for(AvailabilityScheduleRepeatOn avsr: avs.getAvailabilityScheduleRepeatOns()){
+							for(String dayOfWeek: findAvailableParkingsDTO.getRepeatOnWeekDays()){
+								if(dayOfWeek.equalsIgnoreCase(avsr.getDayOfWeek())){
+									totalRepeatOnsMatched++;
+								}
+							}
+						}
+						if(totalRepeatOnsToMatch==totalRepeatOnsMatched){
+							availableParkingsDTO.add(populateAvailableParkingDTO(findAvailableParkingsDTO, parkingLocation, parkingSpace, objectArray));
+						}
+					}
+				}
+			}else{ 
+				availableParkingsDTO.add(populateAvailableParkingDTO(findAvailableParkingsDTO, parkingLocation, parkingSpace, objectArray));
 			}
-			
-			CostingInputVO costingInputVO = new CostingInputVO(findAvailableParkingsDTO.getAvailabilitySchedule().getStartDate(), 
-					findAvailableParkingsDTO.getAvailabilitySchedule().getEndDate(), 
-					findAvailableParkingsDTO.getAvailabilitySchedule().getStartTime(), 
-					findAvailableParkingsDTO.getAvailabilitySchedule().getEndTime(), ratesMap);
-			
-			List<PriceHit> priceHits = costingService.performCosting(costingInputVO);
-			
-			AvailabilitySchedule availabilitySchedule = (AvailabilitySchedule) objectArray[2];
-			Double distance = (Double) objectArray[3];
-			
-			AvailableParkingDTO availableParkingDTO = new AvailableParkingDTO();
-			availableParkingDTO.setLocId(parkingLocation.getId());
-        	availableParkingDTO.setBussinessType(parkingLocation.getBussinessType());
-        	availableParkingDTO.setAddressLine1(parkingLocation.getAddressLine1());
-        	availableParkingDTO.setAddressLine2(parkingLocation.getAddressLine2());
-        	availableParkingDTO.setCity(parkingLocation.getCity());
-        	availableParkingDTO.setState(parkingLocation.getState());
-        	availableParkingDTO.setZipCode(parkingLocation.getZipCode());
-        	availableParkingDTO.setCountry(parkingLocation.getCountry());
-        	availableParkingDTO.setLongitude(parkingLocation.getLongitude());
-        	availableParkingDTO.setLattitude(parkingLocation.getLattitude());
-        	availableParkingDTO.setDistance(distance);
-        	availableParkingDTO.setDistanceUnit(findAvailableParkingsDTO.getDistanceUnit());
-        	availableParkingDTO.setParkingSpaceId(parkingSpace.getId());
-        	availableParkingDTO.setNick(parkingSpace.getNick());
-        	availableParkingDTO.setAvailabilityScheduleId(availabilitySchedule.getId());
-        	availableParkingDTO.setParkingSpacePriceEntrys(parkingSpace.getParkingSpacePriceEntrys());
-        	
-        	double totalCost = 0;
-        	for (PriceHit priceHit : priceHits) {
-        		totalCost += priceHit.getCost().doubleValue();
-        		availableParkingDTO.getPriceHits().add(priceHit);
-        	}
-        	availableParkingDTO.setCost(new BigDecimal(totalCost));
-        	
-        	for (ParkingLocationImage plImage : parkingLocation.getParkingLocationImages())
-        		availableParkingDTO.getParkingLocationImages().add(plImage.getURL());
-        	
-        	for (ParkingLocationFacility plFacility : parkingLocation.getParkingLocationFacilitys())
-        		availableParkingDTO.getParkingLocationFacilitys().add(plFacility.getFacility());
-        	
-        	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
-        		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
-        	try{
+		}
+		return availableParkingsDTO;
+	}
+	
+	private AvailableParkingDTO populateAvailableParkingDTO(FindParkingsDTO findAvailableParkingsDTO, ParkingLocation parkingLocation, ParkingSpace parkingSpace, Object[] objectArray){
+		
+		ParkingSpacePriceEntry parkingSpacePriceEntry;
+		Map<String, BigDecimal> ratesMap = new HashMap<String, BigDecimal>();
+		Iterator<ParkingSpacePriceEntry> parkingSpacePriceEntrys = parkingSpace.getParkingSpacePriceEntrys().iterator();
+		while (parkingSpacePriceEntrys.hasNext()) {
+			parkingSpacePriceEntry = parkingSpacePriceEntrys.next();
+			ratesMap.put(mapPricePlanTypeToName(parkingSpacePriceEntry.getType()), parkingSpacePriceEntry.getPrice());
+		}
+		
+		CostingInputVO costingInputVO = new CostingInputVO(findAvailableParkingsDTO.getAvailabilitySchedule().getStartDate(), 
+				findAvailableParkingsDTO.getAvailabilitySchedule().getEndDate(), 
+				findAvailableParkingsDTO.getAvailabilitySchedule().getStartTime(), 
+				findAvailableParkingsDTO.getAvailabilitySchedule().getEndTime(), ratesMap);
+		
+		List<ParkingRateVO> parkingRates = costingService.performCosting(costingInputVO);
+		
+		AvailabilitySchedule availabilitySchedule = (AvailabilitySchedule) objectArray[2];
+		Double distance = (Double) objectArray[3];
+		
+		AvailableParkingDTO availableParkingDTO = new AvailableParkingDTO();
+		availableParkingDTO.setLocId(parkingLocation.getId());
+    	availableParkingDTO.setBussinessType(parkingLocation.getBussinessType());
+    	availableParkingDTO.setAddressLine1(parkingLocation.getAddressLine1());
+    	availableParkingDTO.setAddressLine2(parkingLocation.getAddressLine2());
+    	availableParkingDTO.setCity(parkingLocation.getCity());
+    	availableParkingDTO.setState(parkingLocation.getState());
+    	availableParkingDTO.setZipCode(parkingLocation.getZipCode());
+    	availableParkingDTO.setCountry(parkingLocation.getCountry());
+    	availableParkingDTO.setLongitude(parkingLocation.getLongitude());
+    	availableParkingDTO.setLattitude(parkingLocation.getLattitude());
+    	availableParkingDTO.setDistance(distance);
+    	availableParkingDTO.setDistanceUnit(findAvailableParkingsDTO.getDistanceUnit());
+    	availableParkingDTO.setParkingSpaceId(parkingSpace.getId());
+    	availableParkingDTO.setNick(parkingSpace.getNick());
+    	availableParkingDTO.setAvailabilityScheduleId(availabilitySchedule.getId());
+    	availableParkingDTO.setParkingSpacePriceEntrys(parkingSpace.getParkingSpacePriceEntrys());
+    	
+    	double totalCost = 0;
+    	for (ParkingRateVO parkingRate : parkingRates) {
+    		totalCost += parkingRate.getTotalCost();
+    		availableParkingDTO.getParkingRates().add(parkingRate);
+    	}
+    	availableParkingDTO.setCost(new BigDecimal(totalCost));
+    	
+    	for (ParkingLocationImage plImage : parkingLocation.getParkingLocationImages())
+    		availableParkingDTO.getParkingLocationImages().add(plImage.getURL());
+    	
+    	for (ParkingLocationFacility plFacility : parkingLocation.getParkingLocationFacilitys())
+    		availableParkingDTO.getParkingLocationFacilitys().add(plFacility.getFacility());
+    	
+    	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
+    		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
+    	try{
+    		if(parkingLocation.getId()!=null && !parkingLocation.getId().equals("")){
 	        	if(favouriteLocationService.checkIfLocationIsFavourite(parkingLocation.getId())){
 	        		availableParkingDTO.setFavourite(true);
 	        	}
-        	}catch(Exception e){
-        		
-        	}
-        	availableParkingsDTO.add(availableParkingDTO);
-		});
-		return availableParkingsDTO;
+    		}
+    	}catch(Exception e){
+    		
+    	}
+		
+		return availableParkingDTO;
 	}
+
 	
 	public static void main(String[] args) {
 		/*FindParkingsDTO findAvailableParkingsDTO = new FindParkingsDTO(){{setAvailabilitySchedule(new AvailabilitySchedule(){{

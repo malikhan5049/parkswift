@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 import java.util.Optional;
 
@@ -50,10 +50,10 @@ public class ParkingSpaceValidator implements Validator{
 					errors.rejectValue("availabilitySchedule.startTime", null,"should not be earlier than currentTime");
 				if(e.getEndDate().compareTo(e.getStartDate()) == 0 && e.getEndTime().compareTo(e.getStartTime())<0)
 					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
-				if(e.getStartTime().getMinuteOfHour() % 30 !=0)
-					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 30");
-				if(e.getEndTime().getMinuteOfHour() % 30 !=0)
-					errors.rejectValue("availabilitySchedule.endTime", null,"minutes part can only be 30");
+				if(e.getStartTime().getMinuteOfHour() % 15 !=0)
+					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 15");
+				if(e.getEndTime().getMinuteOfHour() % 15 !=0)
+					errors.rejectValue("availabilitySchedule.endTime", null,"minutes part can only be 15");
 			}
 			
 			if(e.getRepeatBasis()!=null){

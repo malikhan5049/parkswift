@@ -1,24 +1,34 @@
 package com.ews.parkswift.web.rest.dto.parking;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import com.ews.parkswift.domain.BookedParkingSpace;
 import com.ews.parkswift.domain.PaymentCharged;
+import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
+import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class BookingDTO {
 	
 	private Long bookingId;
 	private Long userId;
 	private Long bookingScheduleId;
+	private Long availabilityScheduleId;
 	private Long parkingSpaceId;
 	private Long locationId;
 
 	private String bookingReferenceNumber;
-	private DateTime bookingDateTime;
+	private Date bookingDateTime;
 	private Integer numberOfSpacesBooked;
 	private BigDecimal totalAmount;
 	private Boolean paymentRecursive;
@@ -36,9 +46,71 @@ public class BookingDTO {
 	private String status;
 	private DateTime cancelationDateTime;
 	private Long cancelledBy;
+	
+	@JsonSerialize(using = CustomLocalDateSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+	private LocalDate startDate;
+	
+	@JsonSerialize(using = CustomLocalDateSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+	private LocalDate endDate;
+	
+	@JsonSerialize(using = CustomLocalTimeSerializer.class)
+	@JsonDeserialize(using = CustomLocalTimeDeserializer.class)
+	private LocalTime startTime;
+	
+	@JsonSerialize(using = CustomLocalTimeSerializer.class)
+	@JsonDeserialize(using = CustomLocalTimeDeserializer.class)
+	private LocalTime endTime;
+	private String repeatBasis;
+	private Integer repeatOccurrences;
+	
 	private Set<BookedParkingSpace> bookedParkingSpaces = new HashSet<>();
 	private Set<PaymentCharged> paymentsCharged = new HashSet<>();
+	private AvailableParkingDTO availableParkingDTO = new AvailableParkingDTO();
 	
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+	public LocalTime getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(LocalTime startTime) {
+		this.startTime = startTime;
+	}
+	public LocalTime getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(LocalTime endTime) {
+		this.endTime = endTime;
+	}
+	public String getRepeatBasis() {
+		return repeatBasis;
+	}
+	public void setRepeatBasis(String repeatBasis) {
+		this.repeatBasis = repeatBasis;
+	}
+	public Integer getRepeatOccurrences() {
+		return repeatOccurrences;
+	}
+	public void setRepeatOccurrences(Integer repeatOccurrences) {
+		this.repeatOccurrences = repeatOccurrences;
+	}
+	public Long getAvailabilityScheduleId() {
+		return availabilityScheduleId;
+	}
+	public void setAvailabilityScheduleId(Long availabilityScheduleId) {
+		this.availabilityScheduleId = availabilityScheduleId;
+	}
 	public Long getParkingSpaceId() {
 		return parkingSpaceId;
 	}
@@ -75,10 +147,10 @@ public class BookingDTO {
 	public void setBookingReferenceNumber(String bookingReferenceNumber) {
 		this.bookingReferenceNumber = bookingReferenceNumber;
 	}
-	public DateTime getBookingDateTime() {
+	public Date getBookingDateTime() {
 		return bookingDateTime;
 	}
-	public void setBookingDateTime(DateTime bookingDateTime) {
+	public void setBookingDateTime(Date bookingDateTime) {
 		this.bookingDateTime = bookingDateTime;
 	}
 	public Integer getNumberOfSpacesBooked() {
@@ -194,6 +266,12 @@ public class BookingDTO {
 	}
 	public void setPaymentsCharged(Set<PaymentCharged> paymentsCharged) {
 		this.paymentsCharged = paymentsCharged;
+	}
+	public AvailableParkingDTO getAvailableParkingDTO() {
+		return availableParkingDTO;
+	}
+	public void setAvailableParkingDTO(AvailableParkingDTO availableParkingDTO) {
+		this.availableParkingDTO = availableParkingDTO;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

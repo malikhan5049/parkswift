@@ -37,7 +37,7 @@ import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.service.ParkingLocationService;
-import com.ews.parkswift.validation.ParkingLocationValidator;
+import com.ews.parkswift.vo.ParkingLocationValidator;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
 import com.fasterxml.jackson.core.JsonParseException;

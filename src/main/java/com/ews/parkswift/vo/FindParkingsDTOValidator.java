@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -34,13 +34,11 @@ public class FindParkingsDTOValidator implements Validator{
 					errors.rejectValue("availabilitySchedule.startTime", null,"should not be earlier than currentTime");
 				if(availabilitySchedule.getEndDate().compareTo(availabilitySchedule.getStartDate()) == 0 && availabilitySchedule.getEndTime().compareTo(availabilitySchedule.getStartTime())<0 )
 					errors.rejectValue("availabilitySchedule.endTime", null,"should not be earlier than startTime");
-				if(availabilitySchedule.getStartTime().getMinuteOfHour() % 30 !=0)
+				if(availabilitySchedule.getStartTime().getMinuteOfHour() % 15 !=0)
 					errors.rejectValue("availabilitySchedule.startTime", null,"minutes part can only be 30");
-				if(availabilitySchedule.getEndTime().getMinuteOfHour() % 30 !=0)
+				if(availabilitySchedule.getEndTime().getMinuteOfHour() % 15 !=0)
 					errors.rejectValue("availabilitySchedule.endTime", null,"minutes part can only be 30");
 			}
-			
-			
 		}
 		
 	}

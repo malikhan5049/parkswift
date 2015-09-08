@@ -27,7 +27,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.validation.InLookupHeader;
+import com.ews.parkswift.vo.InLookupHeader;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -117,7 +117,8 @@ public class ParkingLocation implements Serializable {
     private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
     
     @JsonIgnore
-    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpace>  parkingSpaceEntitys = new HashSet<>(); // in case you need full entity somewhere in code
     
 

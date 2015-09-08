@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 public class FieldErrorMessageDTO {
 	private String field;

@@ -3,6 +3,7 @@ package com.ews.parkswift.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class ParkingLocationImage implements Serializable {
     private String type;
 
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
     @JsonIgnore
     private ParkingLocation parkingLocation;
 

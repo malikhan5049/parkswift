@@ -9,6 +9,7 @@ import java.util.Set;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.PriceHit;
+import com.ews.parkswift.vo.ParkingRateVO;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
 
 public class AvailableParkingDTO {
@@ -52,6 +53,16 @@ public class AvailableParkingDTO {
 	private Set<String> parkingSpaceVehicleTypes = new HashSet<String>();
 
     private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
+    
+    private Set<ParkingRateVO> parkingRates = new HashSet<ParkingRateVO>();
+
+    public Set<ParkingRateVO> getParkingRates() {
+     return parkingRates;
+    }
+
+    public void setParkingRates(Set<ParkingRateVO> parkingRates) {
+     this.parkingRates = parkingRates;
+    }
     
 	public Set<ParkingSpaceDTO> getParkingSpaces() {
 		return parkingSpaces;

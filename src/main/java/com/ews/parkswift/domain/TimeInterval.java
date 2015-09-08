@@ -29,6 +29,14 @@ public enum TimeInterval {
 				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday().plusDays(1)));
 			return getInterval().contains(time.getHourOfDay()<12?time.toDateTimeToday().plusDays(1):time.toDateTimeToday()) || time.equals(getEndTime());
 		}
+	},
+	FULLDAY_NORMAL(LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER), LocalTime.parse("12:00 AM", Constants.LOCALTIMEFORMATTER)) {
+		@Override
+		public boolean contains(LocalTime time) {
+			if(getInterval() == null)
+				setInterval(new Interval(getStartTime().toDateTimeToday(), getEndTime().toDateTimeToday()));
+			return getInterval().contains(time.toDateTimeToday());
+		}
 	};
 	
 	public abstract boolean contains(LocalTime time);

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -54,7 +55,7 @@ public class ParkingSpace implements Serializable {
     private Boolean groupRecord;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private ParkingLocation parkingLocation;
@@ -77,11 +78,10 @@ public class ParkingSpace implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AvailabilitySchedule> availabilitySchedules = new HashSet<>();
     
-    @OneToMany(mappedBy = "parkingSpace")
+    @OneToMany(mappedBy = "parkingSpace",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<BookedParkingSpace> bookedParkingSpace = new HashSet<>();
-
 
     public Long getId() {
         return id;
@@ -166,10 +166,7 @@ public class ParkingSpace implements Serializable {
         this.bookedParkingSpace = bookedParkingSpace;
     }
     
-    
-
-
-    public String getNick() {
+	public String getNick() {
 		return nick;
 	}
 

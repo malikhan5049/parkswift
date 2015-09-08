@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;

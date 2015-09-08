@@ -16,10 +16,11 @@ import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 import com.ews.parkswift.config.Constants;
-import com.ews.parkswift.domain.CostingInputVO;
 import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.PricePlan;
 import com.ews.parkswift.service.CostingService;
+import com.ews.parkswift.vo.CostingInputVO;
+import com.ews.parkswift.vo.ParkingRateVO;
 
 @RunWith(Theories.class)
 public class CostingServiceTest {
@@ -42,7 +43,7 @@ public class CostingServiceTest {
 	}
 	@Theory
 	public void testPerformCosting(CostingServiceUseCase costingServiceUseCase){
-		List<PriceHit> priceHits = costingService.performCosting(costingServiceUseCase.getCostingInputVO());
+		List<ParkingRateVO> priceHits = costingService.performCosting(costingServiceUseCase.getCostingInputVO());
 		Assert.assertEquals(costingServiceUseCase.getPriceHits(), priceHits);
 	}
 	@SuppressWarnings("serial")

@@ -1,4 +1,4 @@
-package com.ews.parkswift.validation;
+package com.ews.parkswift.vo;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

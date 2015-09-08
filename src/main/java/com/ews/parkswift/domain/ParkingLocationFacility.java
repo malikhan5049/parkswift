@@ -3,6 +3,7 @@ package com.ews.parkswift.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.validation.InLookupHeader;
+import com.ews.parkswift.vo.InLookupHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -36,7 +37,7 @@ public class ParkingLocationFacility implements Serializable {
     @InLookupHeader(code=LookupHeaderCode.LOC_FACILITY)
     private String facility;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JsonIgnore
     private ParkingLocation parkingLocation;
 

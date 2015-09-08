@@ -30,7 +30,7 @@ import com.ews.parkswift.domain.ParkingSpace;
 import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
 import com.ews.parkswift.service.ParkingSpaceService;
-import com.ews.parkswift.validation.ParkingSpaceValidator;
+import com.ews.parkswift.vo.ParkingSpaceValidator;
 import com.ews.parkswift.web.rest.util.PaginationUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;

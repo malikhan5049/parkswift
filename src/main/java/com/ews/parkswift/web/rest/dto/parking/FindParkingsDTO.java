@@ -14,7 +14,7 @@ import com.ews.parkswift.domain.ParkingLocationFacility;
 import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.validation.InLookupHeader;
+import com.ews.parkswift.vo.InLookupHeader;
 
 public class FindParkingsDTO {
 	
@@ -49,7 +49,14 @@ public class FindParkingsDTO {
     @Valid
 	private Set<ParkingSpacePriceEntry> parkingSpacePriceEntrys = new HashSet<>();
 	
-	
+    private Set<String> repeatOnWeekDays = new HashSet<>();
+    
+    public Set<String> getRepeatOnWeekDays() {
+     return repeatOnWeekDays;
+    }
+    public void setRepeatOnWeekDays(Set<String> repeatOnWeekDays) {
+     this.repeatOnWeekDays = repeatOnWeekDays;
+    }
 	
 	public Integer getNumberOfSpaces() {
 		return numberOfSpaces;

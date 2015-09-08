@@ -45,8 +45,8 @@ public final class Constants {
 	public static final DateTimeFormatter DATETIMEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	public static final DateTimeFormatter LOCALDATEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
 	public static final DateTimeFormatter LOCALTIMEFORMATTER = DateTimeFormat.forPattern("hh:mm a");
+	public static final DateTimeFormatter LOCALDATETIMEFORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm a");
     
-	
 	public static final String PAYPALL_CLIENT_ID = "AX6jOoqINjUAUHhslHZcjM0_3TlMIrPBF3sqVzLrDAeQV4B5fygos2429qYK0pEjUs_xuZJpZMxIheD4";
 	public static final String PAYPALL_CLIENT_SECRET = "ED7r_WCA_jlY7T7HQcJF7DjHfB6GgAZUBnb9Uku9UUMKN8LGi4D-bersMAIdGizFohXcURomIpFbEXqb";
 	
@@ -56,10 +56,25 @@ public final class Constants {
 	
     // -end for Constants used for PayPal service to get User Profile
 	
-	public static final String BOOKING_REFERENCE_NUMBER_RANDOM = "BOOKING-38400000-8cf0-11bd-b23e-10b96e4ef00d";
-	public static final String PAYMENT_REFERENCE_NUMBER_RANDOM = "PAYMENT-38400000-8cf0-11bd-b23e-10b96e4ef00d";
+	public static final String BOOKING_REFERENCE_NUMBER_RANDOM = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
+	public static final String PAYMENT_REFERENCE_NUMBER_RANDOM = "38400000-8cf0-11bd-b23e-10b96e4ef00d";
 	public static final String MODE = "mode";
 	public static final String MODE_SANDBOX = "sandbox";
 	public static final String EMAIL = "email";
 	public static final String OPENID = "openid";
+	
+	public static final String CURRENCY_USD = "USD";
+	public static final String LOCALE_US = "en_US";
+	public static final String PAYPALL_ACTION_TYPE_PAY = "PAY";
+	public static final String PAYPALL_PREAPPROVAL_CANCEL_URL = "https://devtools-paypal.com/guide/ap_preapprove_payment?cancel=true";
+	public static final String PAYPALL_PREAPPROVAL_RETURN_URL = "https://devtools-paypal.com/guide/ap_preapprove_payment?success=true";
+	public static final String PAYPALL_IPN_NOTIFICATION_URL = "http://replaceIpnUrl.com";
+	
+	public static final String PAYPALL_USER_NAME = "saad.sial77_api1.Yahoo.com";
+	public static final String PAYPALL_PASSWORD = "QJ4XSC82ZPVLU54E";
+	public static final String PAYPALL_SIGNATURE = "AFcWxV21C7fd0v3bYYYRCpSSRl31AEv2GIvRBVF2OlipVtiYjZzUe-4k";
+	public static final String PAYPALL_APP_ID = "APP-80W284485P519543T";
+	
+	public static final String STATUS_SUCCESS= "Success";
+	
 }

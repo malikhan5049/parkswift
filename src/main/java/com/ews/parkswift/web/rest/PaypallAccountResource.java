@@ -1,35 +1,32 @@
 package com.ews.parkswift.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.ews.parkswift.config.Constants;
-import com.ews.parkswift.domain.PaypallAccount;
-import com.ews.parkswift.repository.PaypallAccountRepository;
-import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
-import com.paypal.api.openidconnect.CreateFromAuthorizationCodeParameters;
-import com.paypal.api.openidconnect.Session;
-import com.paypal.api.openidconnect.Tokeninfo;
-import com.paypal.api.openidconnect.Userinfo;
-import com.paypal.base.ClientCredentials;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.PayPalRESTException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
+import com.ews.parkswift.domain.PaypallAccount;
+import com.ews.parkswift.repository.PaypallAccountRepository;
+import com.ews.parkswift.service.util.paypal.PaypalUtils;
+import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
+import com.paypal.base.exception.PayPalException;
 
 /**
  * REST controller for managing PaypallAccount.
@@ -121,49 +118,25 @@ public class PaypallAccountResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public PaypallAccountDTO get(@Valid @RequestBody PaypallAccountDTO accountDTO) {
+	    return PaypalUtils.getPaypalUserDetails(accountDTO.getAuthToken());
+	}
     
-	    PaypallAccountDTO paypallAccountDTO = new PaypallAccountDTO();
-		
-		Map<String, String> configurationMap = new HashMap<String, String>();
-		configurationMap.put(Constants.MODE, Constants.MODE_SANDBOX);
-	
-		APIContext apiContext = new APIContext();
-		apiContext.setConfigurationMap(configurationMap);
-	
-		List<String> scopelist = new ArrayList<String>();
-		scopelist.add(Constants.OPENID);
-		scopelist.add(Constants.EMAIL);
-		String redirectURI = Constants.PAYPALL_REDIRECT_URI;
-	
-		ClientCredentials clientCredentials = new ClientCredentials();
-		clientCredentials.setClientID(Constants.PAYPALL_CLIENT_ID);
-	
-		String redirectUrl = Session.getRedirectURL(redirectURI, scopelist, apiContext, clientCredentials); 
-		System.out.println("redirect url == "+redirectUrl);
-		
-		CreateFromAuthorizationCodeParameters param = new CreateFromAuthorizationCodeParameters();
-		param.setClientID(Constants.PAYPALL_CLIENT_ID);
-		param.setClientSecret(Constants.PAYPALL_CLIENT_SECRET);
-		param.setCode(accountDTO.getAuthToken());
-	
-		Tokeninfo info=null;
-		try {
-			info = Tokeninfo.createFromAuthorizationCode(apiContext, param);
-	    	if(info!=null){
-	    		String accessToken = info.getAccessToken();
-	    		System.out.println("access token == "+accessToken);
-	    		Userinfo userInfo= Userinfo.getUserinfo(accessToken);
-				if(userInfo!=null){
-					paypallAccountDTO.setAuthToken(accountDTO.getAuthToken());
-					paypallAccountDTO.setAccessToken(accessToken);
-					paypallAccountDTO.setPaypallEmail(userInfo.getEmail());
-					paypallAccountDTO.setAccountType(userInfo.getAccountType());
-					paypallAccountDTO.setName(userInfo.getName()==null?userInfo.getName():userInfo.getName());
-					paypallAccountDTO.setMiddleName(userInfo.getMiddleName());
+    
+    @RequestMapping(value = "/executePayment",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public PaypallAccountDTO executePayment(@Valid @RequestBody PaypallAccountDTO accountDTO) {
+//    	PaypalUtils.executePayment(accountDTO.getPayKey());
+//    	PaypalUtils.doCapture(accountDTO.getAuthorization_id(), accountDTO.getAmount());
+				try {
+					PaypalUtils.getResponse(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
+				} catch (MalformedURLException | JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			} 
-		} catch (PayPalRESTException e) {
-			e.printStackTrace();
-		}
-	return paypallAccountDTO;}
+//				PaypalUtils.captureAuthorizedPayment(accountDTO.getAuthorization_id(), accountDTO.getAmount());
+    	return accountDTO;
+    }
+    
 }

@@ -1,180 +1,139 @@
 package com.ews.parkswift.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-import org.joda.time.Period;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.LocalDateTime;
+import org.joda.time.Minutes;
 import org.springframework.stereotype.Service;
 
-import com.ews.parkswift.domain.CostingInputVO;
-import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.domain.PricePlan;
-import com.ews.parkswift.domain.TimeInterval;
+import com.ews.parkswift.vo.CostingInputVO;
+import com.ews.parkswift.vo.ParkingRateVO;
 
 @Service
 public class CostingService {
 	
+	private CostingInputVO costingVO;
 	
-	public List<PriceHit> performCosting(CostingInputVO costingInputVO){
-		List<PriceHit> priceHits = new ArrayList<>();
-		
-		Period dayPeriod = new Period(costingInputVO.getStartDate(), costingInputVO.getEndDate());
-		
-		Integer noOfDaysToCost = dayPeriod.getDays() + 1; // +1 for endDate inclus
-		Integer noOfHoursToCost = getNoOfHoursBwStartTimeNEndTime(costingInputVO.getStartTime(), costingInputVO.getEndTime());
-		
-		//TODO - citation needed
-		if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.NIGHT.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
-			noOfDaysToCost--; // In case of FULLDAY, it becomes 3 days so need to subtract 1
-		}
-		else if(costingInputVO.getEndDate().compareTo(costingInputVO.getStartDate()) > 0 && costingInputVO.getStartTime().equals(TimeInterval.FULLDAY.getStartTime()) && costingInputVO.getEndTime().equals(TimeInterval.FULLDAY.getEndTime())) {
-			noOfDaysToCost--; // In case of FULLDAY, it becomes 3 days so need to subtract 1
-			noOfHoursToCost = 24;
-		}
-		performCostingRecursively(costingInputVO, costingInputVO.getStartTime(),costingInputVO.getEndTime(),noOfHoursToCost, noOfDaysToCost, priceHits);
-		
-			
-		return priceHits;
-	}
-
-
-	private int getNoOfHoursBwStartTimeNEndTime(LocalTime startTime, LocalTime endTime) {
-		DateTime dt_endTime =  endTime.toDateTimeToday() ;
-		if(isFrom12PMTo11_59AM(startTime)  && 
-				isFrom12AMto11_59PM(endTime))
-			dt_endTime  = endTime.toDateTimeToday().plusDays(1);
-		return new Period(startTime.toDateTimeToday(),dt_endTime).getHours();
-	}
+	private List<ParkingRateVO> applicableParkingRates;
 	
-	private int getNoOfMinutesBwStartTimeNEndTime(LocalTime startTime, LocalTime endTime) {
-		return new Period(startTime,endTime).getMinutes();
-	}
-
-
-
-	private boolean isFrom12PMTo11_59AM(LocalTime... times) {
-		for(LocalTime e:times)
-			if(e.getHourOfDay() < 12)
-				return false;
-		return true;
-	}
-	private boolean isFrom12AMto11_59PM(LocalTime... times) {
-		for(LocalTime e:times)
-			if(e.getHourOfDay() >= 12)
-				return false;
-		return true;
-	}
+	private double dayHourRate, nightHourRate, _12HrsDayRate, _12HrsNightRate, fullDayRate, weeklyRate, monthlyRate;
 	
-
-	private void performCostingRecursively(CostingInputVO costingInputVO,
-			LocalTime startTime, LocalTime endTime, Integer noOfHoursToCost,
-			Integer noOfDaysToCost, List<PriceHit> priceHits) {
+	public List<ParkingRateVO> performCosting(CostingInputVO costingInputVO) {
 		
-		try { 
-		if(noOfHoursToCost == PricePlan.FULLMONTH.getTimePeriod() && 
-				costingInputVO.getStartDate().equals(getMonthStartDate(costingInputVO.getStartDate())) && costingInputVO.getEndDate().equals(getMonthEndDate(costingInputVO.getEndDate())) &&
-				startTime.equals(TimeInterval.FULLDAY.getStartTime()) && endTime.equals(TimeInterval.FULLDAY.getEndTime())){
-			BigDecimal monthlyRate = costingInputVO.getRatesMap().get(PricePlan.FULLMONTH.name());
-			priceHits.add(new PriceHit(monthlyRate, monthlyRate.multiply(BigDecimal.valueOf(noOfDaysToCost/PricePlan.FULLMONTH.getDaysPeriod())),
-					PricePlan.FULLMONTH, startTime, endTime));
-		}else if(noOfHoursToCost == PricePlan.FULLDAY.getTimePeriod() &&
-				startTime.equals(TimeInterval.FULLDAY.getStartTime()) && endTime.equals(TimeInterval.FULLDAY.getEndTime())){
-			BigDecimal fullDayRate = costingInputVO.getRatesMap().get(PricePlan.FULLDAY.name());
-			priceHits.add(new PriceHit(fullDayRate, fullDayRate.multiply(BigDecimal.valueOf(noOfDaysToCost)),
-					PricePlan.FULLDAY, startTime, endTime));
-		}else if(noOfHoursToCost == PricePlan._12HOURSDAY.getTimePeriod() &&
-				startTime.equals(TimeInterval.DAY.getStartTime()) && endTime.equals(TimeInterval.DAY.getEndTime())){
-			BigDecimal _12HrsDayRate = costingInputVO.getRatesMap().get(PricePlan._12HOURSDAY.name());
-			priceHits.add(new PriceHit(_12HrsDayRate, _12HrsDayRate.multiply(BigDecimal.valueOf(noOfDaysToCost)),
-					PricePlan._12HOURSDAY, startTime, endTime));
-		}else if(noOfHoursToCost == PricePlan._12HOURSNIGHT.getTimePeriod() && 
-				startTime.equals(TimeInterval.NIGHT.getStartTime()) && endTime.equals(TimeInterval.NIGHT.getEndTime())){
-			BigDecimal _12HrsNightRate = costingInputVO.getRatesMap().get(PricePlan._12HOURSNIGHT.name());
-			priceHits.add(new PriceHit(_12HrsNightRate, _12HrsNightRate.multiply(BigDecimal.valueOf(noOfDaysToCost)),
-					PricePlan._12HOURSNIGHT, startTime, endTime));
-		}else if(noOfHoursToCost <12 && 
-				TimeInterval.DAY.contains(startTime) && TimeInterval.DAY.contains(endTime)){
-			BigDecimal dayHourRate = costingInputVO.getRatesMap().get(PricePlan.DAYHOUR.name());
-			
-			if(startTime.getMinuteOfHour() == 30 && endTime.getMinuteOfHour() != 30){
-				priceHits.add(new PriceHit(dayHourRate, dayHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.DAYHOUR, startTime, startTime.plusMinutes(30)));
-				startTime = startTime.plusMinutes(30);
+		this.costingVO = costingInputVO;
+		
+		ParkingRateVO parkingRateVO=null;
+		costingVO.constructStartDateTime();
+		costingVO.constructEndDateTime();
+		applicableParkingRates = new ArrayList<ParkingRateVO>();
+		
+		dayHourRate = costingVO.getRatesMap().get(PricePlan.DAYHOUR.name()).doubleValue();
+		nightHourRate = costingVO.getRatesMap().get(PricePlan.NIGHTHOUR.name()).doubleValue();
+		_12HrsDayRate = costingVO.getRatesMap().get(PricePlan._12HOURSDAY.name()).doubleValue();
+		_12HrsNightRate = costingVO.getRatesMap().get(PricePlan._12HOURSNIGHT.name()).doubleValue();
+		fullDayRate = costingVO.getRatesMap().get(PricePlan.FULLDAY.name()).doubleValue();
+		weeklyRate = costingVO.getRatesMap().get(PricePlan.FULLWEEK.name()).doubleValue();
+		monthlyRate = costingVO.getRatesMap().get(PricePlan.FULLMONTH.name()).doubleValue();
+		
+		do {
+			try{
+				parkingRateVO = calculateParkingCost();
+			}catch(Exception e){
+				e.printStackTrace();
+				e.getMessage();
 			}
-			if(endTime.getMinuteOfHour() == 30 && startTime.getMinuteOfHour() != 30){
-				priceHits.add(new PriceHit(dayHourRate, dayHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.DAYHOUR, endTime.minusMinutes(30), endTime));
-				endTime = endTime.minusMinutes(30);
-			}
-			
-			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 )
-				priceHits.add(new PriceHit(dayHourRate, dayHourRate.multiply(BigDecimal.valueOf(noOfHoursToCost * noOfDaysToCost)),
-						PricePlan.DAYHOUR, startTime, endTime));
-			
-		}else if(noOfHoursToCost <12 && 
-				TimeInterval.NIGHT.contains(startTime) && TimeInterval.NIGHT.contains(endTime)){
-			BigDecimal nightHourRate = costingInputVO.getRatesMap().get(PricePlan.NIGHTHOUR.name());
-			
-			if(startTime.getMinuteOfHour() == 30 && endTime.getMinuteOfHour() != 30){
-				priceHits.add(new PriceHit(nightHourRate, nightHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.NIGHTHOUR, startTime, startTime.plusMinutes(30)));
-				startTime = startTime.plusMinutes(30);
-			}
-			if(endTime.getMinuteOfHour() == 30 && startTime.getMinuteOfHour() != 30){
-				priceHits.add(new PriceHit(nightHourRate, nightHourRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-						PricePlan.NIGHTHOUR, endTime.minusMinutes(30), endTime));
-				endTime = endTime.minusMinutes(30);
-			}
-			
-			if(getNoOfHoursBwStartTimeNEndTime(startTime, endTime) > 0 )
-				priceHits.add(new PriceHit(nightHourRate, nightHourRate.multiply(BigDecimal.valueOf(noOfHoursToCost * noOfDaysToCost)),
-						PricePlan.NIGHTHOUR, startTime, endTime));
-			
-		}else{
-			LocalTime nextStartTime = null;
-			if(TimeInterval.DAY.contains(startTime)){
-				Integer noOfHoursBwStartTimeNDayEndTime = new Period(startTime, TimeInterval.DAY.getEndTime()).getHours();
-				performCostingRecursively(costingInputVO, startTime, TimeInterval.DAY.getEndTime(), 
-						noOfHoursBwStartTimeNDayEndTime, noOfDaysToCost, priceHits);
-				noOfHoursToCost -= noOfHoursBwStartTimeNDayEndTime;
-				nextStartTime = TimeInterval.NIGHT.getStartTime();
-			}else if(TimeInterval.NIGHT.contains(startTime)){
-				Integer noOfHoursBwStartTimeNNightEndTime = new Period(startTime, TimeInterval.NIGHT.getEndTime()).getHours();
-				performCostingRecursively(costingInputVO, startTime, TimeInterval.NIGHT.getEndTime(), 
-						noOfHoursBwStartTimeNNightEndTime, noOfDaysToCost, priceHits);
-				noOfHoursToCost -= noOfHoursBwStartTimeNNightEndTime;
-				nextStartTime = TimeInterval.DAY.getStartTime();
-			} 
-			performCostingRecursively(costingInputVO, nextStartTime, endTime, noOfHoursToCost, noOfDaysToCost, priceHits);
-		}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void costMinutesPart(LocalTime startTime, LocalTime endTime,
-			Integer noOfDaysToCost, List<PriceHit> priceHits,
-			BigDecimal hourlyRate, PricePlan pricePlan) {
-		if(startTime.getMinuteOfHour() == 30)
-			priceHits.add(new PriceHit(hourlyRate, hourlyRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-					pricePlan, startTime, startTime.plusMinutes(30)));
-		if(endTime.getMinuteOfHour() == 30)
-			priceHits.add(new PriceHit(hourlyRate, hourlyRate.divide(BigDecimal.valueOf(2)).multiply(BigDecimal.valueOf(noOfDaysToCost)),
-					pricePlan, endTime.minusMinutes(30), endTime));
+			applicableParkingRates.add(parkingRateVO);
+		}while(costingVO.getStartDateTime().compareTo(costingVO.getEndDateTime()) < 0);
 		
-	}
-
-	private LocalDate getMonthEndDate(LocalDate date) {
-		return date.dayOfMonth().withMaximumValue();
-	}
-
-	private LocalDate getMonthStartDate(LocalDate date) {
-		return date.dayOfMonth().withMinimumValue();
+		return applicableParkingRates;
 	}
 	
+	private ParkingRateVO calculateParkingCost() throws Exception{
+
+		double totalCost = 0;
+		int numberOfMinutes = 0;
+		LocalDateTime applyRateFrom, applyRateTill;
+		double _1by4DayHourRate = dayHourRate / 4;
+		double _1by4NightHourRate = nightHourRate / 4;
+		int numberOfDaysToCost = getNumberOfDaysBetweenDates(costingVO.getStartDateTime(), costingVO.getEndDateTime()); 
+		
+		if (costingVO.getStartTime().compareTo(PricePlan._12HOURSDAY.getTimeInterval().getStartTime()) == 0 &&
+				Hours.hoursBetween(costingVO.getStartDateTime(), costingVO.getEndDateTime()).getHours() >= 24) {
+			
+			applyRateFrom = costingVO.getStartDateTime();
+			applyRateTill = costingVO.getStartDateTime().plusDays(numberOfDaysToCost);
+			totalCost = fullDayRate * numberOfDaysToCost;
+			costingVO.setStartDateTime(applyRateTill);
+			return new ParkingRateVO(PricePlan.FULLDAY.name(), fullDayRate, totalCost, PricePlan.FULLDAY.getTimeInterval().getStartTime(), PricePlan.FULLDAY.getTimeInterval().getEndTime(), applyRateFrom, applyRateTill);
+		}
+		
+		if (costingVO.getStartTime().compareTo(PricePlan._12HOURSDAY.getTimeInterval().getStartTime()) == 0 &&
+				Hours.hoursBetween(costingVO.getStartDateTime(), costingVO.getEndDateTime()).getHours() >= 12) {
+			
+			applyRateFrom = costingVO.getStartDateTime();
+			applyRateTill = costingVO.getStartDateTime().plusHours(12);
+			costingVO.setStartDateTime(applyRateTill);
+			return new ParkingRateVO(PricePlan._12HOURSDAY.name(), _12HrsDayRate, _12HrsDayRate, PricePlan._12HOURSDAY.getTimeInterval().getStartTime(), PricePlan._12HOURSDAY.getTimeInterval().getEndTime(), applyRateFrom, applyRateTill);
+		}
+		
+		if (costingVO.getStartTime().compareTo(PricePlan._12HOURSNIGHT.getTimeInterval().getStartTime()) == 0 &&
+				Hours.hoursBetween(costingVO.getStartDateTime(), costingVO.getEndDateTime()).getHours() >= 12) {
+			
+			applyRateFrom = costingVO.getStartDateTime();
+			applyRateTill = costingVO.getStartDateTime().plusHours(12);
+			costingVO.setStartDateTime(applyRateTill);
+			return new ParkingRateVO(PricePlan._12HOURSNIGHT.name(), _12HrsNightRate, _12HrsNightRate, PricePlan._12HOURSNIGHT.getTimeInterval().getStartTime(), PricePlan._12HOURSNIGHT.getTimeInterval().getEndTime(), applyRateFrom, applyRateTill);
+		}
+		
+		if (costingVO.getStartTime().compareTo(PricePlan._12HOURSDAY.getTimeInterval().getStartTime()) >= 0 &&
+				costingVO.getStartTime().compareTo(PricePlan._12HOURSDAY.getTimeInterval().getEndTime()) < 0) {
+						
+			if (costingVO.getEndTime().compareTo(PricePlan._12HOURSDAY.getTimeInterval().getEndTime()) < 0 &&
+					costingVO.getStartDate().compareTo(costingVO.getEndDate()) == 0)
+				numberOfMinutes = Minutes.minutesBetween(costingVO.getStartTime(), costingVO.getEndTime()).getMinutes();
+			else
+				numberOfMinutes = Minutes.minutesBetween(costingVO.getStartTime(), PricePlan._12HOURSDAY.getTimeInterval().getEndTime()).getMinutes();
+			
+			applyRateFrom = costingVO.getStartDateTime();
+			applyRateTill = costingVO.getStartDateTime().plusMinutes(numberOfMinutes);
+			
+			totalCost = _1by4DayHourRate * (numberOfMinutes/15);
+			costingVO.setStartDateTime(applyRateTill);
+			return new ParkingRateVO(PricePlan.DAYHOUR.name(), dayHourRate, totalCost, PricePlan.DAYHOUR.getTimeInterval().getStartTime(), PricePlan.DAYHOUR.getTimeInterval().getEndTime(), applyRateFrom, applyRateTill);
+		}
+
+		int hrsToNextDay = PricePlan._12HOURSNIGHT.getTimeInterval().getEndTime().getHourOfDay() + 1;
+		if (costingVO.getStartTime().minusHours(hrsToNextDay).compareTo(PricePlan._12HOURSNIGHT.getTimeInterval().getStartTime().minusHours(hrsToNextDay)) >= 0 &&
+				costingVO.getStartTime().minusHours(hrsToNextDay).compareTo(PricePlan._12HOURSNIGHT.getTimeInterval().getEndTime().minusHours(hrsToNextDay)) < 0) {
+						
+			LocalDateTime _12HourNightEnd = new LocalDateTime(costingVO.getStartDateTime().getYear(), costingVO.getStartDateTime().getMonthOfYear(), 
+					costingVO.getStartDateTime().getDayOfMonth(), costingVO.getStartDateTime().getHourOfDay(), costingVO.getStartDateTime().getMinuteOfHour());
+			int hrOfDay = _12HourNightEnd.getHourOfDay();
+			int _12HourNightEndHour = PricePlan._12HOURSNIGHT.getTimeInterval().getEndTime().getHourOfDay();
+			int hrsToAdd = hrOfDay>=20&&hrOfDay<24?24-hrOfDay+_12HourNightEndHour:_12HourNightEndHour-hrOfDay;
+			_12HourNightEnd = _12HourNightEnd.plusHours(hrsToAdd);
+			
+			if (costingVO.getEndDateTime().compareTo(_12HourNightEnd) >= 0)
+				numberOfMinutes = Minutes.minutesBetween(costingVO.getStartTime().minusHours(hrsToNextDay), PricePlan._12HOURSNIGHT.getTimeInterval().getEndTime().minusHours(hrsToNextDay)).getMinutes();
+			else
+				numberOfMinutes = Minutes.minutesBetween(costingVO.getStartTime().minusHours(hrsToNextDay), costingVO.getEndTime().minusHours(hrsToNextDay)).getMinutes();
+			
+			applyRateFrom = costingVO.getStartDateTime();
+			applyRateTill = costingVO.getStartDateTime().plusMinutes(numberOfMinutes);
+			
+			totalCost = _1by4NightHourRate * (numberOfMinutes/15);
+			costingVO.setStartDateTime(applyRateTill);
+			return new ParkingRateVO(PricePlan.NIGHTHOUR.name(), nightHourRate, totalCost, PricePlan.NIGHTHOUR.getTimeInterval().getStartTime(), PricePlan.NIGHTHOUR.getTimeInterval().getEndTime(), applyRateFrom, applyRateTill);
+		}
+		return null;
+	}
 	
+	private int getNumberOfDaysBetweenDates(LocalDateTime firstDateTime, LocalDateTime secondDateTime) {
+		
+		return Days.daysBetween(firstDateTime, secondDateTime).getDays();
+	}
 }

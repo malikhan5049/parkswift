@@ -87,6 +87,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/findAvailableParkings").permitAll()
             .antMatchers("/api/parkingLocations/**").permitAll()
             .antMatchers("/api/verifyPaypalAccount").permitAll()
+            .antMatchers("/api/executePayment").permitAll()
+            .antMatchers("/api/customerBookings").permitAll()
             .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
 //            .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)

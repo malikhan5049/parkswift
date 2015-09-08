@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -117,12 +118,12 @@ public class CustomerBooking implements Serializable {
     @Column(name = "cancelled_by")
     private Long cancelledBy;
 
-    @OneToMany(mappedBy = "customerBooking")
+    @OneToMany(mappedBy = "customerBooking", fetch= FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<BookedParkingSpace> bookedParkingSpaces = new HashSet<>();
 
-    @OneToMany(mappedBy = "customerBooking")
+    @OneToMany(mappedBy = "customerBooking", fetch= FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PaymentCharged> paymentsCharged = new HashSet<>();
@@ -133,6 +134,9 @@ public class CustomerBooking implements Serializable {
     @OneToOne
     private BookingSchedule bookingSchedule;
 
+    @ManyToOne
+    private ParkingSpace parkingSpace;
+    
     public Long getId() {
         return id;
     }
@@ -325,7 +329,23 @@ public class CustomerBooking implements Serializable {
         this.bookingSchedule = bookingSchedule;
     }
 
-    @Override
+    public Set<PaymentCharged> getPaymentsCharged() {
+		return paymentsCharged;
+	}
+
+	public void setPaymentsCharged(Set<PaymentCharged> paymentsCharged) {
+		this.paymentsCharged = paymentsCharged;
+	}
+
+	public ParkingSpace getParkingSpace() {
+		return parkingSpace;
+	}
+
+	public void setParkingSpace(ParkingSpace parkingSpace) {
+		this.parkingSpace = parkingSpace;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
