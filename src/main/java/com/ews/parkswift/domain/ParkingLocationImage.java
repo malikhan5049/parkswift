@@ -46,7 +46,7 @@ public class ParkingLocationImage implements Serializable {
     private String type;
 
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
     @JsonIgnore
     private ParkingLocation parkingLocation;
 

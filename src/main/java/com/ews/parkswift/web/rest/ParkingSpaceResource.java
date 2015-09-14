@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.domain.ParkingSpace;
 import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
@@ -157,6 +158,15 @@ public class ParkingSpaceResource {
     @Timed
     public void delete(@PathVariable Long id) {
         log.debug("REST request to delete ParkingSpace : {}", id);
-        parkingSpaceRepository.delete(id);
+        ParkingSpace parkingSpace = parkingSpaceRepository.findOne(id);
+        if(null!=parkingSpace){
+        	ParkingLocation parkingLocation = parkingLocationRepository.findOne(parkingSpace.getParkingLocation().getId());
+        	if(null!=parkingLocation){
+        			parkingLocation.getParkingSpaceEntitys().remove(parkingSpace);
+        			parkingLocationRepository.save(parkingLocation);
+//        		parkingSpaceRepository.delete(id);
+        	}
+        	
+        }
     }
 }

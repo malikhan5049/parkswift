@@ -4,12 +4,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +16,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+
+
+
+
+
 import org.apache.http.Consts;
-import org.apache.http.client.methods.HttpPost;
+//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,29 +43,29 @@ import urn.ebay.apis.eBLBaseComponents.ErrorType;
 
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
-import com.paypal.api.openidconnect.CreateFromAuthorizationCodeParameters;
-import com.paypal.api.openidconnect.Session;
-import com.paypal.api.openidconnect.Tokeninfo;
-import com.paypal.api.openidconnect.Userinfo;
-import com.paypal.api.payments.Amount;
-import com.paypal.api.payments.Capture;
-import com.paypal.api.payments.FundingInstrument;
-import com.paypal.api.payments.Payer;
-import com.paypal.api.payments.Payment;
-import com.paypal.api.payments.Transaction;
-import com.paypal.base.ClientCredentials;
-import com.paypal.base.exception.ClientActionRequiredException;
-import com.paypal.base.exception.HttpErrorException;
-import com.paypal.base.exception.InvalidCredentialException;
-import com.paypal.base.exception.InvalidResponseDataException;
-import com.paypal.base.exception.MissingCredentialException;
-import com.paypal.base.exception.OAuthException;
-import com.paypal.base.exception.PayPalException;
-import com.paypal.base.exception.SSLConfigurationException;
-import com.paypal.base.rest.APIContext;
-import com.paypal.base.rest.PayPalRESTException;
+import com.ews.parkswift.web.rest.dto.parking.PaymentDTO;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.paypal.core.ClientCredentials;
 import com.paypal.core.credential.ICredential;
 import com.paypal.core.credential.SignatureCredential;
+import com.paypal.core.rest.APIContext;
+import com.paypal.core.rest.OAuthTokenCredential;
+import com.paypal.core.rest.PayPalRESTException;
+import com.paypal.exception.ClientActionRequiredException;
+import com.paypal.exception.HttpErrorException;
+import com.paypal.exception.InvalidCredentialException;
+import com.paypal.exception.InvalidResponseDataException;
+import com.paypal.exception.MissingCredentialException;
+import com.paypal.exception.SSLConfigurationException;
+import com.paypal.sdk.exceptions.OAuthException;
+import com.paypal.sdk.exceptions.PayPalException;
+import com.paypal.sdk.openidconnect.CreateFromAuthorizationCodeParameters;
+import com.paypal.sdk.openidconnect.Session;
+import com.paypal.sdk.openidconnect.Tokeninfo;
+import com.paypal.sdk.openidconnect.Userinfo;
+import com.paypal.sdk.openidconnect.UserinfoParameters;
 import com.paypal.svcs.services.AdaptivePaymentsService;
 import com.paypal.svcs.services.PermissionsService;
 import com.paypal.svcs.types.ap.ExecutePaymentRequest;
@@ -79,8 +82,6 @@ import com.paypal.svcs.types.ap.RefundInfo;
 import com.paypal.svcs.types.ap.RefundRequest;
 import com.paypal.svcs.types.ap.RefundResponse;
 import com.paypal.svcs.types.common.RequestEnvelope;
-import com.paypal.svcs.types.perm.GetAccessTokenRequest;
-import com.paypal.svcs.types.perm.GetAccessTokenResponse;
 import com.paypal.svcs.types.perm.RequestPermissionsRequest;
 import com.paypal.svcs.types.perm.RequestPermissionsResponse;
 
@@ -807,14 +808,25 @@ public class PaypalUtils {
 		return paymentDetailsResponse;
 	}
 	
+	private static APIContext getAPIContext(){
+		Map<String, String> configurationMap = new HashMap<String, String>();
+		configurationMap.put(Constants.MODE, Constants.MODE_SANDBOX);
+
+		APIContext apiContext = new APIContext();
+		apiContext.setConfigurationMap(configurationMap);
+		
+		return apiContext;
+	}
 	
 	public static PaypallAccountDTO getPaypalUserDetails(String authToken) {
 
 		PaypallAccountDTO paypallAccountDTO = new PaypallAccountDTO();
 		try {
 				String accessToken = getAccessToken(authToken);
-				System.out.println("access token == " + accessToken);
-				Userinfo userInfo = Userinfo.getUserinfo(accessToken);
+				UserinfoParameters params = new UserinfoParameters();
+				params.setAccessToken(accessToken);
+				
+				Userinfo userInfo = Userinfo.getUserinfo(getAPIContext(),params);
 				if (userInfo != null) {
 					paypallAccountDTO.setAuthToken(authToken);
 					paypallAccountDTO.setAccessToken(accessToken);
@@ -831,11 +843,7 @@ public class PaypalUtils {
 	
 	public static String getAccessToken(String authToken) {
 		
-		Map<String, String> configurationMap = new HashMap<String, String>();
-		configurationMap.put(Constants.MODE, Constants.MODE_SANDBOX);
-
-		APIContext apiContext = new APIContext();
-		apiContext.setConfigurationMap(configurationMap);
+		APIContext apiContext = getAPIContext();
 
 		List<String> scopelist = new ArrayList<String>();
 		scopelist.add(Constants.OPENID);
@@ -1094,8 +1102,8 @@ public class PaypalUtils {
 	}
 	
 	
-//	public static void captureAuthorizedPayment(String authId, String amount) throws PayPalException, com.paypal.sdk.exceptions.PayPalException{
-//		
+	public static void captureAuthorizedPayment(String authId, String amount) throws PayPalException, com.paypal.sdk.exceptions.PayPalException{
+		
 //		final String DO_CAPTURE_METHOD = "DoCapture";
 //		APIProfile profile;
 //	    profile = ProfileFactory.createSignatureAPIProfile();
@@ -1105,6 +1113,13 @@ public class PaypalUtils {
 //	        profile.setEnvironment("sandbox");
 //	       // profile.setSubject("");
 //	       // profile.setTimeout(timeout);
+////	        curl https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails \
+////	        	 -H "X-PAYPAL-SECURITY-USERID: {userId}" \
+////	        	 -H "X-PAYPAL-SECURITY-PASSWORD: {password}" \
+////	        	 -H "X-PAYPAL-SECURITY-SIGNATURE: {signature}" \
+////	        	 -H "X-PAYPAL-APPLICATION-ID: {appId}" \
+////	        	 -H "X-PAYPAL-REQUEST-DATA-FORMAT: NV" \
+////	        	 -H "X-PAYPAL-RESPONSE-DATA-FORMAT: NV" \
 //
 //	    NVPEncoder encoder = new NVPEncoder();
 //	    NVPDecoder decoder = new NVPDecoder();
@@ -1125,75 +1140,92 @@ public class PaypalUtils {
 //
 //	    System.out.println("PayPal Response :: "+NVPResponse);
 //	    System.out.println("ACK "+ decoder.get("ACK"));
-//	}
+	}
 	
+	private static HttpURLConnection makeCurl(String urlString, String httpMethod) throws IOException{
+		URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod(httpMethod);
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Authorization", getMerchantAccessToken());
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        
+        return connection;
+	}
 	
-	
-	public static String getResponse(String authId, String payKey, String _amount)
+	public static String getResponseAgainstAuthorizationKey(String authId, String payKey, String _amount)
 			throws MalformedURLException, JSONException {
 
-        //System.out.println(urlString);
-        //System.out.println(msg);
-		paymentDetails(payKey);
-		/* write request */
-//		String url="https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey="+preApprovalKey;
 		String urlString = "https://api.sandbox.paypal.com/v1/payments/authorization/"+authId+"/capture";
-//		String urlString = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-preapproval&preapprovalkey="+preApprovalKey;
-		URL url = new URL(urlString);
-        HttpURLConnection connection;
-        StringBuffer response = new StringBuffer();
-        ICredential credentials = new SignatureCredential(Constants.PAYPALL_USER_NAME, Constants.PAYPALL_PASSWORD, Constants.PAYPALL_SIGNATURE);
+//		String urlString = "https://api.sandbox.paypal.com/v1/payments/payment/"+payKey;
+//		"https://svcs.sandbox.paypal.com/AdaptivePayments/PaymentDetails"
+		
+		 StringBuffer response = new StringBuffer();
         try {
-            connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-//            String accessToken = "A015VqblLa7KI842kXrqzTJSrHKXxi.ZU9DPL3OkeQSIIcY";
-            // Change this to a valid token:
-//            connection.setRequestProperty("Authorization", "Bearer "+accessToken);
-            connection.setRequestProperty("Authorization", "Bearer ");
-            connection.setRequestProperty("Content-Type", "application/json");
-            String jsonData = "{ \"intent\":\"sale\",\"redirect_urls\":{\"return_url\":\"http://example.com/your_redirect_url.html\",\"cancel_url\":\"http://example.com/your_cancel_url.html\"},\"payer\":{\"payment_method\":\"paypal\"},\"transactions\":[{\"amount\":{\"total\":\""+_amount+"\",\"currency\":\"USD\"}}]}";
+        	HttpURLConnection connection = makeCurl(urlString, "GET");
 
-//            connection.setDoOutput(true);
-//            connection.setRequestProperty("Content-Type", "application/json");
-//            connection.setRequestProperty("Accept", "application/json");
-//            connection.setRequestProperty("Authorization", "Bearer A015gOKSZxKoweXPvSuYA1DhJct8prFYkcQNf6HUDOEspHA");
-//            connection.setRequestMethod("POST");
-//            connection.connect();
+            JSONObject amount   = new JSONObject();
+            JSONObject parent = new JSONObject();
 
-//            JSONObject amount   = new JSONObject();
-//            JSONObject parent = new JSONObject();
-//
-//   		 	amount.put("currency", "USD");
-//   		 	amount.put("total", _amount);
-//   		 	parent.put("amount", amount);
-//   		 	parent.put("is_final_capture", true);
-//            
-//   		 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-//         output.write(parent.toString().getBytes("UTF-8"));
-//         output.close();
-//
-//         // Read the response:
-//         BufferedReader reader = new BufferedReader(new InputStreamReader(
-//           connection.getInputStream()));
-//         String line;
-//         while ((line = reader.readLine()) != null) {
-//             System.out.println(line);
-//         }
-//         reader.close();
+   		 	amount.put("currency", "USD");
+   		 	amount.put("total", _amount);
+   		 	parent.put("intent", "sale");
+   		 	parent.put("amount", amount);
+   		 	parent.put("is_final_capture", true);
+
             DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-            output.writeBytes(jsonData);
+            output.writeBytes(parent.toString());
             output.close();
 
-            // Read the response:
             BufferedReader reader = new BufferedReader(new InputStreamReader(
               connection.getInputStream()));
             String line;
+            String paymentLink;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
+                JsonObject responseJSON = new JsonParser().parse(line).getAsJsonObject();
+                if(responseJSON!=null){
+                	System.out.println("ID == " +responseJSON.get("id"));
+                	System.out.println("LINKS == " + responseJSON.get("links"));
+                	System.out.println("PARENT-PAY-KEY == "+responseJSON.get("parent_payment"));
+                	String _payKey= responseJSON.get("parent_payment").toString();
+                	
+//                	JSONObject payer   = new JSONObject();
+//                	payer.put("payer_id","");
+                	
+                	
+//                	if(responseJSON.get("links").isJsonArray()){
+//                		JsonArray jsonArray = responseJSON.getAsJsonArray("links");
+//                		for (int i = 0, size = jsonArray.size(); i < size; i++)
+//                	    {
+//                		JsonObject objectInArray = (JsonObject) jsonArray.get(i);
+//                	      if(objectInArray.get("rel").toString().replaceAll("\"", "").equalsIgnoreCase("parent_payment")){
+//                	    	 paymentLink = objectInArray.get("href").toString();
+//                	    	 
+//                	    	 
+//                	    	 
+//                	    	 
+//                	    	 HttpURLConnection _connection = makeCurl(paymentLink, "GET");
+//                	    	 DataOutputStream _output = new DataOutputStream(_connection.getOutputStream());
+//                	            _output.writeBytes(parent.toString());
+//                	            _output.close();
+//
+//                	            BufferedReader _reader = new BufferedReader(new InputStreamReader(
+//                	              _connection.getInputStream()));
+//                	            String _line;
+//                	            while ((_line = _reader.readLine()) != null) {
+//                	                System.out.println(_line);
+//                	            }
+//                	      }
+//                	    }
+//                	}
+                	
+                }
             }
             reader.close();
+            
      } catch (Exception e) {
          System.out.println(e.getMessage());
      }
@@ -1202,21 +1234,6 @@ public class PaypalUtils {
 		return response.toString();
 	}
 
-	
-	
-	
-	public static boolean capturePayment(String authToken, String captureId){
-		APIContext apiContext = new APIContext(getAccessToken(authToken));
-		
-		try {
-			Capture.get(apiContext, captureId);
-		} catch (PayPalRESTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
 	private static List<Receiver> generateReceiverList() {
 		List<Receiver> listReceivers = new ArrayList<Receiver>();
 		
@@ -1246,7 +1263,105 @@ public class PaypalUtils {
 		sdkConfig.put("acct1.Password", Constants.PAYPALL_PASSWORD);
 		sdkConfig.put("acct1.Signature", Constants.PAYPALL_SIGNATURE);
 		sdkConfig.put("acct1.AppId", Constants.PAYPALL_APP_ID);
-
+//		sdkConfig.put("service.EndPoint","https://api.sandbox.paypal.com");
 		return sdkConfig;
+	}
+	
+	
+	private static String getMerchantAccessToken(){
+	Map<String, String> configurationMap = new HashMap<String, String>();
+	configurationMap.put("service.EndPoint","https://api.sandbox.paypal.com");
+	OAuthTokenCredential merchantTokenCredential = new OAuthTokenCredential(
+			Constants.PAYPALL_CLIENT_ID, Constants.PAYPALL_CLIENT_SECRET, configurationMap);
+	String accessToken="";
+	try {
+		accessToken = merchantTokenCredential.getAccessToken();
+	} catch (PayPalRESTException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return accessToken;
+	}
+	
+	
+	public static String generatePayment(PaymentDTO paymentDTO){
+		
+		RequestEnvelope requestEnvelope = new RequestEnvelope();
+		requestEnvelope.setErrorLanguage(Constants.LOCALE_US);
+		
+		ReceiverList listReceivers = new ReceiverList(paymentDTO.getListReceivers());
+
+		PayRequest payRequest = null;
+		PayResponse payResponse= null;
+		
+		payRequest = new PayRequest(requestEnvelope, Constants.PAYPALL_ACTION_TYPE_PAY,
+				Constants.PAYPAL_PAYMENT_RESPONSE_URL, Constants.CURRENCY_USD, listReceivers,
+				Constants.PAYPAL_PAYMENT_RESPONSE_URL);
+		
+		
+		payRequest.setReceiverList(listReceivers);
+//		payRequest.setSenderEmail(senderEmail);
+		
+		payResponse = makeAPICall(payRequest);
+		
+		return Constants.PAYPALL_PAYMENT_APPROVAL_URL+payResponse.getPayKey();
+	}
+	
+	private static PayResponse makeAPICall(PayRequest payRequest) {
+
+//		Logger logger = Logger.getLogger(this.getClass().toString());
+
+		// ## Creating service wrapper object
+		// Creating service wrapper object to make API call and loading
+		// configuration file for your credentials and endpoint
+//		AdaptivePaymentsService service = new AdaptivePaymentsService(getSdkConf());
+		AdaptivePaymentsService service = null;
+		try {
+			service = new AdaptivePaymentsService(Constants.PAYPAL_CONFIG_PROPERTIES_FILE);
+		} catch (IOException e) {
+//			logger.severe("Error Message : " + e.getMessage());
+			System.out.println("Error Message : " + e.getMessage());
+		}
+		PayResponse payResponse = null;
+		try {
+
+			// ## Making API call
+			// Invoke the appropriate method corresponding to API in service
+			// wrapper object
+			payResponse = service.pay(payRequest);
+		} catch (Exception e) {
+//			logger.severe("Error Message : " + e.getMessage());
+			System.out.println("Error Message : " + e.getMessage());
+		}
+			
+		// ## Accessing response parameters
+		// You can access the response parameters using getter methods in
+		// response object as shown below
+		// ### Success values
+		if (payResponse.getResponseEnvelope().getAck().getValue()
+				.equalsIgnoreCase("Success")) {
+
+			// The pay key, which is a token you use in other Adaptive
+			// Payment APIs (such as the Refund Method) to identify this
+			// payment. The pay key is valid for 3 hours; the payment must
+			// be approved while the pay key is valid.
+//			logger.info("Pay Key : " + payResponse.getPayKey());
+			System.out.println("Pay Key : " + payResponse.getPayKey());
+
+			// Once you get success response, user has to redirect to PayPal
+			// for the payment. Construct redirectURL as follows,
+			// `redirectURL=https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey="
+			// + payResponse.getPayKey();`
+		}
+		// ### Error Values
+		// Access error values from error list using getter methods
+		else {
+//			logger.severe("API Error Message : "
+//					+ payResponse.getError().get(0).getMessage());
+			System.out.println("API Error Message : "
+					+ payResponse.getError().get(0).getMessage());
+		}
+		return payResponse;
+
 	}
 }

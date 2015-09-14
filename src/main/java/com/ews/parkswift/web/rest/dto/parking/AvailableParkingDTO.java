@@ -11,6 +11,7 @@ import com.ews.parkswift.domain.ParkingSpacePriceEntry;
 import com.ews.parkswift.domain.PriceHit;
 import com.ews.parkswift.vo.ParkingRateVO;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
+import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
 
 public class AvailableParkingDTO {
 
@@ -56,7 +57,17 @@ public class AvailableParkingDTO {
     
     private Set<ParkingRateVO> parkingRates = new HashSet<ParkingRateVO>();
 
-    public Set<ParkingRateVO> getParkingRates() {
+    private String paypallEmail; 
+    
+	public String getPaypallEmail() {
+		return paypallEmail;
+	}
+
+	public void setPaypallEmail(String paypallEmail) {
+		this.paypallEmail = paypallEmail;
+	}
+
+	public Set<ParkingRateVO> getParkingRates() {
      return parkingRates;
     }
 

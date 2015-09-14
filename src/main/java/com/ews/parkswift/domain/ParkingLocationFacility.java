@@ -37,7 +37,7 @@ public class ParkingLocationFacility implements Serializable {
     @InLookupHeader(code=LookupHeaderCode.LOC_FACILITY)
     private String facility;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JsonIgnore
     private ParkingLocation parkingLocation;
 

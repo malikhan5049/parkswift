@@ -156,7 +156,7 @@ public class UserXAuthTokenController {
         User user = userService.getUserWithAuthorities();
         
         return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(
-        		user.getFirstName(), user.getLastName(), user.getEmail(),user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)))
+        		user.getFirstName(), user.getLastName(), user.getEmail(), user.getMobilePhone(), user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)))
         , HttpStatus.OK);
     }
     

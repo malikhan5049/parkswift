@@ -20,19 +20,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ews.parkswift.config.Constants;
+import com.ews.parkswift.domain.Feedback;
 import com.ews.parkswift.domain.ParkingLocation;
+import com.ews.parkswift.domain.ParkingLocationContactInfo;
 import com.ews.parkswift.domain.ParkingLocationFacility;
 import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.domain.ParkingSpace;
 import com.ews.parkswift.domain.ParkingSpaceVehicleType;
 import com.ews.parkswift.domain.PaypallAccount;
 import com.ews.parkswift.domain.User;
+import com.ews.parkswift.repository.FeedbackRepository;
+import com.ews.parkswift.repository.ParkingLocationContactInfoRepository;
+import com.ews.parkswift.repository.ParkingLocationFacilityRepository;
 import com.ews.parkswift.repository.ParkingLocationImageRepository;
 import com.ews.parkswift.repository.ParkingLocationRepository;
 import com.ews.parkswift.repository.ParkingSpaceRepository;
 import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
 import com.ews.parkswift.web.rest.dto.parking.AvailableParkingDTO;
+import com.ews.parkswift.web.rest.dto.parking.ParkingLocationDTO;
 
 @Service
 @Transactional
@@ -48,6 +54,13 @@ public class ParkingLocationService {
     private ParkingLocationImageRepository parkingLocationImageRepository;
     @Inject
     private ParkingSpaceRepository parkingSpaceRepository;
+    @Inject
+    private ParkingLocationContactInfoRepository parkingLocationContactInfoRepository;
+    @Inject
+    private ParkingLocationFacilityRepository parkingLocationFacilityRepository;
+    @Inject
+    private FeedbackRepository feedbackRepository;
+    
     
     @Inject
     private UserService userService;
@@ -64,18 +77,81 @@ public class ParkingLocationService {
     		
     	}
     	
+    	if(parkingLocation.getId()!=null){
+    		ParkingLocation pl = parkingLocationRepository.findOne(parkingLocation.getId());
+    		if(null!=pl){
+    			parkingLocation.setParkingSpaceEntitys(pl.getParkingSpaceEntitys());
+    		}
+    	}
+    	
     	parkingLocationRepository.save(parkingLocation);
     }
     
-    @SuppressWarnings("serial")
-	public void update(ParkingLocation parkingLocation) throws ServiceException, IOException{
-    	save(parkingLocation);
-    	List<ParkingLocationImage> imagesFromDB = parkingLocationImageRepository.findAllByParkingLocation(parkingLocation);
-    	File imageFolder = new File(Constants.LOCATION_IMAGES_FOLDER_PATH+File.separator+parkingLocation.getId());
-    	List<ParkingLocationImage> imagesNotInDBButInDirectory = imagesNotInDBButInDirectory(
-				imagesFromDB, imageFolder);
-    	deleteImagesFromDirectory(imagesNotInDBButInDirectory, imageFolder);
+    public void update(ParkingLocationDTO parkingLocationDTO) throws ServiceException, IOException{
+    	ParkingLocation parkingLocation = new ParkingLocation();
+    	User user = userService.getUser();
+    	if(parkingLocationDTO.getId()!=null && !parkingLocationDTO.getId().equals("")){
+    		parkingLocation.setId(parkingLocationDTO.getId());
+    	}
+    	parkingLocation.setUser(user);
+    	parkingLocation.setBussinessType(parkingLocationDTO.getBussinessType());
+    	parkingLocation.setAddressLine1(parkingLocationDTO.getAddressLine1());
+    	parkingLocation.setAddressLine2(parkingLocationDTO.getAddressLine2());
+    	parkingLocation.setCity(parkingLocationDTO.getCity());
+    	parkingLocation.setState(parkingLocationDTO.getState());
+    	parkingLocation.setCountry(parkingLocationDTO.getCountry());
+    	parkingLocation.setZipCode(parkingLocationDTO.getZipCode());
+    	parkingLocation.setLongitude(parkingLocationDTO.getLongitude());
+    	parkingLocation.setLattitude(parkingLocationDTO.getLattitude());
+    	parkingLocation.setActive(parkingLocationDTO.isActive());
+    	
+    	if(parkingLocationDTO.getPaypallAccount()!=null){
+    		PaypallAccount payPallAccount = parkingLocationDTO.getPaypallAccount();
+    		payPallAccount.setUser(user);
+    		updateDefaultPaypallAccount(payPallAccount);
+    		paypallAccountRepository.save(payPallAccount);
+    		parkingLocation.setPaypallAccount(payPallAccount);
+    	}
+    	
+    	ParkingLocationContactInfo parkingLocationContactInfo = new ParkingLocationContactInfo();
+    	parkingLocationContactInfo = parkingLocationDTO.getParkingLocationContactInfo();
+    	parkingLocationContactInfoRepository.save(parkingLocationContactInfo);
+    	parkingLocation.setParkingLocationContactInfo(parkingLocationContactInfo);
+    	
+    	for(ParkingLocationFacility facility: parkingLocationDTO.getParkingLocationFacilitys()){
+    		parkingLocationFacilityRepository.save(facility);
+    		parkingLocation.getParkingLocationFacilitys().add(facility);
+    	}
+    	
+    	for(Feedback feedback: parkingLocationDTO.getFeedbacks()){
+    		feedbackRepository.save(feedback);
+    		parkingLocation.getFeedbacks().add(feedback);
+    	}
+    	
+    	for(ParkingLocationImage image: parkingLocationDTO.getParkingLocationImages()){
+    		parkingLocationImageRepository.save(image);
+    		parkingLocation.getParkingLocationImages().add(image);
+    	}
+    	
+    	for(ParkingSpace parkingSpace: parkingLocationDTO.getParkingSpaceEntitys()){
+    		parkingSpaceRepository.save(parkingSpace);
+    		parkingLocation.getParkingSpaceEntitys().add(parkingSpace);
+    	}
+    	
+    	parkingLocationRepository.saveAndFlush(parkingLocation);
     }
+    
+    
+    
+//    @SuppressWarnings("serial")
+//	public void update(ParkingLocation parkingLocation) throws ServiceException, IOException{
+//    	save(parkingLocation);
+//    	List<ParkingLocationImage> imagesFromDB = parkingLocationImageRepository.findAllByParkingLocation(parkingLocation);
+//    	File imageFolder = new File(Constants.LOCATION_IMAGES_FOLDER_PATH+File.separator+parkingLocation.getId());
+//    	List<ParkingLocationImage> imagesNotInDBButInDirectory = imagesNotInDBButInDirectory(
+//				imagesFromDB, imageFolder);
+//    	deleteImagesFromDirectory(imagesNotInDBButInDirectory, imageFolder);
+//    }
 
 	private List<ParkingLocationImage> imagesNotInDBButInDirectory(
 			List<ParkingLocationImage> imagesFromDB, File imageFolder) {
@@ -130,8 +206,6 @@ public class ParkingLocationService {
 		return url;	
 	}
 	
-	
-
 
 	private void updateDefaultPaypallAccount(
 			PaypallAccount payPallAccount) {

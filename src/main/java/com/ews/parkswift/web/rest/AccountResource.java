@@ -1,11 +1,14 @@
 package com.ews.parkswift.web.rest;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,12 +29,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ews.parkswift.domain.Authority;
+import com.ews.parkswift.domain.PaypallAccount;
 import com.ews.parkswift.domain.User;
+import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.repository.UserRepository;
+import com.ews.parkswift.security.AuthoritiesConstants;
 import com.ews.parkswift.security.SecurityUtils;
+import com.ews.parkswift.security.xauth.Token;
+import com.ews.parkswift.security.xauth.TokenProvider;
 import com.ews.parkswift.service.MailService;
 import com.ews.parkswift.service.UserService;
 import com.ews.parkswift.web.rest.dto.UserDTO;
+import com.ews.parkswift.web.rest.dto.UserDTOMobile;
 
 /**
  * REST controller for managing the current user's account.
@@ -48,7 +60,14 @@ public class AccountResource {
     @Inject
     private MailService mailService;
     
-
+    @Inject
+    private TokenProvider tokenProvider;
+    
+    @Inject
+    private UserDetailsService userDetailsService;
+    
+    @Inject
+    private PaypallAccountRepository paypallAccountRepository;
 
     /**
      * POST  /register -> register the user.
@@ -57,29 +76,44 @@ public class AccountResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
-        return userRepository.findOneByLogin(userDTO.getLogin())
-            .map(user -> new ResponseEntity<>("login already in use", HttpStatus.BAD_REQUEST))
-            .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
-                .map(user -> new ResponseEntity<>("e-mail address already in use", HttpStatus.BAD_REQUEST))
-                .orElseGet(() -> {
-                	boolean insertUserActivated = false;
-                	if(DeviceUtils.isMobile(request))
-                		insertUserActivated = true;
-                    User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
-                    userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
-                    userDTO.getLangKey(), insertUserActivated);
-                    String baseUrl = request.getScheme() + // "http"
-                    "://" +                                // "://"
-                    request.getServerName() +              // "myhost"
-                    ":" +                                  // ":"
-                    request.getServerPort();               // "80"
+    public ResponseEntity<UserDTOMobile> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) {
+        
+    	if (userRepository.findOneByLogin(userDTO.getLogin()).isPresent() || userRepository.findOneByEmail(userDTO.getEmail()).isPresent())
+    		return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+    	else {
+    		
+    		boolean insertUserActivated = false;
+        	if(DeviceUtils.isMobile(request))
+        		insertUserActivated = true;
+            User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
+            userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
+            userDTO.getContactNumber(), userDTO.getLangKey(), insertUserActivated);
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();               
 
-                    if(!insertUserActivated)
-                    	mailService.sendActivationEmail(user, baseUrl);
-                    return new ResponseEntity<>(HttpStatus.CREATED);
-                })
-        );
+            if(!insertUserActivated)
+            	mailService.sendActivationEmail(user, baseUrl);
+            
+            List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<SimpleGrantedAuthority>();
+            grantedAuthorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
+            UserDetails userDetails = new org.springframework.security.core.userdetails.User(userDTO.getLogin(), user.getPassword()!=null?user.getPassword():"", grantedAuthorities);
+    		
+    		Token tokenMobile = tokenProvider.createTokenMobile(userDetails);
+            response.addHeader("x-auth-token", tokenMobile.getToken());
+            
+            if(userDTO.getPaypalEmail()!=null && !userDTO.getPaypalEmail().equals("")){
+            	PaypallAccount paypallAccount = new PaypallAccount();
+            	paypallAccount.setEmail(userDTO.getPaypalEmail());
+            	paypallAccount.setIsDefault(true);
+            	paypallAccount.setUser(user);
+            	
+            	paypallAccountRepository.save(paypallAccount);
+            }
+            
+            return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(
+            		user.getFirstName(), user.getLastName(), user.getEmail(), user.getMobilePhone(), user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)))
+            , HttpStatus.CREATED);
+    	}
+
     }
     
     /**
@@ -111,6 +145,62 @@ public class AccountResource {
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
+    }
+    
+    @RequestMapping(value = "/loginWithSocialMedia",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<UserDTOMobile> loginWithSocialMediaAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) {
+        
+    	if (userRepository.findOneByLogin(userDTO.getLogin()).isPresent()) {
+    		
+    		UserDetails details = this.userDetailsService.loadUserByUsername(userDTO.getLogin());
+    		
+    		Token tokenMobile = tokenProvider.createTokenMobile(details);
+            response.addHeader("x-auth-token", tokenMobile.getToken());
+            
+//            User user = userRepository.findUserByLoginName();
+            Optional<User> userOptional = userRepository.findOneByLogin(userDTO.getLogin());
+            if (userOptional.isPresent()) {
+            	User user = userOptional.get();
+            	List<String> roles = new ArrayList<String>();
+//            	if (user.getAuthorities().size() > 0) Throws Exception
+//            		roles.addAll(user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)));
+            	return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(user.getFirstName(), user.getLastName(), user.getEmail(), user.getMobilePhone(), roles), HttpStatus.OK);
+            }
+    	} else if (userRepository.findOneByEmail(userDTO.getEmail()).isPresent()) {
+    		
+    		UserDetails details = this.userDetailsService.loadUserByUsername(userDTO.getEmail());
+    		
+    		Token tokenMobile = tokenProvider.createTokenMobile(details);
+            response.addHeader("x-auth-token", tokenMobile.getToken());
+            
+            Optional<User> userOptional = userRepository.findOneByEmail(userDTO.getEmail());
+            if (userOptional.isPresent()) {
+            	User user = userOptional.get();
+            	List<String> roles = new ArrayList<String>();
+//            	if (user.getAuthorities().size() > 0) Throws Exception
+//            		roles.addAll(user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)));
+            	return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(user.getFirstName(), user.getLastName(), user.getEmail(), user.getMobilePhone(), roles), HttpStatus.OK);
+            }
+    	} else {
+    		
+    		boolean insertUserActivated = false;
+        	if(DeviceUtils.isMobile(request))
+        		insertUserActivated = true;
+            User user = userService.createUserInformationfromSocialMediaProfile(userDTO.getLogin(), userDTO.getFirstName(),
+            		userDTO.getLastName(), userDTO.getEmail().toLowerCase(), userDTO.getLangKey(), insertUserActivated);
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();               
+
+            if(!insertUserActivated)
+            	mailService.sendActivationEmail(user, baseUrl);
+            List<String> roles = new ArrayList<String>();
+//        	if (user.getAuthorities().size() > 0) Throws Exception
+//        		roles.addAll(user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toCollection(LinkedList::new)));
+        	return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(user.getFirstName(), user.getLastName(), user.getEmail(), user.getMobilePhone(), roles), HttpStatus.OK);
+    	}
+    	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**

@@ -66,15 +66,29 @@ public final class Constants {
 	public static final String CURRENCY_USD = "USD";
 	public static final String LOCALE_US = "en_US";
 	public static final String PAYPALL_ACTION_TYPE_PAY = "PAY";
+	public static final String PAYPALL_ACTION_TYPE_CREATE = "CREATE";
 	public static final String PAYPALL_PREAPPROVAL_CANCEL_URL = "https://devtools-paypal.com/guide/ap_preapprove_payment?cancel=true";
 	public static final String PAYPALL_PREAPPROVAL_RETURN_URL = "https://devtools-paypal.com/guide/ap_preapprove_payment?success=true";
+	
+	public static final String PAYPALL_CHAINED_CANCEL_URL = "https://devtools-paypal.com/guide/ap_chained_payment/php?cancel=true";
+	public static final String PAYPALL_CHAINED_RETURN_URL = "https://devtools-paypal.com/guide/ap_chained_payment/php?success=true";
+	
+	public static final String PAYPALL_PAYMENT_APPROVAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=";
+	
 	public static final String PAYPALL_IPN_NOTIFICATION_URL = "http://replaceIpnUrl.com";
 	
+//	public static final String PAYPALL_USER_NAME = "saad.sial77_api1.Yahoo.com";
+//	public static final String PAYPALL_PASSWORD = "QJ4XSC82ZPVLU54E";
+//	public static final String PAYPALL_SIGNATURE = "AFcWxV21C7fd0v3bYYYRCpSSRl31AEv2GIvRBVF2OlipVtiYjZzUe-4k";
+//	public static final String PAYPALL_APP_ID = "APP-80W284485P519543T";
+	
+	
 	public static final String PAYPALL_USER_NAME = "saad.sial77_api1.Yahoo.com";
-	public static final String PAYPALL_PASSWORD = "QJ4XSC82ZPVLU54E";
-	public static final String PAYPALL_SIGNATURE = "AFcWxV21C7fd0v3bYYYRCpSSRl31AEv2GIvRBVF2OlipVtiYjZzUe-4k";
+	public static final String PAYPALL_PASSWORD = "KQFMMLFW3UFS52ZE";
+	public static final String PAYPALL_SIGNATURE = "ADyVKgzotwVjMNudZaW4Uw4OeWpxAF2uHg38efzaTgTiCKUeWwT2e6Qo";
 	public static final String PAYPALL_APP_ID = "APP-80W284485P519543T";
 	
 	public static final String STATUS_SUCCESS= "Success";
-	
+	public static final String PAYPAL_PAYMENT_RESPONSE_URL ="http://10.10.10.118:8080/api/paymentResponse"; 
+	public static final String PAYPAL_CONFIG_PROPERTIES_FILE = "src/main/resources/sdk_config.properties";
 }

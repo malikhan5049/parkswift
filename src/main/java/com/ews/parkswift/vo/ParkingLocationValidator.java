@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 import com.ews.parkswift.domain.ParkingLocation;
 import com.ews.parkswift.domain.ParkingLocationImage;
 import com.ews.parkswift.repository.PaypallAccountRepository;
+import com.ews.parkswift.web.rest.dto.parking.ParkingLocationDTO;
 
 
 public class ParkingLocationValidator implements Validator{
@@ -44,7 +45,7 @@ public class ParkingLocationValidator implements Validator{
 //					errors.rejectValue("paypallAccount.email", null,"already exist in DB choose another one");
 //			});
 //		}
-	}	
+	}
 	}
 	
 }

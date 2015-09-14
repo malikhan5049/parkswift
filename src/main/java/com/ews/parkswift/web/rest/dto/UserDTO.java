@@ -21,13 +21,20 @@ public class UserDTO {
 
     @Size(max = 50)
     private String lastName;
-
+    
+    @Size(max = 20)
+    private String contactNumber;
+    
     @Email
     @NotNull
     @Size(min = 5, max = 100)
     private String email;
+    
+    @Email
+    @Size(min = 5, max = 100)
+    private String paypalEmail;
 
-    @Size(min = 2, max = 5)
+	@Size(min = 2, max = 5)
     private String langKey;
 
     private List<String> roles;
@@ -73,6 +80,22 @@ public class UserDTO {
     public List<String> getRoles() {
         return roles;
     }
+    
+    public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	
+	public String getPaypalEmail() {
+		return paypalEmail;
+	}
+
+	public void setPaypalEmail(String paypalEmail) {
+		this.paypalEmail = paypalEmail;
+	}
 
     @Override
     public String toString() {

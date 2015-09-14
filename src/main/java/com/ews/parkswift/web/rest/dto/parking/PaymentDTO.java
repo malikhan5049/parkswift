@@ -1,8 +1,12 @@
 package com.ews.parkswift.web.rest.dto.parking;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
+
+import com.paypal.svcs.types.ap.Receiver;
 
 public class PaymentDTO {
 
@@ -17,7 +21,16 @@ public class PaymentDTO {
 	private BigDecimal amountToTransferOwnerAccount;
 	private BigDecimal amountToTransferParkSwiftAccount;
 	private String todel;
+	private List<Receiver> listReceivers = new ArrayList<>();
+	private String paypalURLWithPayKey;
 	
+	
+	public String getPaypalURLWithPayKey() {
+		return paypalURLWithPayKey;
+	}
+	public void setPaypalURLWithPayKey(String payURLWithPayKey) {
+		this.paypalURLWithPayKey = payURLWithPayKey;
+	}
 	public Long getPaymentId() {
 		return paymentId;
 	}
@@ -88,5 +101,12 @@ public class PaymentDTO {
 	public void setTodel(String todel) {
 		this.todel = todel;
 	}
+	public List<Receiver> getListReceivers() {
+		return listReceivers;
+	}
+	public void setListReceivers(List<Receiver> listReceivers) {
+		this.listReceivers = listReceivers;
+	}
+	
 
 }

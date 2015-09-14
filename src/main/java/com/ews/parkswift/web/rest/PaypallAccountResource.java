@@ -1,6 +1,5 @@
 package com.ews.parkswift.web.rest;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,7 +24,7 @@ import com.ews.parkswift.domain.PaypallAccount;
 import com.ews.parkswift.repository.PaypallAccountRepository;
 import com.ews.parkswift.service.util.paypal.PaypalUtils;
 import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
-import com.paypal.base.exception.PayPalException;
+import com.ews.parkswift.web.rest.dto.parking.PaymentDTO;
 
 /**
  * REST controller for managing PaypallAccount.
@@ -126,17 +124,34 @@ public class PaypallAccountResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public PaypallAccountDTO executePayment(@Valid @RequestBody PaypallAccountDTO accountDTO) {
-//    	PaypalUtils.executePayment(accountDTO.getPayKey());
-//    	PaypalUtils.doCapture(accountDTO.getAuthorization_id(), accountDTO.getAmount());
-				try {
-					PaypalUtils.getResponse(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
-				} catch (MalformedURLException | JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+    public PaymentDTO executePayment(@Valid @RequestBody PaymentDTO paymentDTO) {
+//					PaypalUtils.getResponse(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
+//				try {
+//					PaypalUtils.captureAuthorizedPayment(accountDTO.getAuthorization_id(),accountDTO.getAmount());
+//					try {
+//						PaypalUtils.getResponseAgainstAuthorizationKey(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
+//					} catch (MalformedURLException | JSONException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				} catch (PayPalException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 //				PaypalUtils.captureAuthorizedPayment(accountDTO.getAuthorization_id(), accountDTO.getAmount());
-    	return accountDTO;
+			
+    	paymentDTO.setPaypalURLWithPayKey(PaypalUtils.generatePayment(paymentDTO));
+    	return paymentDTO;
+    }
+    
+    @RequestMapping(value = "/paymentResponse",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public void executePayment(@Valid @RequestBody Object paymentDTO) {
+//    	paymentDTO.setPaypalURLWithPayKey(PaypalUtils.generatePayment(paymentDTO));
+//    	return paymentDTO;
+    	System.out.println(paymentDTO);
     }
     
 }

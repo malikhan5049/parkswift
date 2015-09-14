@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -55,7 +54,7 @@ public class ParkingSpace implements Serializable {
     private Boolean groupRecord;
 
     @NotNull
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
     @JsonIdentityReference(alwaysAsId=true)
     private ParkingLocation parkingLocation;

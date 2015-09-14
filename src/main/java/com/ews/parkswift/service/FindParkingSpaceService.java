@@ -165,6 +165,7 @@ public class FindParkingSpaceService {
     	availableParkingDTO.setNick(parkingSpace.getNick());
     	availableParkingDTO.setAvailabilityScheduleId(availabilitySchedule.getId());
     	availableParkingDTO.setParkingSpacePriceEntrys(parkingSpace.getParkingSpacePriceEntrys());
+    	availableParkingDTO.setPaypallEmail(parkingLocation.getPaypallAccount().getEmail());
     	
     	double totalCost = 0;
     	for (ParkingRateVO parkingRate : parkingRates) {

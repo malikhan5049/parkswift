@@ -81,9 +81,9 @@ public class UserService {
            });
     }
     
-    public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-            String langKey, boolean insertUserActivated){
-    	User user = createUserInformation(login, password, firstName, lastName, email, langKey);
+    public User createUserInformation(String login, String password, String firstName, String lastName, String email, 
+    		String contactNumber, String langKey, boolean insertUserActivated){
+    	User user = createUserInformation(login, password, firstName, lastName, email, contactNumber, langKey);
     	if(insertUserActivated){
     		user.setActivated(insertUserActivated);
     		user.setActivationKey(null);
@@ -103,7 +103,7 @@ public class UserService {
 	}
     
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-                                      String langKey) {
+                                      String contactNumber, String langKey) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
@@ -115,6 +115,7 @@ public class UserService {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
+        newUser.setMobilePhone(contactNumber);
         newUser.setLangKey(langKey);
         // new user is not active
         newUser.setActivated(false);

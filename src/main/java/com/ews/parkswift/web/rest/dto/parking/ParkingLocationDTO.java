@@ -1,123 +1,42 @@
-package com.ews.parkswift.domain;
+package com.ews.parkswift.web.rest.dto.parking;
 
-import java.io.Serializable;
+
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.ews.parkswift.startup.ApplicationStartup.LookupHeaderCode;
-import com.ews.parkswift.vo.InLookupHeader;
+import com.ews.parkswift.domain.Feedback;
+import com.ews.parkswift.domain.ParkingLocationContactInfo;
+import com.ews.parkswift.domain.ParkingLocationFacility;
+import com.ews.parkswift.domain.ParkingLocationImage;
+import com.ews.parkswift.domain.ParkingSpace;
+import com.ews.parkswift.domain.PaypallAccount;
+import com.ews.parkswift.domain.User;
 import com.ews.parkswift.web.rest.dto.ParkingSpaceDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A ParkingLocation.
  */
-@Entity
-@Table(name = "PARKING_LOCATION")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class ParkingLocation implements Serializable {
+public class ParkingLocationDTO {
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @NotEmpty
-    @Column(name = "bussiness_type", nullable = false)
-    @InLookupHeader(code = LookupHeaderCode.LOC_TYPE)
     private String bussinessType;
-
-    @NotEmpty
-    @Column(name = "address_line1", nullable = false)
     private String addressLine1;
-
-    @Column(name = "address_line2")
     private String addressLine2;
-
-    @NotEmpty
-    @Column(name = "city", nullable = false)
     private String city;
-
-    @Column(name = "state")
     private String state;
-
-    @NotEmpty
-    @Column(name = "country", nullable = false)
     private String country;
-
-    @NotEmpty
-    @Column(name = "zip_code", nullable = false)
     private String zipCode;
-
-    @NotNull
-    @Digits(integer=18, fraction = 15)
-    @Column(name = "longitude", precision=18, scale=15, nullable = false)
     private BigDecimal longitude;
-
-    @NotNull
-    @Digits(integer=18, fraction = 15)
-    @Column(name = "lattitude", precision=18, scale=15, nullable = false)
     private BigDecimal lattitude;
-    
-    @Column(name = "active")
     private Boolean active = true;
-    
-    @Valid
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
     private ParkingLocationContactInfo parkingLocationContactInfo;
-    
-    @Valid
-    @NotNull
-    @ManyToOne(fetch=FetchType.EAGER)
     private PaypallAccount paypallAccount;
-
-    @ManyToOne
-    @JsonIgnore
     private User user;
-    
-    @Valid
-    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationFacility> parkingLocationFacilitys = new HashSet<>();
-    
-    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Feedback> feedbacks = new HashSet<>();
-    
-    
-    @Valid
-    @OneToMany(mappedBy = "parkingLocation", fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingLocationImage> parkingLocationImages = new HashSet<>();
-    
-    @Transient
-    @JsonSerialize
     private Set<ParkingSpaceDTO> parkingSpaces = new HashSet<>();
-    
-    @OneToMany(mappedBy = "parkingLocation",fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval=true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ParkingSpace>  parkingSpaceEntitys = new HashSet<>(); // in case you need full entity somewhere in code
     
 
@@ -128,9 +47,6 @@ public class ParkingLocation implements Serializable {
 	public void setParkingLocationImages(
 			Set<ParkingLocationImage> parkingLocationImages) {
 		this.parkingLocationImages = parkingLocationImages;
-		this.parkingLocationImages.forEach((e)->{
-			e.setParkingLocation(this);
-		});
 	}
 
 	public Long getId() {
@@ -243,9 +159,6 @@ public class ParkingLocation implements Serializable {
 
     public void setParkingLocationFacilitys(Set<ParkingLocationFacility> parkingLocationFacilitys) {
         this.parkingLocationFacilitys = parkingLocationFacilitys;
-        parkingLocationFacilitys.forEach((e)->{
-        	e.setParkingLocation(this);
-        });
     }
 
     public Set<ParkingSpaceDTO> getParkingSpaces() {
@@ -272,10 +185,6 @@ public class ParkingLocation implements Serializable {
 		this.feedbacks = feedbacks;
 	}
 	
-	
-	
-	
-
 	public Boolean isActive() {
 		return active;
 	}
@@ -284,40 +193,4 @@ public class ParkingLocation implements Serializable {
 		this.active = active;
 	}
 
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ParkingLocation parkingLocation = (ParkingLocation) o;
-
-        if ( ! Objects.equals(id, parkingLocation.id)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "ParkingLocation{" +
-                "id=" + id +
-                ", bussinessType='" + bussinessType + "'" +
-                ", addressLine1='" + addressLine1 + "'" +
-                ", addressLine2='" + addressLine2 + "'" +
-                ", city='" + city + "'" +
-                ", state='" + state + "'" +
-                ", country='" + country + "'" +
-                ", zipCode='" + zipCode + "'" +
-                ", longitude='" + longitude + "'" +
-                ", lattitude='" + lattitude + "'" +
-                '}';
-    }
 }
