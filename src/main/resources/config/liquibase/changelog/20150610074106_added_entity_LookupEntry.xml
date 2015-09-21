@@ -11,6 +11,11 @@
         Added the entity LookupEntry.
     -->
     <changeSet id="20150610074106" author="ali.khan">
+   <!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="LOOKUP_ENTRY"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="LOOKUP_ENTRY">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

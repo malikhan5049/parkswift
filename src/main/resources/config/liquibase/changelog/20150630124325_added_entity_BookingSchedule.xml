@@ -11,6 +11,11 @@
         Added the entity ReservedParking.
     -->
     <changeSet id="20150630124325" author="ali.khan">
+   <!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PARKING_SPACE_RESERVED_ON"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PARKING_SPACE_RESERVED_ON">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

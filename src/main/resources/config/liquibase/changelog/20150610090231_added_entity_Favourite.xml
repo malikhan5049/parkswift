@@ -11,6 +11,11 @@
         Added the entity Favourite.
     -->
     <changeSet id="20150610090231" author="ali.khan">
+   <!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="FAVOURITE"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="FAVOURITE">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

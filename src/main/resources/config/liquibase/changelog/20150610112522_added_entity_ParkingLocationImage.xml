@@ -11,6 +11,11 @@
         Added the entity ParkingSpaceImage.
     -->
     <changeSet id="20150610112522" author="ali.khan">
+    <!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PARKING_LOCATION_IMAGE"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PARKING_LOCATION_IMAGE">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

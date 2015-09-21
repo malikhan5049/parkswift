@@ -17,13 +17,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
+import org.joda.time.DateTime;
 
-import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.ews.parkswift.domain.util.CustomLocalDateTimeSerializer;
 import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
-import com.ews.parkswift.domain.util.CustomLocalTimeSerializer;
-import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -39,35 +36,20 @@ public class BookingSchedule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
-
-    @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
-
-    @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalTime")
-    @JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
-    @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    @Column(name = "start_date_time", nullable = false)
+    private DateTime startDateTime;
 
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalTime")
-    @JsonSerialize(using = CustomLocalTimeSerializer.class)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
-    @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
-
+    @Column(name = "end_date_time", nullable = false)
+    private DateTime endDateTime;
+ 
     @Column(name = "repeat_basis")
     private String repeatBasis;
 
@@ -77,52 +59,26 @@ public class BookingSchedule implements Serializable {
     @Column(name = "status")
     private String status;
 
-
-
     @OneToMany(mappedBy = "bookingSchedule")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<BookingScheduleRepeatOn> bookingScheduleRepeatOns = new HashSet<>();
 
 
-    public Long getId() {
+    public void setStartDateTime(DateTime startDateTime) {
+		this.startDateTime = startDateTime;
+	}
+
+	public void setEndDateTime(DateTime endDateTime) {
+		this.endDateTime = endDateTime;
+	}
+
+	public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public String getRepeatBasis() {
@@ -182,13 +138,41 @@ public class BookingSchedule implements Serializable {
     public String toString() {
         return "BookingSchedule{" +
                 "id=" + id +
-                ", startDate='" + startDate + "'" +
-                ", endDate='" + endDate + "'" +
-                ", startTime='" + startTime + "'" +
-                ", endTime='" + endTime + "'" +
+                ", startDate='" + startDateTime + "'" +
+                ", endDate='" + endDateTime + "'" +
                 ", repeatOn='" + repeatBasis + "'" +
                 ", repeatOccurrences='" + repeatOccurrences + "'" +
                 ", status='" + status + "'" +
                 '}';
     }
+
+	public void constructStartDateTime() {
+		startDateTime = new DateTime(startDateTime.getYear(),
+				startDateTime.getMonthOfYear(), startDateTime.getDayOfMonth(),
+				startDateTime.getHourOfDay(), startDateTime.getMinuteOfHour());
+	}
+
+	public void constructEndDateTime() {
+		endDateTime = new DateTime(endDateTime.getYear(),
+				endDateTime.getMonthOfYear(), endDateTime.getDayOfMonth(),
+				endDateTime.getHourOfDay(), endDateTime.getMinuteOfHour());
+	}
+	
+	public DateTime getStartDateTime() {
+		if (startDateTime != null)
+			return startDateTime;
+		else {
+			constructStartDateTime();
+			return startDateTime;
+		}
+	}
+
+	public DateTime getEndDateTime() {
+		if (endDateTime != null)
+			return endDateTime;
+		else {
+			constructEndDateTime();
+			return endDateTime;
+		}
+	}
 }

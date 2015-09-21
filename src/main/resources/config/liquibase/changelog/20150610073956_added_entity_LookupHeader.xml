@@ -11,6 +11,11 @@
         Added the entity LookupHeader.
     -->
     <changeSet id="20150610073956" author="ali.khan">
+   		<!-- <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="LOOKUP_HEADER"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="LOOKUP_HEADER">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

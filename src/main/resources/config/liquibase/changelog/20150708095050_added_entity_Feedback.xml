@@ -11,6 +11,11 @@
         Added the entity Feedback.
     -->
     <changeSet id="20150708095050" author="ali.khan">
+    <!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="FEEDBACK"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="FEEDBACK">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

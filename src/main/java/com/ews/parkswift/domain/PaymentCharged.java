@@ -36,7 +36,6 @@ public class PaymentCharged implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Max(value = 5)
     @Column(name = "amount_charged", precision=10, scale=2)
     private BigDecimal amountCharged;
 
@@ -76,11 +75,47 @@ public class PaymentCharged implements Serializable {
 
     @Column(name = "todel")
     private String todel;
+    
+    @Column(name = "paykey")
+    private String payKey;
 
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Column(name = "paykey_expiry_date", nullable = true)
+    private DateTime paykeyExpiryDate;
+    
+    @Column(name = "sender_paypal_account")
+    private String senderPaypalEmail;;
+    
     @ManyToOne
     private CustomerBooking customerBooking;
+    
+    public String getSenderPaypalEmail() {
+		return senderPaypalEmail;
+	}
 
-    public Long getId() {
+	public void setSenderPaypalEmail(String senderPaypalEmail) {
+		this.senderPaypalEmail = senderPaypalEmail;
+	}
+
+	public String getPayKey() {
+		return payKey;
+	}
+
+	public void setPayKey(String payKey) {
+		this.payKey = payKey;
+	}
+
+	public DateTime getPaykeyExpiryDate() {
+		return paykeyExpiryDate;
+	}
+
+	public void setPaykeyExpiryDate(DateTime paykeyExpiryDate) {
+		this.paykeyExpiryDate = paykeyExpiryDate;
+	}
+
+	public Long getId() {
         return id;
     }
 

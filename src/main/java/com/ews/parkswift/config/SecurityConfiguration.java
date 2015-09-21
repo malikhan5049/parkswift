@@ -76,6 +76,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/registerSocialMedia").permitAll()
+            .antMatchers("/api/loginWithSocialMedia").permitAll()
             .antMatchers("/api/authenticatefb").permitAll()
             .antMatchers("/api/authenticategoogleplus").permitAll()
             .antMatchers("/api/paypalAccessToken").permitAll()

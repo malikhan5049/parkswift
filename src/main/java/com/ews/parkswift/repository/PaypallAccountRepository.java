@@ -16,7 +16,7 @@ public interface PaypallAccountRepository extends JpaRepository<PaypallAccount,L
     @Query("select paypallAccount from PaypallAccount paypallAccount where paypallAccount.user.login = ?#{principal.username}")
     List<PaypallAccount> findAllForCurrentUser();
 
-	Optional<PaypallAccount> findOneByEmail(String email);
+	PaypallAccount findOneByEmail(String email);
 
 	Optional<PaypallAccount>  findOneById(Long id);
 

@@ -26,6 +26,8 @@ import org.joda.time.DateTime;
 
 import com.ews.parkswift.domain.util.CustomDateTimeDeserializer;
 import com.ews.parkswift.domain.util.CustomDateTimeSerializer;
+import com.ews.parkswift.domain.util.CustomLocalDateTimeSerializer;
+import com.ews.parkswift.domain.util.CustomLocalTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -48,9 +50,9 @@ public class CustomerBooking implements Serializable {
     private String bookingReferenceNumber;
 
     @NotNull
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
     @Column(name = "booking_date_time", nullable = false)
     private DateTime bookingDateTime;
 
@@ -109,9 +111,9 @@ public class CustomerBooking implements Serializable {
     @Column(name = "status", length = 20)
     private String status;
 
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @JsonSerialize(using = CustomDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomDateTimeDeserializer.class)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalTimeDeserializer.class)
     @Column(name = "cancelation_date_time")
     private DateTime cancelationDateTime;
 
@@ -133,9 +135,6 @@ public class CustomerBooking implements Serializable {
 
     @OneToOne
     private BookingSchedule bookingSchedule;
-
-    @ManyToOne
-    private ParkingSpace parkingSpace;
     
     public Long getId() {
         return id;
@@ -335,14 +334,6 @@ public class CustomerBooking implements Serializable {
 
 	public void setPaymentsCharged(Set<PaymentCharged> paymentsCharged) {
 		this.paymentsCharged = paymentsCharged;
-	}
-
-	public ParkingSpace getParkingSpace() {
-		return parkingSpace;
-	}
-
-	public void setParkingSpace(ParkingSpace parkingSpace) {
-		this.parkingSpace = parkingSpace;
 	}
 
 	@Override

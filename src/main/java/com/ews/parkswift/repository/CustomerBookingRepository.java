@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CustomerBookingRepository extends JpaRepository<CustomerBooking,Long> {
 
-    @Query("select customerBooking from CustomerBooking customerBooking where customerBooking.user.login = ?#{principal.username}")
+    @Query("select customerBooking from CustomerBooking customerBooking where customerBooking.user.login = ?#{principal.username} and customerBooking.status = 'BOOKED'")
     List<CustomerBooking> findAllForCurrentUser();
 
 }

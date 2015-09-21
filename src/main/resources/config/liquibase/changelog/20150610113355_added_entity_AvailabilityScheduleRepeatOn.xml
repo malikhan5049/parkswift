@@ -11,6 +11,11 @@
         Added the entity availabilityScheduleRepeatOn.
     -->
     <changeSet id="20150610113355" author="ali.khan">
+     <!-- <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PARKING_SPACE_AVAILABILITY_REPEAT_ON">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

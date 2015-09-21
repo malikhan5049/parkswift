@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,12 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-
-
-
-
-
-import org.apache.http.Consts;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 //import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +47,6 @@ import urn.ebay.apis.eBLBaseComponents.ErrorType;
 import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.web.rest.dto.PaypallAccountDTO;
 import com.ews.parkswift.web.rest.dto.parking.PaymentDTO;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.paypal.core.ClientCredentials;
@@ -343,31 +345,45 @@ public class PaypalUtils {
 	  * @throws IOException
 	  * @throws InterruptedException
 	  */
-	 public static PreapprovalResponse preapproval(String senderPaypalEmail, int maxNumberOfPayments, double maxAmountPerPayment, double maxTotalAmountOfAllPayments, String startingDate, String endingDate)
+	 public static String preapproval(PaymentDTO paymentDTO)
 			throws SSLConfigurationException, InvalidCredentialException,
 			UnsupportedEncodingException, HttpErrorException,
 			InvalidResponseDataException, ClientActionRequiredException,
 			MissingCredentialException, OAuthException, IOException,
 			InterruptedException {
 
+		 DateTimeFormatter dateFormat = DateTimeFormat
+	                .forPattern("G,C,Y,x,w,e,E,Y,D,M,d,a,K,h,H,k,m,s,S,z,Z");
+
+	        String dob = "2002-01-15";
+	        LocalTime localTime = new LocalTime();
+	        LocalDate localDate = new LocalDate();
+	        DateTime dateTime = new DateTime();
+	        LocalDateTime localDateTime = new LocalDateTime();
+	        DateTimeZone dateTimeZone = DateTimeZone.getDefault();
+ 
+		 
+		 
 		RequestEnvelope requestEnvelope = new RequestEnvelope(Constants.LOCALE_US);
 		PreapprovalRequest preapprovalRequest = new PreapprovalRequest();
 		preapprovalRequest.setRequestEnvelope(requestEnvelope);
 
 		preapprovalRequest.setCurrencyCode(Constants.CURRENCY_USD);
 		
-		preapprovalRequest.setStartingDate(startingDate);
-		preapprovalRequest.setEndingDate(endingDate);
-		preapprovalRequest.setMaxAmountPerPayment(maxAmountPerPayment);
-		preapprovalRequest.setMaxNumberOfPayments(maxNumberOfPayments);
-		preapprovalRequest.setMaxTotalAmountOfAllPayments(maxTotalAmountOfAllPayments);
-		preapprovalRequest.setSenderEmail(senderPaypalEmail);
+		preapprovalRequest.setStartingDate(localDate.toString());
+		preapprovalRequest.setEndingDate(localDate.plusDays(3).toString());
+		preapprovalRequest.setMaxAmountPerPayment(paymentDTO.getAmountCharged().doubleValue()*0.80);
+		preapprovalRequest.setMaxNumberOfPayments(1);
+		preapprovalRequest.setMaxTotalAmountOfAllPayments(paymentDTO.getAmountCharged().doubleValue());
+//		preapprovalRequest.setSenderEmail(senderPaypalEmail);
 		
 		preapprovalRequest.setCancelUrl(Constants.PAYPALL_PREAPPROVAL_CANCEL_URL);
 		preapprovalRequest.setReturnUrl(Constants.PAYPALL_PREAPPROVAL_RETURN_URL);
 		preapprovalRequest.setIpnNotificationUrl(Constants.PAYPALL_IPN_NOTIFICATION_URL);
 
-		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(getSdkConf());
+//		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(getSdkConf());
+		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService("src/main/resources/sdk_config.properties");
+	
 		PreapprovalResponse preapprovalResponse = null;
 		try {
 			preapprovalResponse = adaptivePaymentsService.preapproval(preapprovalRequest);
@@ -394,7 +410,7 @@ public class PaypalUtils {
 			e.printStackTrace();
 		}
 		
-		return preapprovalResponse;
+		return preapprovalResponse.getPreapprovalKey();
 	}
 
 	 
@@ -485,7 +501,9 @@ public class PaypalUtils {
 
 		Map<String, String> sdkConfig = getSdkConf();
 
-		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+//		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService(sdkConfig);
+		AdaptivePaymentsService adaptivePaymentsService = new AdaptivePaymentsService("src/main/resources/sdk_config.properties");
+		
 		PayResponse payResponse = null;
 		try {
 			payResponse = adaptivePaymentsService.pay(payRequest);
@@ -711,15 +729,15 @@ public class PaypalUtils {
 	 * @param payKey
 	 * @return
 	 */
-	public static PaymentDetailsResponse paymentDetails(String payKey) {
-
+	public static Map<String,String> getPaymentDetails(String payKey) {
+		Map<String,String> mapResponse = new HashMap<>();
 //		Logger logger = Logger.getLogger(this.getClass().toString());
 
 		// ##PaymentDetailsRequest
 		// The code for the language in which errors are returned, which must be
 		// en_US.
 		RequestEnvelope requestEnvelope = new RequestEnvelope();
-		requestEnvelope.setErrorLanguage("en_US");
+		requestEnvelope.setErrorLanguage(Constants.LOCALE_US);
 
 		// PaymentDetailsRequest which takes,
 		// 
@@ -746,14 +764,13 @@ public class PaypalUtils {
 		// Creating service wrapper object to make API call and loading
 		// configuration file for your credentials and endpoint
 		AdaptivePaymentsService service = null;
-//		try {
-//			service = new AdaptivePaymentsService(
-//					"src/main/resources/sdk_config.properties");
-			service = new AdaptivePaymentsService(getSdkConf());
-//		} catch (IOException e) {
-////			logger.severe("Error Message : " + e.getMessage());
-//			System.out.println("Error Message : " + e.getMessage());
-//		}
+		try {
+			service = new AdaptivePaymentsService(Constants.PAYPAL_CONFIG_PROPERTIES_FILE);
+//			service = new AdaptivePaymentsService(getSdkConf());
+		} catch (IOException e) {
+//			logger.severe("Error Message : " + e.getMessage());
+			System.out.println("Error Message : " + e.getMessage());
+		}
 		PaymentDetailsResponse paymentDetailsResponse = null;
 		try {
 
@@ -794,6 +811,9 @@ public class PaypalUtils {
 //					+ paymentDetailsResponse.getStatus());
 			System.out.println("Payment Status : "
 					+ paymentDetailsResponse.getStatus());
+			mapResponse.put("status", paymentDetailsResponse.getStatus());
+			mapResponse.put("expiryDate", paymentDetailsResponse.getPayKeyExpirationDate());
+			mapResponse.put("senderEmail", paymentDetailsResponse.getSenderEmail());
 //			logger.info("Payment Key Expiration  : "
 //					+ paymentDetailsResponse.getPayKeyExpirationDate());
 		}
@@ -805,7 +825,8 @@ public class PaypalUtils {
 			System.out.println("API Error Message : "
 					+ paymentDetailsResponse.getError().get(0).getMessage());
 		}
-		return paymentDetailsResponse;
+		
+		return mapResponse;
 	}
 	
 	private static APIContext getAPIContext(){
@@ -1234,21 +1255,25 @@ public class PaypalUtils {
 		return response.toString();
 	}
 
-	private static List<Receiver> generateReceiverList() {
+	private static List<Receiver> generateReceiverList(BigDecimal totalAmount, String primaryReceiver) {
+		
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+		df.setMinimumFractionDigits(0);
+		df.setGroupingUsed(false);
+		String formattedAmountForSecondaryReceiver = df.format(totalAmount.doubleValue() * 0.20);
+		System.out.println("Secondary Receiver Amount "+formattedAmountForSecondaryReceiver);
+		
 		List<Receiver> listReceivers = new ArrayList<Receiver>();
 		
 		Receiver receiver = new Receiver();
-		receiver.setAmount(15.0);
-		receiver.setEmail("ews2@ews.com");
+		receiver.setAmount(Double.valueOf(totalAmount.doubleValue()));
+		receiver.setEmail(primaryReceiver);
+		receiver.setPrimary(true);
 		
 		Receiver receiver2 = new Receiver();
-		receiver2.setAmount(15.0);
-		receiver2.setEmail("ews@ews.com");
-		
-		// // Set to true to indicate a chained payment; only one receiver can be a
-		// primary receiver. Omit this field, or set it to false for simple and
-		// parallel payments.
-		receiver2.setPrimary(Boolean.TRUE);
+		receiver2.setAmount(new BigDecimal(formattedAmountForSecondaryReceiver).doubleValue());
+		receiver2.setEmail(Constants.PAYPAL_SECONDARY_RECEIVER);
 		
 		listReceivers.add(receiver);
 		listReceivers.add(receiver2);
@@ -1284,12 +1309,105 @@ public class PaypalUtils {
 	}
 	
 	
+	public static String getPaymentStatus(String payKey) {
+
+//		Logger logger = Logger.getLogger(this.getClass().toString());
+
+		// ##PaymentDetailsRequest
+		// The code for the language in which errors are returned, which must be
+		// en_US.
+		RequestEnvelope requestEnvelope = new RequestEnvelope();
+		requestEnvelope.setErrorLanguage(Constants.LOCALE_US);
+
+		// PaymentDetailsRequest which takes,
+		// 
+		// `Request Envelope` - Information common to each API operation, such
+		// as the language in which an error message is returned.
+		PaymentDetailsRequest paymentDetailsRequest = new PaymentDetailsRequest(
+				requestEnvelope);
+
+		// You must specify either,
+		// 
+		// * `Pay Key` - The pay key that identifies the payment for which you
+		// want to retrieve details. This is the pay key returned in the
+		// PayResponse message.
+		// * `Transaction ID` - The PayPal transaction ID associated with the
+		// payment. The IPN message associated with the payment contains the
+		// transaction ID.
+		// `paymentDetailsRequest.setTransactionId(transactionId)`
+		// * `Tracking ID` - The tracking ID that was specified for this payment
+		// in the PayRequest message.
+		// `paymentDetailsRequest.setTrackingId(trackingId)`
+		
+		paymentDetailsRequest.setPayKey(payKey);
+//		paymentDetailsRequest.setTransactionId("");
+		
+		// ## Creating service wrapper object
+		// Creating service wrapper object to make API call and loading
+		// configuration file for your credentials and endpoint
+		AdaptivePaymentsService service = null;
+		try {
+			service = new AdaptivePaymentsService(Constants.PAYPAL_CONFIG_PROPERTIES_FILE);
+		} catch (IOException e) {
+			System.out.println("Error Message : " + e.getMessage());
+		}
+		PaymentDetailsResponse paymentDetailsResponse = null;
+		try {
+
+			// ## Making API call
+			// Invoke the appropriate method corresponding to API in service
+			// wrapper object
+			paymentDetailsResponse = service
+					.paymentDetails(paymentDetailsRequest);
+		} catch (Exception e) {
+			System.out.println("Error Message : " + e.getMessage());
+		}
+
+		// ## Accessing response parameters
+		// You can access the response parameters using getter methods in
+		// response object as shown below
+		// ### Success values
+		if (paymentDetailsResponse.getResponseEnvelope().getAck()
+				.getValue().equalsIgnoreCase("Success")) {
+
+			// The status of the payment. Possible values are:
+			// 
+			// * CREATED - The payment request was received; funds will be
+			// transferred once the payment is approved
+			// * COMPLETED - The payment was successful
+			// * INCOMPLETE - Some transfers succeeded and some failed for a
+			// parallel payment or, for a delayed chained payment, secondary
+			// receivers have not been paid
+			// * ERROR - The payment failed and all attempted transfers
+			// failed
+			// or all completed transfers were successfully reversed
+			// * REVERSALERROR - One or more transfers failed when
+			// attempting
+			// to reverse a payment
+			// * PROCESSING - The payment is in progress
+			// * PENDING - The payment is awaiting processing
+			System.out.println("Payment Status : "+ paymentDetailsResponse.getStatus());
+			System.out.println("Tracking ID : "+ paymentDetailsResponse.getTrackingId());
+			System.out.println("Sender Email : "+paymentDetailsResponse.getSenderEmail());
+//			paymentDetailsResponse.get
+//			logger.info("Payment Key Expiration  : "
+//					+ paymentDetailsResponse.getPayKeyExpirationDate());
+		}
+		// ### Error Values
+		// Access error values from error list using getter methods
+		else {
+			System.out.println("API Error Message : "+ paymentDetailsResponse.getError().get(0).getMessage());
+		}
+		return paymentDetailsResponse.getStatus();
+	}
+	
+	
 	public static String generatePayment(PaymentDTO paymentDTO){
 		
 		RequestEnvelope requestEnvelope = new RequestEnvelope();
 		requestEnvelope.setErrorLanguage(Constants.LOCALE_US);
 		
-		ReceiverList listReceivers = new ReceiverList(paymentDTO.getListReceivers());
+		ReceiverList listReceivers = new ReceiverList(generateReceiverList(paymentDTO.getAmountCharged(), paymentDTO.getOwnersPaypalEmail()));
 
 		PayRequest payRequest = null;
 		PayResponse payResponse= null;
@@ -1298,13 +1416,12 @@ public class PaypalUtils {
 				Constants.PAYPAL_PAYMENT_RESPONSE_URL, Constants.CURRENCY_USD, listReceivers,
 				Constants.PAYPAL_PAYMENT_RESPONSE_URL);
 		
-		
 		payRequest.setReceiverList(listReceivers);
 //		payRequest.setSenderEmail(senderEmail);
 		
 		payResponse = makeAPICall(payRequest);
 		
-		return Constants.PAYPALL_PAYMENT_APPROVAL_URL+payResponse.getPayKey();
+		return payResponse.getPayKey();
 	}
 	
 	private static PayResponse makeAPICall(PayRequest payRequest) {

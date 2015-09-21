@@ -11,6 +11,11 @@
         Added the entity ParkingLocationContactInfo.
     -->
     <changeSet id="20150626102226" author="ali.khan">
+   		<!--  <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PARKING_LOCATION_CONTACT_INFO"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PARKING_LOCATION_CONTACT_INFO">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

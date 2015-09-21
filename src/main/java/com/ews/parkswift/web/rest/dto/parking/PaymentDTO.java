@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
+import com.ews.parkswift.domain.util.CustomLocalDateSerializer;
+import com.ews.parkswift.domain.util.ISO8601LocalDateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.paypal.svcs.types.ap.Receiver;
 
 public class PaymentDTO {
@@ -23,8 +28,37 @@ public class PaymentDTO {
 	private String todel;
 	private List<Receiver> listReceivers = new ArrayList<>();
 	private String paypalURLWithPayKey;
+	private String payKey;
+	private String ownersPaypalEmail;
+	private String senderPaypalEmail;
+	@JsonSerialize(using = CustomLocalDateSerializer.class)
+	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+	private DateTime payKeyExpiryDate;
 	
-	
+	public String getSenderPaypalEmail() {
+		return senderPaypalEmail;
+	}
+	public void setSenderPaypalEmail(String senderPaypalEmail) {
+		this.senderPaypalEmail = senderPaypalEmail;
+	}
+	public DateTime getPayKeyExpiryDate() {
+		return payKeyExpiryDate;
+	}
+	public void setPayKeyExpiryDate(DateTime payKeyExpiryDate) {
+		this.payKeyExpiryDate = payKeyExpiryDate;
+	}
+	public String getOwnersPaypalEmail() {
+		return ownersPaypalEmail;
+	}
+	public void setOwnersPaypalEmail(String ownersPaypalEmail) {
+		this.ownersPaypalEmail = ownersPaypalEmail;
+	}
+	public String getPayKey() {
+		return payKey;
+	}
+	public void setPayKey(String payKey) {
+		this.payKey = payKey;
+	}
 	public String getPaypalURLWithPayKey() {
 		return paypalURLWithPayKey;
 	}

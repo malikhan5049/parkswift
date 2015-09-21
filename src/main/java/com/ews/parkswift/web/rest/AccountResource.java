@@ -101,12 +101,15 @@ public class AccountResource {
             response.addHeader("x-auth-token", tokenMobile.getToken());
             
             if(userDTO.getPaypalEmail()!=null && !userDTO.getPaypalEmail().equals("")){
-            	PaypallAccount paypallAccount = new PaypallAccount();
-            	paypallAccount.setEmail(userDTO.getPaypalEmail());
-            	paypallAccount.setIsDefault(true);
-            	paypallAccount.setUser(user);
+            	PaypallAccount paypallAccount = paypallAccountRepository.findOneByEmail(userDTO.getPaypalEmail());
+            	if(null==paypallAccount){
+            		paypallAccount = new PaypallAccount();
+            		paypallAccount.setEmail(userDTO.getPaypalEmail());
+            		paypallAccount.setIsDefault(true);
+            		paypallAccount.setUser(user);
+            		paypallAccountRepository.save(paypallAccount);
+            	}
             	
-            	paypallAccountRepository.save(paypallAccount);
             }
             
             return new ResponseEntity<UserDTOMobile>(new UserDTOMobile(
@@ -155,7 +158,7 @@ public class AccountResource {
         
     	if (userRepository.findOneByLogin(userDTO.getLogin()).isPresent()) {
     		
-    		UserDetails details = this.userDetailsService.loadUserByUsername(userDTO.getLogin());
+    		UserDetails details = this.userDetailsService.loadUserByUsername(userDTO.getEmail());
     		
     		Token tokenMobile = tokenProvider.createTokenMobile(details);
             response.addHeader("x-auth-token", tokenMobile.getToken());

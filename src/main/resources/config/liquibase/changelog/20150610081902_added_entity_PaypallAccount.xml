@@ -11,6 +11,11 @@
         Added the entity PaypallAccount.
     -->
     <changeSet id="20150610081902" author="ali.khan">
+   	<!-- 	<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PAYPALL_ACCOUNT"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PAYPALL_ACCOUNT">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

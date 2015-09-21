@@ -73,7 +73,8 @@ public final class Constants {
 	public static final String PAYPALL_CHAINED_CANCEL_URL = "https://devtools-paypal.com/guide/ap_chained_payment/php?cancel=true";
 	public static final String PAYPALL_CHAINED_RETURN_URL = "https://devtools-paypal.com/guide/ap_chained_payment/php?success=true";
 	
-	public static final String PAYPALL_PAYMENT_APPROVAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=";
+//	public static final String PAYPALL_PAYMENT_APPROVAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=";
+	public static final String PAYPALL_PAYMENT_APPROVAL_URL = "https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay?paykey=";
 	
 	public static final String PAYPALL_IPN_NOTIFICATION_URL = "http://replaceIpnUrl.com";
 	
@@ -82,7 +83,12 @@ public final class Constants {
 //	public static final String PAYPALL_SIGNATURE = "AFcWxV21C7fd0v3bYYYRCpSSRl31AEv2GIvRBVF2OlipVtiYjZzUe-4k";
 //	public static final String PAYPALL_APP_ID = "APP-80W284485P519543T";
 	
+	public static final String BOOKING_STATUS_BOOKED = "BOOKED";
+	public static final String BOOKING_STATUS_CANCELLED = "CANCELLED";
+	public static final String PAYPAL_PRIMARY_RECEIVER = "COMPLETED";
+	public static final String PAYPAL_SECONDARY_RECEIVER = "parkswift@ews.com";
 	
+	public static final String PAYPAL_PAYMENT_STATUS_COMPLETED = "COMPLETED";
 	public static final String PAYPALL_USER_NAME = "saad.sial77_api1.Yahoo.com";
 	public static final String PAYPALL_PASSWORD = "KQFMMLFW3UFS52ZE";
 	public static final String PAYPALL_SIGNATURE = "ADyVKgzotwVjMNudZaW4Uw4OeWpxAF2uHg38efzaTgTiCKUeWwT2e6Qo";

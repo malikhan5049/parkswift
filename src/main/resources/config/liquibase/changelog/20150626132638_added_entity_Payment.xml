@@ -11,6 +11,11 @@
         Added the entity Payment.
     -->
     <changeSet id="20150626132638" author="ali.khan">
+    <!-- <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="PAYMENT"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="PAYMENT">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

@@ -183,13 +183,12 @@ public class FindParkingSpaceService {
     	for (ParkingSpaceVehicleType psVehicleType : parkingSpace.getParkingSpaceVehicleTypes())
     		availableParkingDTO.getParkingSpaceVehicleTypes().add(psVehicleType.getType());
     	try{
-    		if(parkingLocation.getId()!=null && !parkingLocation.getId().equals("")){
+    		if(parkingLocation.getUser().getId()!=null){
 	        	if(favouriteLocationService.checkIfLocationIsFavourite(parkingLocation.getId())){
 	        		availableParkingDTO.setFavourite(true);
 	        	}
     		}
     	}catch(Exception e){
-    		
     	}
 		
 		return availableParkingDTO;

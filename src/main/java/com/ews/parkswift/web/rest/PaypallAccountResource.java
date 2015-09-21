@@ -125,22 +125,7 @@ public class PaypallAccountResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public PaymentDTO executePayment(@Valid @RequestBody PaymentDTO paymentDTO) {
-//					PaypalUtils.getResponse(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
-//				try {
-//					PaypalUtils.captureAuthorizedPayment(accountDTO.getAuthorization_id(),accountDTO.getAmount());
-//					try {
-//						PaypalUtils.getResponseAgainstAuthorizationKey(accountDTO.getAuthorization_id(), accountDTO.getPayKey(), accountDTO.getAmount());
-//					} catch (MalformedURLException | JSONException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				} catch (PayPalException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				PaypalUtils.captureAuthorizedPayment(accountDTO.getAuthorization_id(), accountDTO.getAmount());
-			
-    	paymentDTO.setPaypalURLWithPayKey(PaypalUtils.generatePayment(paymentDTO));
+    	paymentDTO.setPayKey(PaypalUtils.generatePayment(paymentDTO));
     	return paymentDTO;
     }
     
@@ -149,8 +134,6 @@ public class PaypallAccountResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public void executePayment(@Valid @RequestBody Object paymentDTO) {
-//    	paymentDTO.setPaypalURLWithPayKey(PaypalUtils.generatePayment(paymentDTO));
-//    	return paymentDTO;
     	System.out.println(paymentDTO);
     }
     

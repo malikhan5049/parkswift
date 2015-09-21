@@ -70,13 +70,17 @@ public class ParkingLocationService {
     	parkingLocation.setUser(user);
     	
     	if(parkingLocation.getPaypallAccount()!=null){
-    		PaypallAccount payPallAccount = parkingLocation.getPaypallAccount();
-    		payPallAccount.setUser(user);
+    		PaypallAccount payPallAccount = paypallAccountRepository.findOneByEmail(parkingLocation.getPaypallAccount().getEmail());
+    		if(null==payPallAccount){
+    			payPallAccount = new PaypallAccount();
+    			payPallAccount.setEmail(parkingLocation.getPaypallAccount().getEmail());
+    			payPallAccount.setIsDefault(true);
+    			payPallAccount.setUser(user);
+    			paypallAccountRepository.save(payPallAccount);
+    		}
     		updateDefaultPaypallAccount(payPallAccount);
-    		paypallAccountRepository.save(payPallAccount);
-    		
+    		parkingLocation.setPaypallAccount(payPallAccount);
     	}
-    	
     	if(parkingLocation.getId()!=null){
     		ParkingLocation pl = parkingLocationRepository.findOne(parkingLocation.getId());
     		if(null!=pl){

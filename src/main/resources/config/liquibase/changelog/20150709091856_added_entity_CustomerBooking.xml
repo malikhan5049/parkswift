@@ -11,6 +11,11 @@
         Added the entity CustomerBooking.
     -->
     <changeSet id="20150709091856" author="jhipster">
+     <!-- <preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists schemaName="parkswift" tableName="CUSTOMER_BOOKING"/>
+			</not>
+		</preConditions> -->
         <createTable tableName="CUSTOMER_BOOKING">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

@@ -2,6 +2,7 @@ package com.ews.parkswift.repository;
 
 import java.util.List;
 
+import com.ews.parkswift.config.Constants;
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
 
 
@@ -21,12 +22,17 @@ public interface FindParkingSpaceRepository {
 			+ "and "+HAVERSINE_PART+" < :distance "
 			+ "and avs.startDate <= :startDate and avs.endDate >=:endDate "
 			+ "and avs.startTime <=:startTime and avs.endTime>=:endTime "
-			+ "and ps.numberOfSpaces > "
-				+ "(select count(bps.parkingSpace) from BookedParkingSpace bps "
+//			+ "and ps.numberOfSpaces > "
+			+ "and "
+				+ "(ps.numberOfSpaces - (select count(bps.parkingSpace) from BookedParkingSpace bps "
 				+ "join bps.customerBooking cb "
 				+ "join cb.bookingSchedule bs "
-				+ "where ps.id = bps.parkingSpace.id and bs.startDate >= :startDate and bs.endDate <=:endDate "
-				+ "and bs.startTime >= :startTime and bs.endTime <= :endTime) ";
+				+ "where ps.id = bps.parkingSpace.id and "
+				+ "cb.status = 'BOOKED' and "  
+				+ "((bs.startDateTime <= :startDateTime and :startDateTime < bs.endDateTime) or " 
+				+ "(bs.startDateTime < :endDateTime and :endDateTime <= bs.endDateTime) or "
+				+ "(:startDateTime <= bs.startDateTime and bs.startDateTime < :endDateTime) or " 
+		        + "(:startDateTime < bs.endDateTime and bs.endDateTime <= :endDateTime)))) > 0";
 	public static String FIND_PARKING_QUERY = FIND_PARKING_QUERY_SELECT
 			+ FIND_PARKING_QUERY_FROM
 			+ FIND_PARKING_QUERY_WHERE

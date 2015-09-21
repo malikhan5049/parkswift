@@ -43,6 +43,13 @@
     <include file="classpath:config/liquibase/changelog/20150712092406_alter_entity_LookupEntry.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150714075407_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150727042507_alter_entity_ParkingSpace.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150903081902_alter_entity_CustomerBooking.xml" relativeToChangelogFile="false"/>
+	<include file="classpath:config/liquibase/changelog/20150917101940_alter_entity_PaymentCharged.xml" relativeToChangelogFile="false"/>
+  	<include file="classpath:config/liquibase/changelog/20150917101950_alter_entity_PaymentCharged.xml" relativeToChangelogFile="false"/>
+  	<include file="classpath:config/liquibase/changelog/20150918124325_alter_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
+  	<include file="classpath:config/liquibase/changelog/20150918124326_alter_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
+  	<include file="classpath:config/liquibase/changelog/20150919124326_alter_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
+  	<include file="classpath:config/liquibase/changelog/20150919124327_alter_entity_BookingSchedule.xml" relativeToChangelogFile="false"/>
+    <!-- <include file="classpath:config/liquibase/changelog/20150903081902_alter_entity_CustomerBooking.xml" relativeToChangelogFile="false"/> -->
+    <!-- <include file="classpath:config/liquibase/changelog/20150915081902_alter_entity_CustomerBooking.xml" relativeToChangelogFile="false"/> -->
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

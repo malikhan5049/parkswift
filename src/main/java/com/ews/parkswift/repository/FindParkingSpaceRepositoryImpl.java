@@ -7,6 +7,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 import org.springframework.stereotype.Repository;
 
 import com.ews.parkswift.web.rest.dto.parking.FindParkingsDTO;
@@ -38,6 +42,14 @@ public class FindParkingSpaceRepositoryImpl implements
 		query.setParameter("endDate", findParkingDTO.getAvailabilitySchedule().getEndDate());
 		query.setParameter("startTime", findParkingDTO.getAvailabilitySchedule().getStartTime());
 		query.setParameter("endTime", findParkingDTO.getAvailabilitySchedule().getEndTime());
+		
+		LocalDate startDate = findParkingDTO.getAvailabilitySchedule().getStartDate();
+		LocalDate endDate = findParkingDTO.getAvailabilitySchedule().getEndDate();
+		LocalTime startTime = findParkingDTO.getAvailabilitySchedule().getStartTime();
+		LocalTime endTime = findParkingDTO.getAvailabilitySchedule().getEndTime();
+		
+		query.setParameter("startDateTime", new DateTime(startDate.getYear(), startDate.getMonthOfYear(), startDate.getDayOfMonth(), startTime.getHourOfDay(), startTime.getMinuteOfHour()));
+		query.setParameter("endDateTime", new DateTime(endDate.getYear(), endDate.getMonthOfYear(), endDate.getDayOfMonth(), endTime.getHourOfDay(), endTime.getMinuteOfHour()));
 	}
 
 	private StringBuffer buildFindParkingQueryString(

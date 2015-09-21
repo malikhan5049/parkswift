@@ -84,7 +84,12 @@ public class FavouriteLocationsService {
 }
     
     boolean checkIfLocationIsFavourite(Long locId) throws Exception{
-    	User user = userRepository.findUserByLoginName();
+    	User user = null;
+    	try{
+    		user = userRepository.findUserByLoginName();
+    	}catch(Exception e){
+    		
+    	}
 		String qry = "from Favourite fav where fav.user.id=? and fav.parkingLocation.id=?";
 		Query query = this.entityManager.createQuery(qry);
 		query.setParameter(1, user.getId());
